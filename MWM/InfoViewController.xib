@@ -66,6 +66,7 @@
 						<string key="NSFrame">{{199, 335}, {121, 125}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
@@ -81,33 +82,36 @@
 						<string key="NSFrame">{{20, 80}, {280, 360}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
+						<reference key="NSNextKeyView" ref="581425667"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<bool key="IBUIEditable">NO</bool>
 						<object class="NSMutableString" key="IBUIText">
-							<bytes key="NS.bytes">TWV0YSBXYXRjaCBpcyBhIHByaXZhdGVseS1oZWxkIGNvbXBhbnkgZm9jdXNpbmcgb24gcmVpbnZlbnRp
-bmcgdGhlIHdhdGNoIGFzIGEgc3R5bGlzaCBhbmQgcmVsZXZhbnQgbW9iaWxlIGFjY2Vzc29yeS4gCgpN
-ZXRhIFdhdGNoIGRldmVsb3BtZW50IHN5c3RlbXMgYWxsb3cgZGV2ZWxvcGVycyB0byBxdWlja2x5IGFu
-ZCBlYXNpbHkgZXh0ZW5kIHRoZSBpbnRlcmZhY2VzIG9mIGRldmljZXMgYW5kIGFwcGxpY2F0aW9ucyB0
-byB0aGUgd3Jpc3QuIFRhcmdldCBtYXJrZXRzIGFuZCBhcHBsaWNhdGlvbnMgaW5jbHVkZTogcXVhbnRp
-ZmllZCBzZWxmICYgbW9iaWxlIGhlYWx0aDsgbWVzc2FnaW5nLCBhbGVydHMsIGFuZCBub3RpZmljYXRp
-b25zOyBjYXJyaWVyIHZhbHVlIGFkZGVkIHNlcnZpY2VzOyBuYXZpZ2F0aW9uICYgbG9jYXRpb24tYmFz
-ZWQgc2VydmljZXM7IG1vYmlsZSBhbmQgbXVzaWMgbGlmZXN0eWxlIGVuaGFuY2VtZW50LiAKCk1ldGEg
-V2F0Y2ggaXMgYmFzZWQgaW4gRGFsbGFzLCBUZXhhcyBhbmQgaGFzIGFuIFImRCBmYWNpbGl0eSBpbiBF
-c3BvbywgRmlubGFuZC4KCk1ldGEgV2F0Y2ggaXMgYSBkZXZlbG9wZXItZnJpZW5kbHkgc21hcnR3YXRj
-aCB1c2VkIHRvIGhlaWdodGVuIHVzZXIgZW5nYWdlbWVudCBhbmQgZHJpdmUgYXBwIHVzYWdlLiAKCk1l
-dGEgV2F0Y2gsIHdoZW4gcGFpcmVkIHdpdGggaU9TICg0Uykgb3IgQW5kcm9pZC1iYXNlZCBzbWFydCBw
-aG9uZXMsIGVuYWJsZSBuZXcga2luZHMgb2YgZ2xhbmNlYWJsZSBpbnRlcmFjdGlvbnMuIEluIHRoZSBz
-YW1lIHdheSB0aGF0IGdsYW5jaW5nIGF0IGEgd3Jpc3R3YXRjaCBpcyBtb3JlIHNpbXBsZSB0aGFuIHB1
-bGxpbmcgb3V0IGEgcG9ja2V0IHdhdGNoIHRvIGNoZWNrIHRoZSB0aW1lLCBnbGFuY2luZyBhdCBNZXRh
-IFdhdGNoIGlzIG1vcmUgY29udmVuaWVudCB0aGFuIHB1bGxpbmcgeW91ciBwaG9uZSBvdXQgb2YgYSBw
-b2NrZXQgb3IgaGFuZGJhZyB0byB2aWV3IGFsZXJ0cywgbm90aWZpY2F0aW9ucywgYW5kIGNsb3VkLWJh
-c2VkIGluZm9ybWF0aW9uLgoKTW9yZSBpbmZvOiB3d3cubWV0YXdhdGNoLm9yZwoKTWV0YSBXYXRjaCwg
-THRkLgpEYWxsYXMsIFRleGFzIHwgRXNwb28sIEZpbmxhbmQKcGhvbmU6ICsxIDQ2OS0yNzgtTUVUQSAo
-NjM4MikKRW1haWw6IGluZm9AbWV0YXdhdGNoLm9yZw</bytes>
+							<bytes key="NS.bytes">TWV0YSBXYXRjaCBNYW5hZ2VyKE1XTSkgaXMgYSBkZW1vc3RyYXRpb24gYXBwIGZvciB0aGUgTWV0YSBX
+YXRjaCB3aGljaCBkZW1vc3RyYXRlcyB0aGUgY2FwYmlsaXR5IG9mIHRoZSBNZXRhIFdhdGNoIGNvbm5l
+Y3Rpbmcgd2l0aCBpUGhvbmUgNFMgdXNpbmcgQmx1ZXRvb3RoIExvdyBFbmVyZ3kuIAoKTWV0YSBXYXRj
+aCBpcyBhIHByaXZhdGVseS1oZWxkIGNvbXBhbnkgZm9jdXNpbmcgb24gcmVpbnZlbnRpbmcgdGhlIHdh
+dGNoIGFzIGEgc3R5bGlzaCBhbmQgcmVsZXZhbnQgbW9iaWxlIGFjY2Vzc29yeS4gCgpNZXRhIFdhdGNo
+IGRldmVsb3BtZW50IHN5c3RlbXMgYWxsb3cgZGV2ZWxvcGVycyB0byBxdWlja2x5IGFuZCBlYXNpbHkg
+ZXh0ZW5kIHRoZSBpbnRlcmZhY2VzIG9mIGRldmljZXMgYW5kIGFwcGxpY2F0aW9ucyB0byB0aGUgd3Jp
+c3QuIFRhcmdldCBtYXJrZXRzIGFuZCBhcHBsaWNhdGlvbnMgaW5jbHVkZTogcXVhbnRpZmllZCBzZWxm
+ICYgbW9iaWxlIGhlYWx0aDsgbWVzc2FnaW5nLCBhbGVydHMsIGFuZCBub3RpZmljYXRpb25zOyBjYXJy
+aWVyIHZhbHVlIGFkZGVkIHNlcnZpY2VzOyBuYXZpZ2F0aW9uICYgbG9jYXRpb24tYmFzZWQgc2Vydmlj
+ZXM7IG1vYmlsZSBhbmQgbXVzaWMgbGlmZXN0eWxlIGVuaGFuY2VtZW50LiAKCk1ldGEgV2F0Y2ggaXMg
+YmFzZWQgaW4gRGFsbGFzLCBUZXhhcyBhbmQgaGFzIGFuIFImRCBmYWNpbGl0eSBpbiBFc3BvbywgRmlu
+bGFuZC4KCk1ldGEgV2F0Y2ggaXMgYSBkZXZlbG9wZXItZnJpZW5kbHkgc21hcnR3YXRjaCB1c2VkIHRv
+IGhlaWdodGVuIHVzZXIgZW5nYWdlbWVudCBhbmQgZHJpdmUgYXBwIHVzYWdlLiAKCk1ldGEgV2F0Y2gs
+IHdoZW4gcGFpcmVkIHdpdGggaU9TICg0Uykgb3IgQW5kcm9pZC1iYXNlZCBzbWFydCBwaG9uZXMsIGVu
+YWJsZSBuZXcga2luZHMgb2YgZ2xhbmNlYWJsZSBpbnRlcmFjdGlvbnMuIEluIHRoZSBzYW1lIHdheSB0
+aGF0IGdsYW5jaW5nIGF0IGEgd3Jpc3R3YXRjaCBpcyBtb3JlIHNpbXBsZSB0aGFuIHB1bGxpbmcgb3V0
+IGEgcG9ja2V0IHdhdGNoIHRvIGNoZWNrIHRoZSB0aW1lLCBnbGFuY2luZyBhdCBNZXRhIFdhdGNoIGlz
+IG1vcmUgY29udmVuaWVudCB0aGFuIHB1bGxpbmcgeW91ciBwaG9uZSBvdXQgb2YgYSBwb2NrZXQgb3Ig
+aGFuZGJhZyB0byB2aWV3IGFsZXJ0cywgbm90aWZpY2F0aW9ucywgYW5kIGNsb3VkLWJhc2VkIGluZm9y
+bWF0aW9uLgoKTW9yZSBpbmZvOiB3d3cubWV0YXdhdGNoLm9yZwoKTWV0YSBXYXRjaCwgTHRkLgpEYWxs
+YXMsIFRleGFzIHwgRXNwb28sIEZpbmxhbmQKcGhvbmU6ICsxIDQ2OS0yNzgtTUVUQSAoNjM4MikKRW1h
+aWw6IGluZm9AbWV0YXdhdGNoLm9yZw</bytes>
 						</object>
 						<object class="NSColor" key="IBUITextColor">
 							<int key="NSColorSpace">3</int>
@@ -131,7 +135,7 @@ NjM4MikKRW1haWw6IGluZm9AbWV0YXdhdGNoLm9yZw</bytes>
 					<object class="IBUILabel" id="852313615">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{29, 44}, {280, 28}}</string>
+						<string key="NSFrame">{{29, 44}, {281, 28}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="347530108"/>
@@ -141,7 +145,7 @@ NjM4MikKRW1haWw6IGluZm9AbWV0YXdhdGNoLm9yZw</bytes>
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBUIText">About Meta Watch</string>
+						<string key="IBUIText">About Meta Watch Manager</string>
 						<object class="NSColor" key="IBUITextColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MSAxIDEAA</bytes>
@@ -150,15 +154,19 @@ NjM4MikKRW1haWw6IGluZm9AbWV0YXdhdGNoLm9yZw</bytes>
 							</object>
 						</object>
 						<nil key="IBUIHighlightedColor"/>
+						<object class="NSColor" key="IBUIShadowColor">
+							<int key="NSColorSpace">3</int>
+							<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
+						</object>
 						<int key="IBUIBaselineAdjustment">0</int>
 						<float key="IBUIMinimumFontSize">10</float>
 						<object class="IBUIFontDescription" key="IBUIFontDescription">
 							<int key="type">2</int>
-							<double key="pointSize">21</double>
+							<double key="pointSize">17</double>
 						</object>
 						<object class="NSFont" key="IBUIFont">
 							<string key="NSName">Helvetica-Bold</string>
-							<double key="NSSize">21</double>
+							<double key="NSSize">17</double>
 							<int key="NSfFlags">16</int>
 						</object>
 					</object>

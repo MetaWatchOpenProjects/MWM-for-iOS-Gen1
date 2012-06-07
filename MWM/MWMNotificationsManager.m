@@ -31,11 +31,19 @@
 #import "MWManager.h"
 #import "AppDelegate.h"
 
+@interface MWMNotificationsManager () 
+
+@property (nonatomic, strong) NSTimer *notifCalendarTimer;
+
+@end
+
 @implementation MWMNotificationsManager
+
+@synthesize notifCalendarTimer;
 
 static MWMNotificationsManager *sharedManager;
 
-#pragma mark - Notifications Enalbers
+#pragma mark - Calendar
 
 - (void) setNotificationsEnabled:(BOOL)enable {
     if (enable) {
@@ -44,6 +52,8 @@ static MWMNotificationsManager *sharedManager;
         [self enableTimeZoneSupport:[[prefs objectForKey:@"notifTimezone"] boolValue]];
     } else {
         [[NSNotificationCenter defaultCenter] removeObserver:self];
+        [notifCalendarTimer invalidate];
+        self.notifCalendarTimer = nil;
     }
     
 }
@@ -58,7 +68,6 @@ static MWMNotificationsManager *sharedManager;
 }
 
 - (void) storeChanged:(id)sender {
-    NSLog(@"NotificationManager detected calendar changes.");
     EKEventStore *eventStore = [[EKEventStore alloc] init];
     NSDate *startDate = [NSDate date];
     NSDate *endDate   = [NSDate distantFuture];
@@ -68,9 +77,15 @@ static MWMNotificationsManager *sharedManager;
     
     NSArray *newEventsArray = [[eventStore eventsMatchingPredicate:predicate] sortedArrayUsingSelector:@selector(compareStartDateWithEvent:)];
     if (newEventsArray.count > 0) {
+        
         EKEvent *nextEvent = [newEventsArray objectAtIndex:0];
-        NSString *textToDisplay = [NSString stringWithFormat:@"%@", nextEvent.title];
-        [NSTimer scheduledTimerWithTimeInterval:[nextEvent.startDate timeIntervalSinceDate:[NSDate date]] target:self selector:@selector(internalUpdate:) userInfo:textToDisplay repeats:NO];
+        NSDateFormatter *format = [[NSDateFormatter alloc] init];
+        [format setDateFormat:@"HH:mm"];
+        
+        
+        NSString *textToDisplay = [NSString stringWithFormat:@"%@\n \n%@", [format stringFromDate:nextEvent.startDate], nextEvent.title];
+        self.notifCalendarTimer = [NSTimer scheduledTimerWithTimeInterval:[nextEvent.startDate timeIntervalSinceDate:[NSDate date]] target:self selector:@selector(internalUpdate:) userInfo:textToDisplay repeats:NO];
+        NSLog(@"NotificationManager detected calendar changes. Post in:%f", [nextEvent.startDate timeIntervalSinceDate:[NSDate date]]);
     }
 }
 
@@ -78,7 +93,11 @@ static MWMNotificationsManager *sharedManager;
     UIImage *imageToSend = [AppDelegate imageForText:timer.userInfo];
     
     [[MWManager sharedManager] writeImage:[AppDelegate imageDataForCGImage:imageToSend.CGImage] forMode:kMODE_NOTIFICATION inRect:CGRectMake(0, (96 - imageToSend.size.height)*0.5, imageToSend.size.width, imageToSend.size.height) linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:YES buzzWhenDone:YES];
+    
+    self.notifCalendarTimer = nil;
 }
+
+#pragma mark - Timezone
 
 - (void) enableTimeZoneSupport:(BOOL)enable {
     if (enable) {
