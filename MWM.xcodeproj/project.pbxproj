@@ -43,12 +43,15 @@
 		275A00E6153EB4DB0096E977 /* handsfree.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 275A00E5153EB4DB0096E977 /* handsfree.jpeg */; };
 		275A00E8153EC6600096E977 /* idel.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 275A00E7153EC6600096E977 /* idel.bmp */; };
 		276A1B2C15512434007C77C7 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 276A1B2B15512434007C77C7 /* CoreBluetooth.framework */; };
+		278C944B1581464E00BD6256 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 278C944A1581464D00BD6256 /* icon.png */; };
 		279CDCFD1562B8FA00C9FA63 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CDCFC1562B8FA00C9FA63 /* MediaPlayer.framework */; };
 		27A71CD5156BC44D0025D784 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 27A71CD4156BC44D0025D784 /* LICENSE */; };
 		27CED4B21575392B00539874 /* setting@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27CED4B11575392B00539874 /* setting@2x.png */; };
 		27CED4B515753A5600539874 /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 27CED4B415753A5600539874 /* setting.png */; };
 		27CED4BE15753F1400539874 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CED4BC15753F1400539874 /* SettingsViewController.m */; };
 		27CED4BF15753F1400539874 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27CED4BD15753F1400539874 /* SettingsViewController.xib */; };
+		27DFF4051581474700FF7121 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27DFF4041581474700FF7121 /* Default@2x.png */; };
+		27DFF4071581474B00FF7121 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 27DFF4061581474B00FF7121 /* Default.png */; };
 		27E0F37C153ED04400D1C3F3 /* header-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 27E0F37A153ED04400D1C3F3 /* header-logo.png */; };
 		27E0F37D153ED04400D1C3F3 /* header-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27E0F37B153ED04400D1C3F3 /* header-logo@2x.png */; };
 		27E0F381153ED09300D1C3F3 /* RevolutionStamp transparent fade.png in Resources */ = {isa = PBXBuildFile; fileRef = 27E0F37F153ED09300D1C3F3 /* RevolutionStamp transparent fade.png */; };
@@ -140,6 +143,7 @@
 		275A00E5153EB4DB0096E977 /* handsfree.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = handsfree.jpeg; sourceTree = "<group>"; };
 		275A00E7153EC6600096E977 /* idel.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = idel.bmp; sourceTree = "<group>"; };
 		276A1B2B15512434007C77C7 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		278C944A1581464D00BD6256 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		279CDCFC1562B8FA00C9FA63 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		27A71CD4156BC44D0025D784 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		27CED4B11575392B00539874 /* setting@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setting@2x.png"; sourceTree = "<group>"; };
@@ -147,6 +151,8 @@
 		27CED4BB15753F1400539874 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		27CED4BC15753F1400539874 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		27CED4BD15753F1400539874 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
+		27DFF4041581474700FF7121 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../Default@2x.png"; sourceTree = "<group>"; };
+		27DFF4061581474B00FF7121 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
 		27E0F37A153ED04400D1C3F3 /* header-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "header-logo.png"; sourceTree = "<group>"; };
 		27E0F37B153ED04400D1C3F3 /* header-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "header-logo@2x.png"; sourceTree = "<group>"; };
 		27E0F37F153ED09300D1C3F3 /* RevolutionStamp transparent fade.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RevolutionStamp transparent fade.png"; sourceTree = "<group>"; };
@@ -328,11 +334,14 @@
 		275A00DC153EA9C60096E977 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				27DFF4061581474B00FF7121 /* Default.png */,
+				27DFF4041581474700FF7121 /* Default@2x.png */,
 				27CED4B11575392B00539874 /* setting@2x.png */,
 				27CED4B415753A5600539874 /* setting.png */,
 				271E82EB156EB9F400110EFA /* emptyface.png */,
 				271E82EE156EC2C600110EFA /* frame.png */,
 				27E2930915626D0A00E0DB78 /* icon@2x.png */,
+				278C944A1581464D00BD6256 /* icon.png */,
 				27E293141562793C00E0DB78 /* 1.bmp */,
 				27E293151562793C00E0DB78 /* 2.bmp */,
 				27E293161562793C00E0DB78 /* 3.bmp */,
@@ -570,6 +579,9 @@
 				274DA7CC15765C0200F864DE /* setting_icon@2x.jpg in Resources */,
 				2752BBEF157E1E9D0053FE77 /* TestViewController.xib in Resources */,
 				2752BBF4157E26900053FE77 /* AlarmViewController.xib in Resources */,
+				278C944B1581464E00BD6256 /* icon.png in Resources */,
+				27DFF4051581474700FF7121 /* Default@2x.png in Resources */,
+				27DFF4071581474B00FF7121 /* Default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -672,6 +684,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MWM/MWM-Prefix.pch";
 				INFOPLIST_FILE = "MWM/MWM-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/MWM/libMWManager\"",
@@ -688,6 +701,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MWM/MWM-Prefix.pch";
 				INFOPLIST_FILE = "MWM/MWM-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/MWM/libMWManager\"",

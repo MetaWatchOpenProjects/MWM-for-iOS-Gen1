@@ -222,6 +222,8 @@
         }
     }
     
+    row1Label.text = row2Label.text = row3Label.text = @"";
+    
     [self drawDisconnectedScreen];
     
     if (errorCode == DISCONNECTEDUNKNOWN ) {
