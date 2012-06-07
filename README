@@ -14,6 +14,3 @@ To contribute your code, you must please fill out and submit a contributor agree
 You can find this in the developer section of the metawatch.org website.
 
 Have fun!
-
-If you are developing other apps connecting with Meta Watch, consider using the class of MWManager 
-and implement delegates by yourself. The class of MWManager will be improved with the time.
