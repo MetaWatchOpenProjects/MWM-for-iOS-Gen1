@@ -42,7 +42,6 @@
 - (void) preparePresets {
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     if ([prefs objectForKey:@"watchLayout"] == nil) {
-        NSLog(@"eeee");
         NSDictionary *layoutDict = [NSDictionary dictionaryWithObjectsAndKeys:
                                     @"WidgetTime", @"03", 
                                     @"WidgetWeather", @"13", 
@@ -64,6 +63,12 @@
     }
     if ([prefs objectForKey:@"drawDashLines"] == nil) {
         [prefs setObject:[NSNumber numberWithBool:YES] forKey:@"drawDashLines"];
+    }
+    if ([prefs objectForKey:@"notifCalendar"] == nil) {
+        [prefs setObject:[NSNumber numberWithBool:YES] forKey:@"notifCalendar"];
+    }
+    if ([prefs objectForKey:@"notifTimezone"] == nil) {
+        [prefs setObject:[NSNumber numberWithBool:YES] forKey:@"notifTimezone"];
     }
     [prefs synchronize];
 }

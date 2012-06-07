@@ -41,8 +41,9 @@ static MWMNotificationsManager *sharedManager;
     if (enable) {
         NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
         [self setCalendarAlertEnabled:[[prefs objectForKey:@"notifCalendar"] boolValue]];
+        [self enableTimeZoneSupport:[[prefs objectForKey:@"notifTimezone"] boolValue]];
     } else {
-        [self setCalendarAlertEnabled:NO];
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
     }
     
 }
@@ -77,6 +78,18 @@ static MWMNotificationsManager *sharedManager;
     UIImage *imageToSend = [AppDelegate imageForText:timer.userInfo];
     
     [[MWManager sharedManager] writeImage:[AppDelegate imageDataForCGImage:imageToSend.CGImage] forMode:kMODE_NOTIFICATION inRect:CGRectMake(0, (96 - imageToSend.size.height)*0.5, imageToSend.size.width, imageToSend.size.height) linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:YES buzzWhenDone:YES];
+}
+
+- (void) enableTimeZoneSupport:(BOOL)enable {
+    if (enable) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(systemTimeZoneChanged) name:NSSystemTimeZoneDidChangeNotification object:nil];
+    } else {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSSystemTimeZoneDidChangeNotification object:nil];
+    }
+}
+
+- (void) systemTimeZoneChanged {
+    [[MWManager sharedManager] setWatchRTC];
 }
 
 #pragma mark - Singleton

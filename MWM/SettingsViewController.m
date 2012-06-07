@@ -46,6 +46,15 @@
 
 @synthesize mainTableView;
 
+- (void) notifTimezoneToggleValueChanged:(id)sender {
+    UISwitch *toggle = (UISwitch*)sender;
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    [prefs setObject:[NSNumber numberWithBool:toggle.isOn] forKey:@"notifTimezone"];
+    [prefs synchronize];
+    
+    [[MWMNotificationsManager sharedManager] enableTimeZoneSupport:toggle.isOn];
+}
+
 - (void) notifCalendarToggleValueChanged:(id)sender {
     UISwitch *toggle = (UISwitch*)sender;
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
@@ -98,7 +107,7 @@
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        return 3;
+        return 4;
     } else if (section == 1) {
         return 3;
     } else if (section == 2) {
@@ -161,11 +170,16 @@
             
             [toggleSwitch setOn:[[prefs objectForKey:@"autoReconnect"] boolValue]];
             [toggleSwitch addTarget:self action:@selector(autoReconnectToggleValueChanged:) forControlEvents:UIControlEventValueChanged];
-        } else {
+        } else if (indexPath.row == 2)  {
             cell.textLabel.text = @"Vibrate on Connect";
             
             [toggleSwitch setOn:[[prefs objectForKey:@"buzzOnConnect"] boolValue]];
             [toggleSwitch addTarget:self action:@selector(buzzOnConnectToggleValueChanged:) forControlEvents:UIControlEventValueChanged];
+        } else {
+            cell.textLabel.text = @"Timezone Support";
+            
+            [toggleSwitch setOn:[[prefs objectForKey:@"notifTimezone"] boolValue]];
+            [toggleSwitch addTarget:self action:@selector(notifTimezoneToggleValueChanged:) forControlEvents:UIControlEventValueChanged];
         }
     } else if (indexPath.section == 1) {
         if (indexPath.row == 0) {

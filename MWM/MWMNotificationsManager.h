@@ -37,6 +37,7 @@
 - (void) setNotificationsEnabled:(BOOL)enable;
 
 - (void) setCalendarAlertEnabled:(BOOL)enable;
+- (void) enableTimeZoneSupport:(BOOL)enable;
 
 
 
