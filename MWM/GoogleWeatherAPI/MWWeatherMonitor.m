@@ -59,7 +59,7 @@ static MWWeatherMonitor *sharedMonitor;
 // Use cordinates
 //http://www.google.com/ig/api?weather=,,,60167000,24955000 *1000000
 -(NSDictionary*)currentWeather {
-    NSURL *url =[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kKAWeatherBaseURL, self.city]];
+    NSURL *url =[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kKAWeatherBaseURL, [self.city stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
     
     NSError* error = nil;
     NSData* d = [NSData dataWithContentsOfURL:url options:NSDataReadingUncached error:&error];
