@@ -29,19 +29,13 @@
 #import "InfoViewController.h"
 
 @interface InfoViewController ()
-@property (nonatomic, strong) MPMusicPlayerController *musicPlayer;
 @end
 
 @implementation InfoViewController
 
-@synthesize musicPlayer;
 
 - (IBAction) doneBtnPressed:(id)sender {
     [self.presentingViewController dismissModalViewControllerAnimated:YES];
-}
-
-- (IBAction) playBtnPressed:(id)sender {
-    [self.musicPlayer skipToNextItem];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -49,7 +43,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
     }
     return self;
 }

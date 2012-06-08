@@ -99,7 +99,7 @@
 
 
 - (void) widget:(id)widget updatedWithError:(NSError*)error {
-    [[MWManager sharedManager] writeImage:[AppDelegate imageDataForCGImage:[widget previewRef]] forMode:kMODE_IDLE inRect:[widget preview].frame linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:NO buzzWhenDone:NO];
+    [[MWManager sharedManager] writeImage:[AppDelegate imageDataForCGImage:[widget previewRef]] forMode:kMODE_IDLE inRect:[widget preview].frame linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:NO buzzWhenDone:NO buzzRepeats:0];
 }
 
 #pragma mark - MWManagerProtocol
@@ -199,7 +199,7 @@
     barIndicatorView.sliderCanMoveVertically = YES;
     
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"buzzOnConnect"] boolValue]) {
-        [[MWManager sharedManager] setBuzz];
+        [[MWManager sharedManager] setBuzzWithRepeats:3];
     }
     
     [[MWManager sharedManager] setTimerWith:TIMERVALUE andID:0 andCounts:255]; 

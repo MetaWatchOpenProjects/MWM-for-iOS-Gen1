@@ -44,7 +44,6 @@
 		275A00E8153EC6600096E977 /* idel.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 275A00E7153EC6600096E977 /* idel.bmp */; };
 		276A1B2C15512434007C77C7 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 276A1B2B15512434007C77C7 /* CoreBluetooth.framework */; };
 		278C944B1581464E00BD6256 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 278C944A1581464D00BD6256 /* icon.png */; };
-		279CDCFD1562B8FA00C9FA63 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CDCFC1562B8FA00C9FA63 /* MediaPlayer.framework */; };
 		27A71CD5156BC44D0025D784 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 27A71CD4156BC44D0025D784 /* LICENSE */; };
 		27CED4B21575392B00539874 /* setting@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27CED4B11575392B00539874 /* setting@2x.png */; };
 		27CED4B515753A5600539874 /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 27CED4B415753A5600539874 /* setting.png */; };
@@ -208,7 +207,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				279CDCFD1562B8FA00C9FA63 /* MediaPlayer.framework in Frameworks */,
 				276A1B2C15512434007C77C7 /* CoreBluetooth.framework in Frameworks */,
 				27FDD0131546F7FC0013D099 /* EventKit.framework in Frameworks */,
 				275A00BA153EA9470096E977 /* UIKit.framework in Frameworks */,
@@ -691,6 +689,7 @@
 				);
 				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = iphoneos;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -708,6 +707,7 @@
 				);
 				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = iphoneos;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
