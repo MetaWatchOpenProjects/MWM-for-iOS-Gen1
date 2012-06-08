@@ -96,10 +96,16 @@ static CGFloat widgetHeight = 32;
     [self update:-1];
 }
 
+- (void) timeChanged:(id)sender {
+    NSLog(@"System time changed");
+    [self update:-1];
+}
+
 - (void) prepareToUpdate {
     [delegate widgetViewCreated:self];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeChanged:)
                                                  name:EKEventStoreChangedNotification object:eventStore];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(timeChanged:) name:UIApplicationSignificantTimeChangeNotification object:nil];
 }
 
 - (void) stopUpdate {

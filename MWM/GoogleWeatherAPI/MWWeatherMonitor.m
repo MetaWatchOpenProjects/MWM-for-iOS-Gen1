@@ -61,8 +61,18 @@ static MWWeatherMonitor *sharedMonitor;
 -(NSDictionary*)currentWeather {
     NSURL *url =[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kKAWeatherBaseURL, [self.city stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
     
+    if (url == nil) {
+        NSLog(@"invalid url");
+        return nil;
+    }
+    
     NSError* error = nil;
     NSData* d = [NSData dataWithContentsOfURL:url options:NSDataReadingUncached error:&error];
+    
+    if (d == nil) {
+        NSLog(@"no weather data");
+        return nil;
+    }
     
     NSString *dataString = [[NSString alloc]initWithData:d encoding:NSISOLatin1StringEncoding];
     NSData *data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
