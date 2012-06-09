@@ -206,8 +206,9 @@ static CGFloat widgetHeight = 32;
     NSDictionary *weather = [[MWWeatherMonitor sharedMonitor] weatherDict];
     NSString *condition = [weather objectForKey:@"condition"];
 
-    NSString *location = [weather objectForKey:@"postal_code"];
+    NSString *location = [weather objectForKey:@"city"];
     
+    NSLog(@"%@", [weather description]);
     if (useCelsius) {
         temp = [weather objectForKey:@"temp_c"];
         low = [weather objectForKey:@"low_c"];
@@ -241,7 +242,7 @@ static CGFloat widgetHeight = 32;
     }
     
     [condition drawInRect:CGRectMake(0, 3, 41, 14) withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentCenter];
-    [location drawInRect:CGRectMake(0, 16+7, 41, 7) withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentCenter];
+    [location drawInRect:CGRectMake(0, 17+2, 41, 14) withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentCenter];
     
     [weatherIcon drawInRect:CGRectMake(42, 4, 24, 24)];
     if (useCelsius) {
