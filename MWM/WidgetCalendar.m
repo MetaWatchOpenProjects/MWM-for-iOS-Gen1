@@ -91,21 +91,24 @@ static CGFloat widgetHeight = 32;
     [self update:-1];
 }
 
-- (void) storeChanged:(id)sender {
+- (void) storeChanged {
     NSLog(@"Calendar Changes Detected");
     [self update:-1];
 }
 
-- (void) timeChanged:(id)sender {
+- (void) timeChanged {
     NSLog(@"System time changed");
     [self update:-1];
 }
 
 - (void) prepareToUpdate {
     [delegate widgetViewCreated:self];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeChanged:)
-                                                 name:EKEventStoreChangedNotification object:eventStore];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(timeChanged:) name:UIApplicationSignificantTimeChangeNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeChanged)
+                                                 name:EKEventStoreChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(timeChanged) name:UIApplicationSignificantTimeChangeNotification object:nil];
 }
 
 - (void) stopUpdate {
@@ -129,7 +132,16 @@ static CGFloat widgetHeight = 32;
                                                                      endDate:endDate
                                                                    calendars:nil];
         
-        NSArray *newEventsArray = [[eventStore eventsMatchingPredicate:predicate] sortedArrayUsingSelector:@selector(compareStartDateWithEvent:)];
+        NSMutableArray *newEventsArray = [NSMutableArray array];
+        
+        for (EKEvent *event in [eventStore eventsMatchingPredicate:predicate]) {
+            if ([event.startDate timeIntervalSinceNow] > 0) {
+                [newEventsArray addObject:event];
+            }
+        }
+        
+        [newEventsArray sortUsingSelector:@selector(compareStartDateWithEvent:)];
+        
         if (showMode == 0) {
             [self updateModeNext:newEventsArray];
         } else if (showMode == 1) {

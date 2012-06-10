@@ -35,11 +35,13 @@
 
 @property (nonatomic, strong) NSTimer *notifCalendarTimer;
 
+@property (nonatomic, strong) EKEventStore *eventStore;
+
 @end
 
 @implementation MWMNotificationsManager
 
-@synthesize notifCalendarTimer;
+@synthesize notifCalendarTimer, eventStore;
 
 static MWMNotificationsManager *sharedManager;
 
@@ -60,22 +62,38 @@ static MWMNotificationsManager *sharedManager;
 
 - (void) setCalendarAlertEnabled:(BOOL)enable {
     if (enable) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:EKEventStoreChangedNotification object:eventStore];
+        self.eventStore= [[EKEventStore alloc] init];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeChanged:)
+                                                     name:EKEventStoreChangedNotification object:eventStore];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:EKEventStoreChangedNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeChanged)
                                                      name:EKEventStoreChangedNotification object:nil];
+        
+        [self storeChanged];
     } else {
         [[NSNotificationCenter defaultCenter] removeObserver:self name:EKEventStoreChangedNotification object:nil];
     }
 }
 
-- (void) storeChanged:(id)sender {
-    EKEventStore *eventStore = [[EKEventStore alloc] init];
+- (void) storeChanged {
+    [self.eventStore refreshSourcesIfNecessary];
     NSDate *startDate = [NSDate date];
     NSDate *endDate   = [NSDate distantFuture];
     NSPredicate *predicate = [eventStore predicateForEventsWithStartDate:startDate
                                                                  endDate:endDate
                                                                calendars:nil];
     
-    NSArray *newEventsArray = [[eventStore eventsMatchingPredicate:predicate] sortedArrayUsingSelector:@selector(compareStartDateWithEvent:)];
+    NSMutableArray *newEventsArray = [NSMutableArray array];
+    
+    for (EKEvent *event in [eventStore eventsMatchingPredicate:predicate]) {
+        if ([event.startDate timeIntervalSinceNow] > 0) {
+            [newEventsArray addObject:event];
+        }
+    }
+    
+    [newEventsArray sortUsingSelector:@selector(compareStartDateWithEvent:)];
+
     if (newEventsArray.count > 0) {
         
         EKEvent *nextEvent = [newEventsArray objectAtIndex:0];
@@ -101,6 +119,7 @@ static MWMNotificationsManager *sharedManager;
 
 - (void) enableTimeZoneSupport:(BOOL)enable {
     if (enable) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSSystemTimeZoneDidChangeNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(systemTimeZoneChanged) name:NSSystemTimeZoneDidChangeNotification object:nil];
     } else {
         [[NSNotificationCenter defaultCenter] removeObserver:self name:NSSystemTimeZoneDidChangeNotification object:nil];
@@ -114,10 +133,14 @@ static MWMNotificationsManager *sharedManager;
 #pragma mark - Singleton
 
 + (MWMNotificationsManager *) sharedManager {
-    if (sharedManager == nil) {
-        sharedManager = [[super allocWithZone:NULL] init];
-    }
-    return sharedManager;
+    @synchronized([MWMNotificationsManager class])
+	{
+		if (sharedManager == nil) {
+            sharedManager = [[super allocWithZone:NULL] init];
+        }
+        return sharedManager;
+	}
+    
 }
 
 - (id)init
@@ -126,10 +149,15 @@ static MWMNotificationsManager *sharedManager;
     if (self) {
         // Initialization code here.
         NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+        
         if ([prefs objectForKey:@"notifCalendar"] == nil) {
             [prefs setValue:[NSNumber numberWithBool:YES] forKeyPath:@"notifCalendar"];
-            [prefs synchronize];
         }
+        if ([prefs objectForKey:@"notifTimezone"] == nil) {
+            [prefs setValue:[NSNumber numberWithBool:YES] forKeyPath:@"notifTimezone"];
+        }
+        
+        [prefs synchronize];
 
     }
     

@@ -81,7 +81,6 @@
 		27E2931A1562793C00E0DB78 /* 3.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 27E293161562793C00E0DB78 /* 3.bmp */; };
 		27E2931B1562793C00E0DB78 /* 4.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 27E293171562793C00E0DB78 /* 4.bmp */; };
 		27EB0BAE157F67F900AE2186 /* MWMNotificationsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EB0BAD157F67F900AE2186 /* MWMNotificationsManager.m */; };
-		27F2B46E156E6CB1005738E8 /* MWMWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F2B46D156E6CB1005738E8 /* MWMWidget.m */; };
 		27F2B472156E732E005738E8 /* WidgetPhoneStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F2B471156E732E005738E8 /* WidgetPhoneStatus.m */; };
 		27F2B474156E734B005738E8 /* WidgetPhoneStatusSettingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27F2B473156E734B005738E8 /* WidgetPhoneStatusSettingView.xib */; };
 		27F2B47B156E77AF005738E8 /* WidgetsSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F2B479156E77AE005738E8 /* WidgetsSelectionViewController.m */; };
@@ -185,7 +184,6 @@
 		27EB0BAC157F67F900AE2186 /* MWMNotificationsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWMNotificationsManager.h; sourceTree = "<group>"; };
 		27EB0BAD157F67F900AE2186 /* MWMNotificationsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWMNotificationsManager.m; sourceTree = "<group>"; };
 		27F2B46C156E6CB1005738E8 /* MWMWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MWMWidget.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		27F2B46D156E6CB1005738E8 /* MWMWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MWMWidget.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		27F2B470156E732E005738E8 /* WidgetPhoneStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = WidgetPhoneStatus.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		27F2B471156E732E005738E8 /* WidgetPhoneStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = WidgetPhoneStatus.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		27F2B473156E734B005738E8 /* WidgetPhoneStatusSettingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WidgetPhoneStatusSettingView.xib; sourceTree = "<group>"; };
@@ -458,7 +456,6 @@
 			children = (
 				270ECAA6156E62C800ECCCED /* MWMWidgetDelegate.h */,
 				27F2B46C156E6CB1005738E8 /* MWMWidget.h */,
-				27F2B46D156E6CB1005738E8 /* MWMWidget.m */,
 				270ECAA4156E4ED200ECCCED /* WidgetPhoneStatus */,
 				27E2930D15626DED00E0DB78 /* WidgetTime */,
 				27E2930E15626DF900E0DB78 /* WidgetWeather */,
@@ -599,7 +596,6 @@
 				27F7CE691541A95900C66158 /* WidgetWeather.m in Sources */,
 				27FDD0111546CAEA0013D099 /* WidgetTime.m in Sources */,
 				27FDD0161546F8110013D099 /* WidgetCalendar.m in Sources */,
-				27F2B46E156E6CB1005738E8 /* MWMWidget.m in Sources */,
 				27F2B47B156E77AF005738E8 /* WidgetsSelectionViewController.m in Sources */,
 				27CED4BE15753F1400539874 /* SettingsViewController.m in Sources */,
 				274DA7C215764AC400F864DE /* InfoViewController.m in Sources */,
