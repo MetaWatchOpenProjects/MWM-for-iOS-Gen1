@@ -133,7 +133,7 @@ static CGFloat widgetHeight = 32;
         if (showMode == 0) {
             [self updateModeNext:newEventsArray];
         } else if (showMode == 1) {
-            [self updateModeToday:newEventsArray];
+            [self updateModeNextThree:newEventsArray];
         }
         
         if (newEventsArray.count > 0) {
@@ -242,7 +242,7 @@ static CGFloat widgetHeight = 32;
     
 }
 
-- (void) updateModeToday:(NSArray*)events {
+- (void) updateModeNextThree:(NSArray*)events {
     if (events.count == 0) {
         UIFont *font = [UIFont fontWithName:@"MetaWatch Small caps 8pt" size:8];   
         //UIFont *largeFont = [UIFont fontWithName:@"MetaWatch Large 16pt" size:16];
@@ -297,14 +297,15 @@ static CGFloat widgetHeight = 32;
     CGContextSetFillColorWithColor(ctx, [UIColor whiteColor].CGColor);
     CGContextFillRect(ctx, CGRectMake(0, 0, widgetWidth, widgetHeight));
     
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"dd/MM"];
+    NSString *formatString = [NSDateFormatter dateFormatFromTemplate:@"ddMM" options:0 locale:[NSLocale currentLocale]];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:formatString];
     
     CGContextSetFillColorWithColor(ctx, [UIColor blackColor].CGColor);
     NSInteger currentHeight = 4;
     for (int i = 0; i < [events count]; i++) {
         EKEvent *currentEvent = [events objectAtIndex:i];
-        NSString *drawingString = [NSString stringWithFormat:@"%@ %@", [formatter stringFromDate:currentEvent.startDate], currentEvent.title];
+        NSString *drawingString = [NSString stringWithFormat:@"%@ %@", [dateFormatter stringFromDate:currentEvent.startDate], currentEvent.title];
         [drawingString drawInRect:CGRectMake(3, currentHeight, 90, 5) withFont:font lineBreakMode:UILineBreakModeCharacterWrap alignment:UITextAlignmentLeft];
         currentHeight = currentHeight + 9; // font is 5
         if (i == 2) {
