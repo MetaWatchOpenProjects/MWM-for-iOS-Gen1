@@ -283,11 +283,11 @@
     rightBarBtn.width = 30;
     self.navigationItem.rightBarButtonItem = rightBarBtn;
     
-    UIBarButtonItem *leftBarBtn = [[UIBarButtonItem alloc] initWithTitle:@"Change"
-                                                                    style:UIBarButtonItemStyleBordered
-                                                                   target:self
-                                                                   action:@selector(leftBarBtnPressed:)]; 
-    self.navigationItem.leftBarButtonItem = leftBarBtn;
+//    UIBarButtonItem *leftBarBtn = [[UIBarButtonItem alloc] initWithTitle:@"Change"
+//                                                                    style:UIBarButtonItemStyleBordered
+//                                                                   target:self
+//                                                                   action:@selector(leftBarBtnPressed:)]; 
+//    self.navigationItem.leftBarButtonItem = leftBarBtn;
     
     self.appDelegate = [UIApplication sharedApplication].delegate;
     
