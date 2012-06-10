@@ -93,7 +93,9 @@ static MWMNotificationsManager *sharedManager;
     }
     
     [newEventsArray sortUsingSelector:@selector(compareStartDateWithEvent:)];
-
+    
+    [self.notifCalendarTimer invalidate];
+    
     if (newEventsArray.count > 0) {
         
         EKEvent *nextEvent = [newEventsArray objectAtIndex:0];
@@ -103,7 +105,7 @@ static MWMNotificationsManager *sharedManager;
         
         NSString *textToDisplay = [NSString stringWithFormat:@"%@\n \n%@", [format stringFromDate:nextEvent.startDate], nextEvent.title];
         self.notifCalendarTimer = [NSTimer scheduledTimerWithTimeInterval:[nextEvent.startDate timeIntervalSinceDate:[NSDate date]] target:self selector:@selector(internalUpdate:) userInfo:textToDisplay repeats:NO];
-        NSLog(@"NotificationManager detected calendar changes. Post in:%f", [nextEvent.startDate timeIntervalSinceDate:[NSDate date]]);
+        NSLog(@"NotificationManager detected calendar changes.\nSend notification in:%f", [nextEvent.startDate timeIntervalSinceDate:[NSDate date]]);
     }
 }
 
