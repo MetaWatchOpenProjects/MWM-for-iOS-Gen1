@@ -125,6 +125,7 @@ static CGFloat widgetHeight = 32;
 }
 
 - (void) stopUpdate {
+    
 }
 
 - (void) update:(NSInteger)timestamp {
@@ -136,11 +137,15 @@ static CGFloat widgetHeight = 32;
         if ([[MWWeatherMonitor sharedMonitor] currentWeather]) {
             received = YES;
             [self drawWeather];
+            [delegate widget:self updatedWithError:nil];
         } else {
-            [self drawNullWeather];
+            if (received == NO) {
+                [self drawNullWeather];
+                [delegate widget:self updatedWithError:nil];
+            }
         }
         
-        [delegate widget:self updatedWithError:nil];
+        
     }
     if (timestamp < 0) {
         updatedTimestamp = (NSInteger)[NSDate timeIntervalSinceReferenceDate];
