@@ -71,7 +71,8 @@
 
 - (void)leftBarBtnPressed:(id)sender {
     NSLog(@"leftBarBtnPressed");
-    [[MWManager sharedManager] setButton:kBUTTON_A atMode:kMODE_IDLE forType:kBUTTON_TYPE_IMMEDIATE withCallbackMsg:0];
+
+    [[MWManager sharedManager] updateDisplay:kMODE_NOTIFICATION];
     //[NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(test) userInfo:nil repeats:NO];
     //[[MWManager sharedManager] getDeviceType];
 }
