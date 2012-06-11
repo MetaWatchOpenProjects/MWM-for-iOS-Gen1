@@ -229,6 +229,10 @@
         }
     }
     
+    for (int i = 0; i < liveWidgets.count; i++) {
+        [liveWidgets replaceObjectAtIndex:i withObject:[NSNull null]];
+    }
+    
     row1Label.text = row2Label.text = row3Label.text = @"";
     
     [self drawDisconnectedScreen];
