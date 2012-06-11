@@ -87,7 +87,7 @@
 #define PIXELS_PER_LINE 96
 #define BYTES_PER_LINE PIXELS_PER_LINE / 8
 
-// Macro for disconnect:
+// Macro for disconnect error code:
 #define DISCONNECTEDUNKNOWN 201
 #define DISCONNECTEDBYUSER 202
 #define DISCONNECTEDBY8882 203
@@ -114,6 +114,14 @@
  *
  */
 @property (nonatomic) NSInteger statusCode;
+
+/*!
+ *  @property currentAppModeIdentifier
+ *
+ *  @discussion The identifer of the app which is currently using the application mode.
+ *
+ */
+@property (nonatomic, strong) NSString *currentAppModeIdentifier;
 
 /*!
  *  @method sharedManager
@@ -153,6 +161,30 @@
 - (void) disconnect:(NSInteger)errorCode;
 
 /*!
+ *  @method setWatchUse12H:
+ *
+ *  @discussion Set the watch to use 12h.
+ *
+ */
+- (void) setWatchUse12H:(BOOL)use12H;
+
+/*!
+ *  @method setWatchShowSec:
+ *
+ *  @discussion Set the watch show seconds
+ *
+ */
+- (void) setWatchShowSec:(BOOL)showSec;
+
+/*!
+ *  @method setWatchShowMonthFirst:
+ *
+ *  @discussion Set the watch show month first
+ *
+ */
+- (void) setWatchShowMonthFirst:(BOOL)monthFirst;
+
+/*!
  *  @method setWatchRTC
  *
  *  @discussion Set the real time clock of the watch. Invoked automatically when watch connected.
@@ -161,7 +193,7 @@
 - (void) setWatchRTC;
 
 /*!
- *  @method writeImage:forMode:inRect:linesPerMessage:shouldLoadTemplate:buzzWhenDone:
+ *  @method writeImage:forMode:inRect:linesPerMessage:shouldLoadTemplate:buzzWhenDone:buzzRepeats:
  *  @param imgData Bitmap data for image, use imageDataForCGImage to create.
  *  @param mode The mode of the image should be displayed at.
  *  @param rect The y cordinate will be used to determine the start line of the data. Other properties not used yet.
@@ -240,6 +272,14 @@
  */
 - (void) removeTimer:(NSUInteger)idInteger;
 
+/*!
+ *  @method setButton:atMode:forType:withCallbackMsg:
+ *
+ *  @discussion Not in use.
+ *
+ */
+- (void) setButton:(unsigned char)btnIndex atMode:(unsigned char)mode forType:(unsigned char)type withCallbackMsg:(unsigned char)msg;
+
 @end
 
 /*!
@@ -286,5 +326,13 @@
  *
  */
 - (void) MWMCheckEvent:(NSTimeInterval)timestamp;
+
+/*!
+ *  @method MWMBtn:atMode:pressedForType:withMsg:
+ *
+ *  @discussion Not in use.
+ *
+ */
+- (void) MWMBtn:(unsigned char)btnIndex atMode:(unsigned char)mode pressedForType:(unsigned char)type withMsg:(unsigned char)msg;
 
 @end

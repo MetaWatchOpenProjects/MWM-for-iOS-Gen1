@@ -28,6 +28,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MWMWidgetDelegate.h"
+#import "MWManager.h"
 
 @interface WidgetTime : NSObject
 
@@ -47,6 +48,9 @@
 @property (nonatomic, strong) UILabel *timeLabel;
 @property (nonatomic, strong) UILabel *dateLabel;
 @property (nonatomic, strong) NSTimer *watchTimer;
+@property (nonatomic) BOOL use12H;
+@property (nonatomic) BOOL showSec;
+@property (nonatomic) BOOL monthFirst;
 
 - (void) update:(NSInteger)timestamp;
 - (void) prepareToUpdate;

@@ -70,7 +70,9 @@
 }
 
 - (void)leftBarBtnPressed:(id)sender {
-    [[MWMNotificationsManager sharedManager] setCalendarAlertEnabled:YES];
+    NSLog(@"leftBarBtnPressed");
+    [[MWManager sharedManager] setButton:kBUTTON_A atMode:kMODE_IDLE forType:kBUTTON_TYPE_IMMEDIATE withCallbackMsg:0];
+    //[NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(test) userInfo:nil repeats:NO];
     //[[MWManager sharedManager] getDeviceType];
 }
 
@@ -127,6 +129,10 @@
             [widget update:timestamp];
         }
     }
+}
+
+- (void) MWMBtn:(unsigned char)btnIndex atMode:(unsigned char)mode pressedForType:(unsigned char)type withMsg:(unsigned char)msg {
+    NSLog(@"btn pressed:%x mode:%x, type:%x, msg:%x", btnIndex, mode, type, msg);
 }
 
 #pragma mark - DragSliderView Delegate
@@ -283,11 +289,11 @@
     rightBarBtn.width = 30;
     self.navigationItem.rightBarButtonItem = rightBarBtn;
     
-//    UIBarButtonItem *leftBarBtn = [[UIBarButtonItem alloc] initWithTitle:@"Change"
-//                                                                    style:UIBarButtonItemStyleBordered
-//                                                                   target:self
-//                                                                   action:@selector(leftBarBtnPressed:)]; 
-//    self.navigationItem.leftBarButtonItem = leftBarBtn;
+    UIBarButtonItem *leftBarBtn = [[UIBarButtonItem alloc] initWithTitle:@"Test"
+                                                                    style:UIBarButtonItemStyleBordered
+                                                                   target:self
+                                                                   action:@selector(leftBarBtnPressed:)]; 
+    self.navigationItem.leftBarButtonItem = leftBarBtn;
     
     self.appDelegate = [UIApplication sharedApplication].delegate;
     
