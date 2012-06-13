@@ -103,7 +103,7 @@ static MWWeatherMonitor *sharedMonitor;
 }
 
 -(void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict {
-    NSLog(@"element: %@ %@",elementName, attributeDict);
+    //NSLog(@"element: %@ %@",elementName, attributeDict);
     if ([elementName isEqualToString:@"forecast_conditions"]) {
         parserIndent++;
     }

@@ -106,6 +106,7 @@ static CGFloat widgetHeight = 30;
     UISwitch *segCtrl = (UISwitch*)sender;
     showSec = segCtrl.isOn;
     [[MWManager sharedManager] setWatchShowSec:showSec];
+    [[MWManager sharedManager] setWatchRTC];
     [self saveData];
     //[delegate widget:self updatedWithError:nil];
 }
@@ -118,6 +119,7 @@ static CGFloat widgetHeight = 30;
         use12H = NO;
     }
     [[MWManager sharedManager] setWatchUse12H:use12H];
+    [[MWManager sharedManager] setWatchRTC];
     [self saveData];
 }
 
@@ -129,6 +131,7 @@ static CGFloat widgetHeight = 30;
         monthFirst = NO;
     }
     [[MWManager sharedManager] setWatchShowMonthFirst:monthFirst];
+    [[MWManager sharedManager] setWatchRTC];
     [self saveData];
 }
 
@@ -137,6 +140,7 @@ static CGFloat widgetHeight = 30;
     [[MWManager sharedManager] setWatchShowMonthFirst:use12H];
     [[MWManager sharedManager] setWatchShowSec:showSec];
     [[MWManager sharedManager] setWatchShowMonthFirst:monthFirst];
+    [[MWManager sharedManager] setWatchRTC];
 }
 
 - (void) update:(NSInteger)timestamp {
