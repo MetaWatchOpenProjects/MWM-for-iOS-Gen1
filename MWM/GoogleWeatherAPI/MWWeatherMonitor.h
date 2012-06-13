@@ -40,5 +40,6 @@
 
 @property (nonatomic, retain) NSString *city;
 @property (nonatomic, retain) NSMutableDictionary *weatherDict;
+@property (nonatomic) NSInteger parserIndent;
 
 @end

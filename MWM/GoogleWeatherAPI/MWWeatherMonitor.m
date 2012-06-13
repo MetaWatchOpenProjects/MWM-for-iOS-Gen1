@@ -29,7 +29,7 @@
 #import "MWWeatherMonitor.h"
 
 @implementation MWWeatherMonitor
-@synthesize weatherDict,city;
+@synthesize weatherDict, city, parserIndent;
 
 static MWWeatherMonitor *sharedMonitor;
 
@@ -78,7 +78,6 @@ static MWWeatherMonitor *sharedMonitor;
     NSData *data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
     [dataString release];
     
-    
     if (error) {
         NSLog(@"no weather data");
         return nil;
@@ -89,6 +88,7 @@ static MWWeatherMonitor *sharedMonitor;
     [parser setShouldResolveExternalEntities:YES];
     [parser setShouldReportNamespacePrefixes:YES];
     [parser setDelegate:self];
+    parserIndent = 0;
     [parser parse];
       
     [parser release];
@@ -103,7 +103,13 @@ static MWWeatherMonitor *sharedMonitor;
 }
 
 -(void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict {
-    //  NSLog(@"element: %@ %@",elementName, attributeDict);
+    NSLog(@"element: %@ %@",elementName, attributeDict);
+    if ([elementName isEqualToString:@"forecast_conditions"]) {
+        parserIndent++;
+    }
+    if (parserIndent > 1) {
+        [parser abortParsing];
+    }
      id obj = [attributeDict objectForKey:@"data"];
     if (obj) {
         [self.weatherDict setObject:obj forKey:elementName];
