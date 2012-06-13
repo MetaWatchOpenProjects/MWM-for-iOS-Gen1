@@ -177,15 +177,15 @@ static CGFloat widgetHeight = 30;
         timeLabel.text = theTime;
         dateLabel.text = @"";
     } else {
-        [timeFormat setDateFormat:@"hh:mm"];
-        
         if (use12H) {
+            [timeFormat setDateFormat:@"hh:mm"];
             if (monthFirst) {
                 [dateFormat setDateFormat:@"a'\n'EEE'\n'MM/dd"];
             } else {
                 [dateFormat setDateFormat:@"a'\n'EEE'\n'dd/MM"];
             }
         } else {
+            [timeFormat setDateFormat:@"HH:mm"];
             if (monthFirst) {
                 [dateFormat setDateFormat:@"EEE'\n'MM/dd'\n'yyyy"];
             } else {
