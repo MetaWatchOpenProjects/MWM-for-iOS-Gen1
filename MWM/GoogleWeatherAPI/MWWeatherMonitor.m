@@ -104,17 +104,12 @@ static MWWeatherMonitor *sharedMonitor;
 
 -(void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict {
     //NSLog(@"element: %@ %@",elementName, attributeDict);
-    if ([elementName isEqualToString:@"forecast_conditions"]) {
-        parserIndent++;
+    if ([weatherDict objectForKey:elementName] == nil) {
+        id obj = [attributeDict objectForKey:@"data"];
+        if (obj) {
+            [self.weatherDict setObject:obj forKey:elementName];
+        }
     }
-    if (parserIndent > 1) {
-        [parser abortParsing];
-    }
-     id obj = [attributeDict objectForKey:@"data"];
-    if (obj) {
-        [self.weatherDict setObject:obj forKey:elementName];
-    }
-    
 }
 
 

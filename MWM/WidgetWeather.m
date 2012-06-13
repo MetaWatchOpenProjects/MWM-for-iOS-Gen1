@@ -133,6 +133,9 @@ static CGFloat widgetHeight = 32;
         return;
     }
     if (timestamp < 0 || timestamp - updatedTimestamp >= updateIntvl) {
+        UILocalNotification *notif = [[UILocalNotification alloc] init];
+        notif.alertBody = @"weather update";
+        [[UIApplication sharedApplication] presentLocalNotificationNow:notif];
         updatedTimestamp = timestamp;
         if ([[MWWeatherMonitor sharedMonitor] currentWeather]) {
             received = YES;
@@ -240,8 +243,10 @@ static CGFloat widgetHeight = 32;
         weatherIcon=[UIImage imageNamed:@"weather_rain.bmp"];
     }else if ([condition isEqualToString:@"Chance of Rain"]) {
         weatherIcon=[UIImage imageNamed:@"weather_rain.bmp"];
+    }else if ([condition isEqualToString:@"Light rain"]) {
+        weatherIcon=[UIImage imageNamed:@"weather_rain.bmp"];
     } else {
-        NSLog(@"unknown weather");
+        NSLog(@"unknown weather:%@", condition);
         weatherIcon=[UIImage imageNamed:@"weather_sunny.bmp"];
     }
     
