@@ -133,9 +133,6 @@ static CGFloat widgetHeight = 32;
         return;
     }
     if (timestamp < 0 || timestamp - updatedTimestamp >= updateIntvl) {
-        UILocalNotification *notif = [[UILocalNotification alloc] init];
-        notif.alertBody = @"weather update";
-        [[UIApplication sharedApplication] presentLocalNotificationNow:notif];
         updatedTimestamp = timestamp;
         if ([[MWWeatherMonitor sharedMonitor] currentWeather]) {
             received = YES;
@@ -227,7 +224,7 @@ static CGFloat widgetHeight = 32;
     }
     
     
-    NSLog(@"%@, %@, %@, %@", condition, low, high, temp);
+    NSLog(@"%@,%@, %@, %@, %@", location, condition, low, high, temp);
     UIImage *weatherIcon = nil;
     if ([condition isEqualToString:@"Clear"]) {
         weatherIcon=[UIImage imageNamed:@"weather_sunny.bmp"];
