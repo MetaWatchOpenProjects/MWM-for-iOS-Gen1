@@ -39,6 +39,8 @@
 - (void) setCalendarAlertEnabled:(BOOL)enable;
 - (void) enableTimeZoneSupport:(BOOL)enable;
 
+- (void) update:(NSInteger)timestamp;
+
 
 
 @end

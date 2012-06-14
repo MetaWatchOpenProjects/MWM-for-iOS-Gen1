@@ -73,8 +73,6 @@
     NSLog(@"leftBarBtnPressed");
 
     [[MWManager sharedManager] updateDisplay:kMODE_NOTIFICATION];
-    //[NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(test) userInfo:nil repeats:NO];
-    //[[MWManager sharedManager] getDeviceType];
 }
 
 - (IBAction) infoBtnPressed:(id)sender {
@@ -118,17 +116,7 @@
     [self watchDisconnected:err.code];
 }
 
-- (void) MWMDidDiscoveredWritePort:(CBPeripheral *)bleDevice {
-    // Save
-    NSUserDefaults *perfs = [NSUserDefaults standardUserDefaults];
-    if ([[perfs objectForKey:@"rememberOnConnect"] boolValue]) {
-        CFStringRef string = CFUUIDCreateString(NULL, bleDevice.UUID);
-        NSString *uuidString = (__bridge_transfer NSString*)(string);
-        NSLog(@"Saving:%@", uuidString);
-        [perfs setValue:uuidString forKey:@"savedUUID"];
-        [perfs synchronize];
-    }
-    
+- (void) MWMDidDiscoveredWritePort {
     [self watchConnected];
 }
 
@@ -140,6 +128,7 @@
             [widget update:timestamp];
         }
     }
+    [[MWMNotificationsManager sharedManager] update:timestamp];
 }
 
 - (void) MWMBtn:(unsigned char)btnIndex atMode:(unsigned char)mode pressedForType:(unsigned char)type withMsg:(unsigned char)msg {

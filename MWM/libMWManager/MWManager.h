@@ -309,7 +309,7 @@
  *  @discussion Invoked when the watch is fully connected and ready to be used.
  *
  */
-- (void) MWMDidDiscoveredWritePort:(CBPeripheral*)bleDevice;
+- (void) MWMDidDiscoveredWritePort;
 
 /*!
  *  @method MWM:didDisconnectPeripheral:withError:

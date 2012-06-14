@@ -56,6 +56,6 @@
 @property (nonatomic, strong) NSArray *eventsArray;
 @property (nonatomic, strong) EKEventStore *eventStore;
 @property (nonatomic, strong) NSTimer *internalUpdateTimer;
-
+@property (nonatomic) NSInteger nextUpdateTimestamp;
 
 @end

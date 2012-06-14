@@ -32,7 +32,7 @@
 
 @synthesize preview, updateIntvl, updatedTimestamp, settingView, widgetSize, widgetID, widgetName, delegate, previewRef;
 
-@synthesize eventsArray, nextEvent, showMode, eventStore, internalUpdateTimer;
+@synthesize eventsArray, nextEvent, showMode, eventStore, internalUpdateTimer, nextUpdateTimestamp;
 
 static NSInteger widget = 10002;
 static CGFloat widgetWidth = 96;
@@ -53,6 +53,7 @@ static CGFloat widgetHeight = 32;
         showMode = 0;
         updateIntvl = -1;
         updatedTimestamp = 0;
+        nextUpdateTimestamp = -1;
         
         eventStore = [[EKEventStore alloc] init];
         
@@ -116,6 +117,12 @@ static CGFloat widgetHeight = 32;
 }
 
 - (void) update:(NSInteger)timestamp {
+    if (timestamp > nextUpdateTimestamp && nextUpdateTimestamp > 0) {
+        [self internalUpdate:nil];
+        nextUpdateTimestamp = -1;
+        return;
+    }
+    
     if (updateIntvl < 0 && timestamp > 0) {
         return;
     }
@@ -149,8 +156,8 @@ static CGFloat widgetHeight = 32;
         }
         
         if (newEventsArray.count > 0) {
-            NSLog(@"Next internal update in:%f", [nextEvent.endDate timeIntervalSinceDate:[NSDate date]]+10);
-            self.internalUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:[nextEvent.endDate timeIntervalSinceDate:[NSDate date]]+10 target:self selector:@selector(internalUpdate:) userInfo:nil repeats:NO];
+            nextUpdateTimestamp = [nextEvent.startDate timeIntervalSinceReferenceDate] + 10;
+            NSLog(@"Next internal update in:%d", nextUpdateTimestamp);
         }
         
         self.eventsArray = newEventsArray;

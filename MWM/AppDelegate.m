@@ -128,8 +128,12 @@
 }
 
 - (BOOL) application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    NSLog(@"%@", url);
-    return YES;
+    if ([[url scheme] isEqualToString:@"mwm"]) {
+        NSString *taskName = [url query];
+        NSLog(@"%@", taskName);
+        return YES;
+    }
+    return NO;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

@@ -223,7 +223,9 @@ static CGFloat widgetHeight = 32;
         high = [weather objectForKey:@"high"];
     }
     
-    
+    UILocalNotification *notif = [[UILocalNotification alloc] init];
+    notif.alertBody = [NSString stringWithFormat:@"%@,%@, %@, %@, %@", location, condition, low, high, temp];
+    [[UIApplication sharedApplication] presentLocalNotificationNow:notif];
     NSLog(@"%@,%@, %@, %@, %@", location, condition, low, high, temp);
     UIImage *weatherIcon = nil;
     if ([condition isEqualToString:@"Clear"]) {

@@ -95,6 +95,8 @@ static MWWeatherMonitor *sharedMonitor;
     [parser release];
     
     if ([weatherDict valueForKey:@"city"]) {
+        
+        
         NSInteger lowInF = [[weatherDict valueForKey:@"low"] integerValue];
         [weatherDict setValue:[NSString stringWithFormat:@"%d", ((lowInF - 32) *5/9)] forKey:@"low_c"];
         NSInteger highInF = [[weatherDict valueForKey:@"high"] integerValue];
