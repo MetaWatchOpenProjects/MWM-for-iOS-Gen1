@@ -70,6 +70,9 @@
     if ([prefs objectForKey:@"notifTimezone"] == nil) {
         [prefs setObject:[NSNumber numberWithBool:YES] forKey:@"notifTimezone"];
     }
+    if ([prefs objectForKey:@"writeWithResponse"] == nil) {
+        [prefs setObject:[NSNumber numberWithBool:YES] forKey:@"writeWithResponse"];
+    }
     [prefs synchronize];
 }
 

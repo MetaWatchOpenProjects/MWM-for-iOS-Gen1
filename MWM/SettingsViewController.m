@@ -226,7 +226,7 @@
         
     } else {
         if (indexPath.row == 0) {
-            cell.textLabel.text = @"Tests";
+            cell.textLabel.text = @"Experimental";
             toggleSwitch.hidden = YES;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }

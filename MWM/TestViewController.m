@@ -28,11 +28,27 @@
 
 #import "TestViewController.h"
 
+#import "MWManager.h"
+
 @interface TestViewController ()
+
+@property (nonatomic, strong) IBOutlet UISegmentedControl *responseSegCtrl;
+
+- (IBAction) responseSegCtrlValueChanged:(id)sender;
 
 @end
 
 @implementation TestViewController
+
+@synthesize responseSegCtrl;
+
+- (IBAction) responseSegCtrlValueChanged:(id)sender {
+    if (responseSegCtrl.selectedSegmentIndex == 0) {
+        [[MWManager sharedManager] setMWMWriteWithResponse:YES];
+    } else {
+        [[MWManager sharedManager] setMWMWriteWithResponse:NO];
+    }
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -55,6 +71,17 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    if ([[prefs objectForKey:@"writeWithResponse"] boolValue]) {
+        [responseSegCtrl setSelectedSegmentIndex:0];
+    } else {
+        [responseSegCtrl setSelectedSegmentIndex:1];
+    }
+    
+    [super viewWillAppear:animated];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

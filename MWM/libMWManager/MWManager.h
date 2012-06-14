@@ -42,6 +42,7 @@
 #define kMSG_TYPE_SET_RTC 0x26
 #define kMSG_TYPE_GET_RTC 0x27
 #define kMSG_TYPE_GET_RTC_RESPONSE 0x28
+#define kMSG_TYPE_WRITE_NVAL 0x30
 
 #define kMSG_TYPE_STATUS_CHANGE_EVENT 0x33
 #define kMSG_TYPE_BUTTON_EVENT_MESSAGE 0x34
@@ -279,6 +280,14 @@
  *
  */
 - (void) setButton:(unsigned char)btnIndex atMode:(unsigned char)mode forType:(unsigned char)type withCallbackMsg:(unsigned char)msg;
+
+/*!
+ *  @method setMWMWriteWithResponse:
+ *
+ *  @discussion Toggle whether the MWM should send BLE commands using with repsonse or without response. "With Response" is signficantly faster but may be unreliable.
+ *
+ */
+- (void) setMWMWriteWithResponse:(BOOL)withRes;
 
 @end
 
