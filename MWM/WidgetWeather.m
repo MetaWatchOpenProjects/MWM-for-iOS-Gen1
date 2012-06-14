@@ -170,7 +170,7 @@ static CGFloat widgetHeight = 32;
     /*
      Draw the Weather
      */
-    [@"No Weather Data" drawInRect:CGRectMake(0, 12, widgetWidth, widgetHeight) withFont:font lineBreakMode:UILineBreakModeCharacterWrap alignment:UITextAlignmentCenter];
+    [@"No Weather Data or invalid city" drawInRect:CGRectMake(0, 12, widgetWidth, widgetHeight) withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentCenter];
     
     previewRef = CGBitmapContextCreateImage(ctx);
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();

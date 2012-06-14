@@ -94,13 +94,18 @@ static MWWeatherMonitor *sharedMonitor;
       
     [parser release];
     
-    NSInteger lowInF = [[weatherDict valueForKey:@"low"] integerValue];
-    [weatherDict setValue:[NSString stringWithFormat:@"%d", ((lowInF - 32) *5/9)] forKey:@"low_c"];
-    NSInteger highInF = [[weatherDict valueForKey:@"high"] integerValue];
-    [weatherDict setValue:[NSString stringWithFormat:@"%d", ((highInF - 32) *5/9)] forKey:@"high_c"];
+    if ([weatherDict valueForKey:@"city"]) {
+        NSInteger lowInF = [[weatherDict valueForKey:@"low"] integerValue];
+        [weatherDict setValue:[NSString stringWithFormat:@"%d", ((lowInF - 32) *5/9)] forKey:@"low_c"];
+        NSInteger highInF = [[weatherDict valueForKey:@"high"] integerValue];
+        [weatherDict setValue:[NSString stringWithFormat:@"%d", ((highInF - 32) *5/9)] forKey:@"high_c"];
+        
+        //NSLog(@"weather: %@", self.weatherDict);
+        return weatherDict;
+    } else {
+        return nil;
+    }
     
-    //NSLog(@"weather: %@", self.weatherDict);
-    return weatherDict;
 }
 
 -(void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict {
