@@ -122,7 +122,7 @@
  *  @discussion The identifer of the app which is currently using the application mode.
  *
  */
-@property (nonatomic, strong) NSString *currentAppModeIdentifier;
+@property (nonatomic, readonly) NSString *currentAppModeIdentifier;
 
 /*!
  *  @method sharedManager
@@ -284,10 +284,14 @@
 /*!
  *  @method setMWMWriteWithResponse:
  *
- *  @discussion Toggle whether the MWM should send BLE commands using with repsonse or without response. "With Response" is signficantly faster but may be unreliable.
+ *  @discussion Toggle whether the MWM should send BLE commands using with repsonse or without response. With Response" is signficantly faster but may be unreliable.
  *
  */
 - (void) setMWMWriteWithResponse:(BOOL)withRes;
+
+- (BOOL) isAppModeAvailable;
+- (BOOL) gainAccessToAppModeFromApp:(NSString*)appIdentifier;
+- (BOOL) releaseAccessToAppModeFromApp:(NSString*)appIdentifier;
 
 @end
 
@@ -305,7 +309,7 @@
  *  @discussion Invoked when the watch is fully connected and ready to be used.
  *
  */
-- (void) MWMDidDiscoveredWritePort;
+- (void) MWMDidDiscoveredWritePort:(CBPeripheral*)bleDevice;
 
 /*!
  *  @method MWM:didDisconnectPeripheral:withError:

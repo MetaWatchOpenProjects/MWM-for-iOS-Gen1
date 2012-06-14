@@ -118,7 +118,17 @@
     [self watchDisconnected:err.code];
 }
 
-- (void) MWMDidDiscoveredWritePort {
+- (void) MWMDidDiscoveredWritePort:(CBPeripheral *)bleDevice {
+    // Save
+    NSUserDefaults *perfs = [NSUserDefaults standardUserDefaults];
+    if ([[perfs objectForKey:@"rememberOnConnect"] boolValue]) {
+        CFStringRef string = CFUUIDCreateString(NULL, bleDevice.UUID);
+        NSString *uuidString = (__bridge_transfer NSString*)(string);
+        NSLog(@"Saving:%@", uuidString);
+        [perfs setValue:uuidString forKey:@"savedUUID"];
+        [perfs synchronize];
+    }
+    
     [self watchConnected];
 }
 
