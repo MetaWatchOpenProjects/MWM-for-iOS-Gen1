@@ -128,9 +128,22 @@
 }
 
 - (BOOL) application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    if ([[url scheme] isEqualToString:@"mwm"]) {
-        NSString *taskName = [url query];
-        NSLog(@"%@", taskName);
+    if ([[url absoluteString] isEqualToString:@"mwm://gain"]) {
+        // gain access
+        if ([[MWManager sharedManager] gainAccessToAppModeFromApp:sourceApplication]) {
+            NSLog(@"access granted");
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"mwmapp://granted"]];
+        } else {
+            NSLog(@"access grant failed");
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"mwmapp://notgranted"]];
+        }
+        return YES;
+    } else if ([[url absoluteString] isEqualToString:@"mwm://release"]) {
+        if ([[MWManager sharedManager] releaseAccessToAppModeFromApp:sourceApplication]) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"mwmapp://released"]];
+        } else {
+            NSLog(@"access release failed");
+        }
         return YES;
     }
     return NO;

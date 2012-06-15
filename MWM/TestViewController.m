@@ -33,14 +33,16 @@
 @interface TestViewController ()
 
 @property (nonatomic, strong) IBOutlet UISegmentedControl *responseSegCtrl;
+@property (nonatomic, strong) IBOutlet UILabel *appIDLabel;
 
 - (IBAction) responseSegCtrlValueChanged:(id)sender;
+- (IBAction) clearBtnPressed:(id)sender;
 
 @end
 
 @implementation TestViewController
 
-@synthesize responseSegCtrl;
+@synthesize responseSegCtrl, appIDLabel;
 
 - (IBAction) responseSegCtrlValueChanged:(id)sender {
     if (responseSegCtrl.selectedSegmentIndex == 0) {
@@ -48,6 +50,11 @@
     } else {
         [[MWManager sharedManager] setMWMWriteWithResponse:NO];
     }
+}
+
+- (IBAction) clearBtnPressed:(id)sender {
+    [[MWManager sharedManager] releaseAccessToAppModeFromApp:[[MWManager sharedManager] currentAppModeIdentifier]];
+    appIDLabel.text = [[MWManager sharedManager] currentAppModeIdentifier];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -80,7 +87,7 @@
     } else {
         [responseSegCtrl setSelectedSegmentIndex:1];
     }
-    
+    appIDLabel.text = [[MWManager sharedManager] currentAppModeIdentifier];
     [super viewWillAppear:animated];
 }
 
