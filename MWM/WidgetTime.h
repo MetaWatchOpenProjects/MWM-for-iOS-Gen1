@@ -56,4 +56,6 @@
 - (void) prepareToUpdate;
 - (void) stopUpdate;
 
++ (BOOL) getBoolPref:(NSString *)prefName;
+
 @end
