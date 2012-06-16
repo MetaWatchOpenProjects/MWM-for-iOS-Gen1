@@ -27,6 +27,7 @@
 //
 
 #import "WidgetCalendar.h"
+#import "WidgetTime.h"
 
 @implementation WidgetCalendar
 
@@ -141,23 +142,24 @@ static CGFloat widgetHeight = 32;
         NSPredicate *predicate = [eventStore predicateForEventsWithStartDate:startDate
                                                                      endDate:endDate
                                                                    calendars:nil];
-        
+
         NSMutableArray *newEventsArray = [NSMutableArray array];
-        
-        for (EKEvent *event in [eventStore eventsMatchingPredicate:predicate]) {
+
+        // get events sorted by start date
+		for (EKEvent *event in [[eventStore eventsMatchingPredicate:predicate] sortedArrayUsingSelector:@selector(compareStartDateWithEvent:)]) {
             if ([event.startDate timeIntervalSinceNow] > 0) {
                 [newEventsArray addObject:event];
             }
+			// no need to get more than three events
+			if (newEventsArray.count >= 3) break;
         }
-        
-        [newEventsArray sortUsingSelector:@selector(compareStartDateWithEvent:)];
-        
+
         if (showMode == 0) {
             [self updateModeNext:newEventsArray];
         } else if (showMode == 1) {
             [self updateModeNextThree:newEventsArray];
         }
-        
+
         if (newEventsArray.count > 0) {
             nextUpdateTimestamp = [nextEvent.startDate timeIntervalSinceReferenceDate] + 10;
             NSLog(@"Next internal update in:%f", nextUpdateTimestamp - [NSDate timeIntervalSinceReferenceDate]);
@@ -216,10 +218,9 @@ static CGFloat widgetHeight = 32;
     } else {
         self.nextEvent = [events objectAtIndex:0];
     }
-    
-    
-    
-    NSLog(@"Event Start Date:%@", [self transformedValue:nextEvent.startDate]);
+
+
+    NSLog(@"Event Start Date:%@", [self relativeEventDate:nextEvent]);
     
     UIFont *font = [UIFont fontWithName:@"MetaWatch Small caps 8pt" size:8];   
     //UIFont *largeFont = [UIFont fontWithName:@"MetaWatch Large 16pt" size:16];
@@ -241,8 +242,8 @@ static CGFloat widgetHeight = 32;
     
     // Paint text over the title area 
     CGContextSetFillColorWithColor(ctx, [[UIColor whiteColor]CGColor]);
-    [[self transformedValue:nextEvent.startDate] drawInRect:CGRectMake(titleRect.origin.x + 1, titleRect.origin.y + 1, titleRect.size.width, titleRect.size.height) withFont:font lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentLeft];
-    
+    [[self relativeEventDate:nextEvent] drawInRect:CGRectMake(titleRect.origin.x + 1, titleRect.origin.y + 1, titleRect.size.width, titleRect.size.height) withFont:font lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentLeft];
+
     // Draw content
     CGContextSetFillColorWithColor(ctx, [[UIColor blackColor]CGColor]);
     [nextEvent.title drawInRect:CGRectMake(titleRect.origin.x + 1, titleRect.origin.y + titleRect.size.height + 1, titleRect.size.width, widgetHeight - titleRect.size.height - titleRect.origin.y - 1) withFont:font lineBreakMode:UILineBreakModeCharacterWrap alignment:UITextAlignmentLeft];
@@ -314,20 +315,29 @@ static CGFloat widgetHeight = 32;
     
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     //CGContextSetFillColorWithColor(ctx, [[UIColor clearColor]CGColor]);
-    
+
     // Fill background as white
     CGContextSetFillColorWithColor(ctx, [UIColor whiteColor].CGColor);
     CGContextFillRect(ctx, CGRectMake(0, 0, widgetWidth, widgetHeight));
-    
-    NSString *formatString = [NSDateFormatter dateFormatFromTemplate:@"ddMM" options:0 locale:[NSLocale currentLocale]];
+
+    // display date according to clock setting
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:formatString];
-    
+    [dateFormatter setDateFormat:[WidgetTime getBoolPref:@"monthFirst"]?@"MM/dd":@"dd/MM"];
+
+	// Formatter to display time for today's events (use 24-hour time to save space)
+    NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
+    [timeFormatter setDateFormat:@"HH:mm"];
+
     CGContextSetFillColorWithColor(ctx, [UIColor blackColor].CGColor);
     NSInteger currentHeight = 4;
     for (int i = 0; i < [events count]; i++) {
         EKEvent *currentEvent = [events objectAtIndex:i];
-        NSString *drawingString = [NSString stringWithFormat:@"%@ %@", [dateFormatter stringFromDate:currentEvent.startDate], currentEvent.title];
+        
+        // Set formatter based upon if event is today (for today show time, otherwise show date)
+		NSDateFormatter *formatter =  !currentEvent.allDay && [self isToday:currentEvent.startDate] ? timeFormatter : dateFormatter;
+        
+		NSString *drawingString = [NSString stringWithFormat:@"%@ %@", [formatter stringFromDate:currentEvent.startDate], currentEvent.title];
+		
         [drawingString drawInRect:CGRectMake(3, currentHeight, 90, 5) withFont:font lineBreakMode:UILineBreakModeCharacterWrap alignment:UITextAlignmentLeft];
         currentHeight = currentHeight + 9; // font is 5
         if (i == 2) {
@@ -351,65 +361,44 @@ static CGFloat widgetHeight = 32;
     [delegate widget:self updatedWithError:nil];
 }
 
-// snippet from BDDateTransformer.m //2
-- (NSString*)transformedValue:(NSDate *)date
+// Calculate the days between two dates
+- (int)daysBetween:(NSDate *)startDate toDate:(NSDate *)endDate
 {
-    // Initialize the formatter.
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateStyle:NSDateFormatterShortStyle];
-    [formatter setTimeStyle:NSDateFormatterNoStyle];
-    
-    // Initialize the calendar and flags.
-    unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit | NSWeekdayCalendarUnit;
     NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSCalendarUnit units=NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
+    NSDateComponents *comp1=[calendar components:units fromDate:startDate];
+    NSDateComponents *comp2=[calendar components:units fromDate:endDate];
+    [comp1 setHour:12];
+    [comp2 setHour:12];
+    NSDate *date1=[calendar dateFromComponents: comp1];
+    NSDate *date2=[calendar dateFromComponents: comp2];
+    return [[calendar components:NSDayCalendarUnit fromDate:date1 toDate:date2 options:0] day];
+}
+
+// Is the specified date today?
+- (BOOL)isToday:(NSDate *)date
+{
+	return [self daysBetween:[NSDate date] toDate:date] == 0;
+}
+
+// Get a relative date format from the event
+- (NSString *)relativeEventDate:(EKEvent *)event
+{
+	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterShortStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
     
-    // Create reference date for supplied date.
-    NSDateComponents *comps = [calendar components:unitFlags fromDate:date];
-    [comps setHour:0];
-    [comps setMinute:0];
-    [comps setSecond:0];
-    NSDate *suppliedDate = [calendar dateFromComponents:comps];
+	NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
+    [timeFormatter setDateStyle:NSDateFormatterNoStyle];
+	if (event.allDay) [timeFormatter setTimeStyle:NSDateFormatterNoStyle];
+    else [timeFormatter setTimeStyle:NSDateFormatterShortStyle];
     
-    // Iterate through the eight days (tomorrow, today, and the last six).
-    int i;
-    for (i = 0; i < 7; i++)
-    {
-        // Initialize reference date.
-        comps = [calendar components:unitFlags fromDate:[NSDate date]];
-        [comps setHour:0];
-        [comps setMinute:0];
-        [comps setSecond:0];
-        [comps setDay:[comps day] + i];
-        NSDate *referenceDate = [calendar dateFromComponents:comps];
-        // Get week day (starts at 1).
-        int weekday = [[calendar components:unitFlags fromDate:referenceDate] weekday] - 1;
-        
-        if ([suppliedDate compare:referenceDate] == NSOrderedSame && i == 0)
-        {
-            // Today's time (a la iPhone Mail)
-            [formatter setDateStyle:NSDateFormatterNoStyle];
-            [formatter setTimeStyle:NSDateFormatterShortStyle];
-            return [NSString stringWithFormat:@"Today %@", [formatter stringFromDate:date]];
-        }
-        else if ([suppliedDate compare:referenceDate] == NSOrderedSame && i == 1)
-        {
-            [formatter setDateStyle:NSDateFormatterNoStyle];
-            [formatter setTimeStyle:NSDateFormatterShortStyle];
-            return [NSString stringWithFormat:@"Tomorrow %@", [formatter stringFromDate:date]];
-        }
-        else if ([suppliedDate compare:referenceDate] == NSOrderedSame)
-        {
-            // Day of the week
-            [formatter setDateStyle:NSDateFormatterNoStyle];
-            [formatter setTimeStyle:NSDateFormatterShortStyle];
-            NSString *day = [[formatter weekdaySymbols] objectAtIndex:weekday];
-            return [NSString stringWithFormat:@"%@ %@", day, [formatter stringFromDate:date]];
-        }
-    }
-    
-    // It's not in those eight days.
-    NSString *defaultDate = [formatter stringFromDate:date];
-    return defaultDate;
+	int days = [self daysBetween:[NSDate date] toDate:event.startDate];
+	if (days >= 0 && days < 8) {
+		if (days < 2) [dateFormatter setDoesRelativeDateFormatting:YES];
+		else if (days < 8) [dateFormatter setDateFormat:@"cccc"];
+	}
+	return [NSString stringWithFormat:@"%@ %@", [dateFormatter stringFromDate:event.startDate], [timeFormatter stringFromDate:event.startDate]];
 }
 
 - (void) dealloc {

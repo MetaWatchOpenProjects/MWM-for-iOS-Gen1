@@ -203,6 +203,19 @@ static CGFloat widgetHeight = 30;
     //NSLog(@"tick, %@, %@", theTime , theDate);
 }
 
+// Allow external classes to read preferences
++ (BOOL) getBoolPref:(NSString *)prefName {
+	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+	NSDictionary *dataDict = [prefs valueForKey:[NSString stringWithFormat:@"%d", widget]];
+	if (dataDict == nil) {  // if no preferences found, use defaults
+		dataDict = [[NSDictionary alloc] initWithObjectsAndKeys:
+                    [NSNumber numberWithInteger:YES], @"use12H",
+                    [NSNumber numberWithInteger:NO], @"showSec",
+                    [NSNumber numberWithInteger:YES], @"monthFirst", nil];
+	}
+	return [[dataDict valueForKey:prefName] boolValue];
+}
+
 - (void) dealloc {
     [self stopUpdate];
     [delegate widgetViewShoudRemove:self];
