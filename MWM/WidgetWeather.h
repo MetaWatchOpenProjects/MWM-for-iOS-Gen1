@@ -28,8 +28,9 @@
 
 #import <Foundation/Foundation.h>
 #import "MWMWidgetDelegate.h"
+#import "MWWeatherMonitor.h"
 
-@interface WidgetWeather : NSObject <UITextFieldDelegate, UIActionSheetDelegate>
+@interface WidgetWeather : NSObject <UITextFieldDelegate, UIActionSheetDelegate, MWWeatherMonitorDelegate>
 
 // MetaWatch Widget Interface
 @property (nonatomic, strong) UIView *preview;
@@ -55,6 +56,7 @@
 @property (nonatomic) BOOL useCelsius;
 @property (nonatomic, strong) NSString *currentCityName;
 @property (nonatomic) NSInteger weatherUpdateIntervalInMins;
+@property (nonatomic, strong) NSDictionary *weatherDict;
 
 
 

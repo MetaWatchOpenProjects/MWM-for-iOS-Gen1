@@ -31,14 +31,25 @@
 
 #define kKAWeatherBaseURL @"http://www.google.com/ig/api\?weather="
 
-@interface MWWeatherMonitor : NSObject<NSXMLParserDelegate>
+@interface MWWeatherMonitor : NSObject<NSXMLParserDelegate, NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 
 
 +(MWWeatherMonitor *) sharedMonitor;
 
--(NSDictionary*)currentWeather;
-
 @property (nonatomic, retain) NSString *city;
 @property (nonatomic, retain) NSMutableDictionary *weatherDict;
+@property (nonatomic, retain) NSMutableData *connData;
+
+@property (nonatomic, assign) id delegate;
+
+- (void) getWeather;
+
+@end
+
+@protocol MWWeatherMonitorDelegate <NSObject>
+
+- (void) weatherUpdated:(NSDictionary*)weather;
+- (void) weatherFailedToUpdate;
+- (void) weatherFailedToResolveCity:(NSString*)cityName;
 
 @end

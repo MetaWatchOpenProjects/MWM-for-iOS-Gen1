@@ -27,13 +27,12 @@
 //
 
 #import "WidgetWeather.h"
-#import "MWWeatherMonitor.h"
 
 @implementation WidgetWeather
 
 @synthesize preview, updateIntvl, updatedTimestamp, settingView, widgetSize, widgetID, delegate, previewRef;
 
-@synthesize received, geoLocationEnabled, updatedTime, useCelsius, currentCityName, widgetName, weatherUpdateIntervalInMins;
+@synthesize received, geoLocationEnabled, updatedTime, useCelsius, currentCityName, widgetName, weatherUpdateIntervalInMins, weatherDict;
 
 static NSInteger widget = 10001;
 static CGFloat widgetWidth = 96;
@@ -57,6 +56,7 @@ static CGFloat widgetHeight = 32;
         updateIntvl = 3600;
         updatedTimestamp = 0;
         
+        [[MWWeatherMonitor sharedMonitor] setDelegate:self];
         [[MWWeatherMonitor sharedMonitor] setCity:currentCityName];
         
         NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
@@ -134,23 +134,33 @@ static CGFloat widgetHeight = 32;
     }
     if (timestamp < 0 || timestamp - updatedTimestamp >= updateIntvl) {
         updatedTimestamp = timestamp;
-        if ([[MWWeatherMonitor sharedMonitor] currentWeather]) {
-            received = YES;
-            [self drawWeather];
-            [delegate widget:self updatedWithError:nil];
-        } else {
-            if (received == NO) {
-                [self drawNullWeather];
-                [delegate widget:self updatedWithError:nil];
-            }
-        }
         
+        [[MWWeatherMonitor sharedMonitor] getWeather];
         
     }
     if (timestamp < 0) {
         updatedTimestamp = (NSInteger)[NSDate timeIntervalSinceReferenceDate];
     }
 
+}
+
+- (void) weatherUpdated:(NSDictionary *)weather {
+    received = YES;
+    self.weatherDict = [NSDictionary dictionaryWithDictionary:weather];
+    [self drawWeather];
+    [delegate widget:self updatedWithError:nil];
+}
+
+- (void) weatherFailedToUpdate {
+    if (received == NO) {
+        [self drawNullWeather];
+        [delegate widget:self updatedWithError:nil];
+    }    
+}
+
+- (void) weatherFailedToResolveCity:(NSString *)cityName {
+    [self drawNoCityWeather];
+    [delegate widget:self updatedWithError:nil];
 }
 
 - (void) drawNullWeather {
@@ -170,7 +180,39 @@ static CGFloat widgetHeight = 32;
     /*
      Draw the Weather
      */
-    [@"No Weather Data or invalid city" drawInRect:CGRectMake(0, 12, widgetWidth, widgetHeight) withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentCenter];
+    [@"No Weather Data" drawInRect:CGRectMake(0, 12, widgetWidth, widgetHeight) withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentCenter];
+    
+    previewRef = CGBitmapContextCreateImage(ctx);
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();   
+    
+    for (UIView *view in self.preview.subviews) {
+        [view removeFromSuperview];
+    }
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+    imageView.tag = 7001;
+    imageView.frame = CGRectMake(0, 0, image.size.width, image.size.height);
+    [self.preview addSubview:imageView];
+}
+
+- (void) drawNoCityWeather {
+    UIFont *font = [UIFont fontWithName:@"MetaWatch Small caps 8pt" size:8];   
+    //UIFont *largeFont = [UIFont fontWithName:@"MetaWatch Large 16pt" size:16];
+    CGSize size  = CGSizeMake(widgetWidth, widgetHeight);
+    
+    UIGraphicsBeginImageContextWithOptions(size,NO,1.0);
+    
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    //CGContextSetFillColorWithColor(ctx, [[UIColor clearColor]CGColor]);
+    CGContextSetFillColorWithColor(ctx, [UIColor whiteColor].CGColor);
+    CGContextFillRect(ctx, CGRectMake(0, 0, widgetWidth, widgetHeight));
+    
+    CGContextSetFillColorWithColor(ctx, [[UIColor blackColor]CGColor]);
+    
+    /*
+     Draw the Weather
+     */
+    [@"Invalid City" drawInRect:CGRectMake(0, 12, widgetWidth, widgetHeight) withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentCenter];
     
     previewRef = CGBitmapContextCreateImage(ctx);
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
@@ -186,6 +228,11 @@ static CGFloat widgetHeight = 32;
 }
 
 - (void) drawWeather {
+    if (weatherDict == nil) {
+        [self drawNullWeather];
+        return;
+    }
+    
     UIFont *font = [UIFont fontWithName:@"MetaWatch Small caps 8pt" size:8];   
     UIFont *largeFont = [UIFont fontWithName:@"MetaWatch Large 16pt" size:16];
     CGSize size  = CGSizeMake(widgetWidth, widgetHeight);
@@ -207,20 +254,19 @@ static CGFloat widgetHeight = 32;
     NSString *temp;
     NSString *low;
     NSString *high;
+    
+    NSString *condition = [weatherDict objectForKey:@"condition"];
 
-    NSDictionary *weather = [[MWWeatherMonitor sharedMonitor] weatherDict];
-    NSString *condition = [weather objectForKey:@"condition"];
-
-    NSString *location = [weather objectForKey:@"city"];
+    NSString *location = [weatherDict objectForKey:@"city"];
     //NSLog(@"%@", [weather description]);
     if (useCelsius) {
-        temp = [weather objectForKey:@"temp_c"];
-        low = [weather objectForKey:@"low_c"];
-        high = [weather objectForKey:@"high_c"];
+        temp = [weatherDict objectForKey:@"temp_c"];
+        low = [weatherDict objectForKey:@"low_c"];
+        high = [weatherDict objectForKey:@"high_c"];
     } else {
-        temp = [weather objectForKey:@"temp_f"];
-        low = [weather objectForKey:@"low"];
-        high = [weather objectForKey:@"high"];
+        temp = [weatherDict objectForKey:@"temp_f"];
+        low = [weatherDict objectForKey:@"low"];
+        high = [weatherDict objectForKey:@"high"];
     }
     
     UILocalNotification *notif = [[UILocalNotification alloc] init];
@@ -259,8 +305,6 @@ static CGFloat widgetHeight = 32;
     } else {
         [location drawInRect:CGRectMake(0, 17, 41, 14) withFont:font lineBreakMode:UILineBreakModeCharacterWrap alignment:UITextAlignmentCenter];
     }
-    
-    
     
     [weatherIcon drawInRect:CGRectMake(42, 4, 24, 24)];
     if (useCelsius) {
@@ -303,7 +347,9 @@ static CGFloat widgetHeight = 32;
         useCelsius = NO;
     }
     [self saveData];
+    
     [self drawWeather];
+    
     [delegate widget:self updatedWithError:nil];
 }
 
@@ -327,10 +373,9 @@ static CGFloat widgetHeight = 32;
         currentCityName = @"Helsinki";
     }
     [[MWWeatherMonitor sharedMonitor] setCity:currentCityName];
-    
     [self saveData];
     
-    [self update:-1];
+    [[MWWeatherMonitor sharedMonitor] getWeather];
     
     return NO;
 }
