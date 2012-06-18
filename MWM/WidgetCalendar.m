@@ -94,7 +94,9 @@ static CGFloat widgetHeight = 32;
 
 - (void) storeChanged {
     NSLog(@"Calendar Changes Detected");
-    [self update:-1];
+    //[self update:-1];
+    [internalUpdateTimer invalidate];
+    internalUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(internalUpdate:) userInfo:nil repeats:NO];
 }
 
 - (void) timeChanged {

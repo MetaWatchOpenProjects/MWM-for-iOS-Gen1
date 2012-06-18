@@ -35,13 +35,15 @@
 
 @property (nonatomic, strong) NSTimer *notifCalendarTimer;
 
+@property (nonatomic, strong) NSTimer *storeChangedTimer;
+
 @property (nonatomic, strong) EKEventStore *eventStore;
 
 @end
 
 @implementation MWMNotificationsManager
 
-@synthesize notifCalendarTimer, eventStore;
+@synthesize notifCalendarTimer, storeChangedTimer, eventStore;
 
 static MWMNotificationsManager *sharedManager;
 
@@ -64,16 +66,21 @@ static MWMNotificationsManager *sharedManager;
     if (enable) {
         [[NSNotificationCenter defaultCenter] removeObserver:self name:EKEventStoreChangedNotification object:eventStore];
         self.eventStore= [[EKEventStore alloc] init];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeChanged:)
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeChangedHandler)
                                                      name:EKEventStoreChangedNotification object:eventStore];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:EKEventStoreChangedNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeChanged)
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeChangedHandler)
                                                      name:EKEventStoreChangedNotification object:nil];
         
         [self storeChanged];
     } else {
         [[NSNotificationCenter defaultCenter] removeObserver:self name:EKEventStoreChangedNotification object:nil];
     }
+}
+
+- (void) storeChangedHandler {
+    [storeChangedTimer invalidate];
+    storeChangedTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(storeChanged) userInfo:nil repeats:NO];
 }
 
 - (void) storeChanged {
