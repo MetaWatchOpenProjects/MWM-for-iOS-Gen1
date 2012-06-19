@@ -123,9 +123,9 @@
 - (void) MWMCheckEvent:(NSTimeInterval)timestamp {
     NSInteger roundedTimeStamp = (NSInteger)timestamp;
     NSLog(@"MWMCheckEvent:%d", roundedTimeStamp);
-    UILocalNotification *notif = [[UILocalNotification alloc] init];
-    notif.alertBody = [NSString stringWithFormat:@"CheckEvent:%d", roundedTimeStamp];
-    [[UIApplication sharedApplication] presentLocalNotificationNow:notif];
+//    UILocalNotification *notif = [[UILocalNotification alloc] init];
+//    notif.alertBody = [NSString stringWithFormat:@"CheckEvent:%d", roundedTimeStamp];
+//    [[UIApplication sharedApplication] presentLocalNotificationNow:notif];
     for (id widget in liveWidgets) {
         if (![widget isEqual:[NSNull null]]) {
             [widget update:timestamp];

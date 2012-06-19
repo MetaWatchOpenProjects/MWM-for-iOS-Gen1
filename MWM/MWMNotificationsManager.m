@@ -55,7 +55,7 @@ static MWMNotificationsManager *sharedManager;
         [self enableTimeZoneSupport:[[prefs objectForKey:@"notifTimezone"] boolValue]];
     } else {
         [[NSNotificationCenter defaultCenter] removeObserver:self];
-        nextCalendarUpdateTimestamp = -1;
+        nextCalendarUpdateTimestamp = 0;
     }
     
 }
@@ -157,10 +157,7 @@ static MWMNotificationsManager *sharedManager;
         NSString *textToDisplay = [NSString stringWithFormat:@"%@\n \n%@", [format stringFromDate:nextEvent.startDate], nextEvent.title];
         UIImage *imageToSend = [AppDelegate imageForText:textToDisplay];
         [[MWManager sharedManager] writeImage:[AppDelegate imageDataForCGImage:imageToSend.CGImage] forMode:kMODE_NOTIFICATION inRect:CGRectMake(0, (96 - imageToSend.size.height)*0.5, imageToSend.size.width, imageToSend.size.height) linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:YES buzzWhenDone:YES buzzRepeats:8];
-        UILocalNotification* notif = [[UILocalNotification alloc] init];
-        notif.alertBody = textToDisplay;
-        [[UIApplication sharedApplication] presentLocalNotificationNow:notif];
-        nextCalendarUpdateTimestamp = 0;
+        [self storeChanged];
     }
 }
 @end
