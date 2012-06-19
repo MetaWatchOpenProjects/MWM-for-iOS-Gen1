@@ -54,7 +54,7 @@ static CGFloat widgetHeight = 32;
         showMode = 0;
         updateIntvl = -1;
         updatedTimestamp = 0;
-        nextUpdateTimestamp = -1;
+        nextUpdateTimestamp = 0;
         
         eventStore = [[EKEventStore alloc] init];
         
@@ -93,7 +93,7 @@ static CGFloat widgetHeight = 32;
     [self update:-1];
 }
 
-- (void) storeChanged {
+- (void) calendarStoreChanged {
     NSLog(@"Calendar Changes Detected");
     [self update:-1];
 }
@@ -107,9 +107,7 @@ static CGFloat widgetHeight = 32;
     [delegate widgetViewCreated:self];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeChanged)
-                                                 name:EKEventStoreChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(calendarStoreChanged) name:EKEventStoreChangedNotification object:eventStore];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(timeChanged) name:UIApplicationSignificantTimeChangeNotification object:nil];
 }
 
@@ -117,63 +115,46 @@ static CGFloat widgetHeight = 32;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void) update:(NSInteger)timestamp {
-    if (timestamp > nextUpdateTimestamp && nextUpdateTimestamp > 0) {
-        [self internalUpdate:nil];
-        UILocalNotification* notif = [[UILocalNotification alloc] init];
-        notif.alertBody = [NSString stringWithFormat:@"calendar widget: %d", timestamp];
-        [[UIApplication sharedApplication] presentLocalNotificationNow:notif];
-        nextUpdateTimestamp = -1;
-        return;
-    }
-    
-    if (updateIntvl < 0 && timestamp > 0) {
-        return;
-    }
-    if (timestamp < 0 || timestamp - updatedTimestamp >= updateIntvl) {
-        if (timestamp < 0) {
-            updatedTimestamp = (NSInteger)[NSDate timeIntervalSinceReferenceDate];
-        } else {
-            updatedTimestamp = timestamp;
-        }
-        
-        NSDate *startDate = [NSDate date];
-        NSDate *endDate   = [NSDate distantFuture];
-        NSPredicate *predicate = [eventStore predicateForEventsWithStartDate:startDate
-                                                                     endDate:endDate
-                                                                   calendars:nil];
-
-        NSMutableArray *newEventsArray = [NSMutableArray array];
-
-        // get events sorted by start date
-		for (EKEvent *event in [[eventStore eventsMatchingPredicate:predicate] sortedArrayUsingSelector:@selector(compareStartDateWithEvent:)]) {
-            if ([event.startDate timeIntervalSinceNow] > 0) {
-                [newEventsArray addObject:event];
-            }
-			// no need to get more than three events
-			if (newEventsArray.count >= 3) break;
-        }
-
-        if (showMode == 0) {
-            [self updateModeNext:newEventsArray];
-        } else if (showMode == 1) {
-            [self updateModeNextThree:newEventsArray];
-        }
-
-        if (newEventsArray.count > 0) {
-            nextUpdateTimestamp = [nextEvent.startDate timeIntervalSinceReferenceDate] + 10;
-            NSLog(@"Next internal update in:%f", nextUpdateTimestamp - [NSDate timeIntervalSinceReferenceDate]);
-        }
-        
-        self.eventsArray = newEventsArray;
+- (void) update:(NSInteger)timestamp {    
+    if (timestamp < 0 || (timestamp - updatedTimestamp >= updateIntvl && updateIntvl >= 0) || timestamp > nextUpdateTimestamp) {
+        [self doInternalUpdate:timestamp];
     }
     
 }
 
-- (void) internalUpdate:(NSTimer*)theTimer {
-    NSLog(@"WidgetCalendar: internalupdate");
-    [self update:-1];
-    self.internalUpdateTimer = nil;
+- (void) doInternalUpdate:(NSInteger)timestamp {
+    
+    updatedTimestamp = timestamp;
+    
+    NSDate *startDate = [NSDate date];
+    NSDate *endDate   = [NSDate distantFuture];
+    NSPredicate *predicate = [eventStore predicateForEventsWithStartDate:startDate
+                                                                 endDate:endDate
+                                                               calendars:nil];
+    
+    NSMutableArray *newEventsArray = [NSMutableArray array];
+    
+    // get events sorted by start date
+    for (EKEvent *event in [[eventStore eventsMatchingPredicate:predicate] sortedArrayUsingSelector:@selector(compareStartDateWithEvent:)]) {
+        if ([event.startDate timeIntervalSinceNow] > 0) {
+            [newEventsArray addObject:event];
+        }
+        // no need to get more than three events
+        if (newEventsArray.count >= 3) break;
+    }
+    
+    if (showMode == 0) {
+        [self updateModeNext:newEventsArray];
+    } else if (showMode == 1) {
+        [self updateModeNextThree:newEventsArray];
+    }
+    
+    if (newEventsArray.count > 0) {
+        nextUpdateTimestamp = [nextEvent.startDate timeIntervalSinceReferenceDate] + 10;
+        NSLog(@"Next internal update in:%d", (NSInteger)(nextUpdateTimestamp - [NSDate timeIntervalSinceReferenceDate]));
+    }
+    
+    self.eventsArray = newEventsArray;
 }
 
 - (void) updateModeNext:(NSArray*)events {

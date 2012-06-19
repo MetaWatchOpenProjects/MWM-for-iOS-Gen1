@@ -64,12 +64,8 @@ static MWMNotificationsManager *sharedManager;
     if (enable) {
         [[NSNotificationCenter defaultCenter] removeObserver:self name:EKEventStoreChangedNotification object:eventStore];
         self.eventStore= [[EKEventStore alloc] init];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeChanged:)
-                                                     name:EKEventStoreChangedNotification object:eventStore];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:EKEventStoreChangedNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeChanged)
-                                                     name:EKEventStoreChangedNotification object:nil];
-        
+                                                     name:EKEventStoreChangedNotification object:eventStore];
         [self storeChanged];
     } else {
         [[NSNotificationCenter defaultCenter] removeObserver:self name:EKEventStoreChangedNotification object:nil];

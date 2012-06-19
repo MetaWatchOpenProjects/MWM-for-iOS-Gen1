@@ -129,19 +129,15 @@ static CGFloat widgetHeight = 32;
 }
 
 - (void) update:(NSInteger)timestamp {
-    if (updateIntvl < 0 && timestamp > 0) {
-        return;
+    if (timestamp < 0 || (timestamp - updatedTimestamp >= updateIntvl && updateIntvl >= 0)) {
+        // -1: force update; update by interval; update by next calendar
+        [self doInternalUpdate:timestamp];
     }
-    if (timestamp < 0 || timestamp - updatedTimestamp >= updateIntvl) {
-        updatedTimestamp = timestamp;
-        
-        [[MWWeatherMonitor sharedMonitor] getWeather];
-        
-    }
-    if (timestamp < 0) {
-        updatedTimestamp = (NSInteger)[NSDate timeIntervalSinceReferenceDate];
-    }
+}
 
+- (void) doInternalUpdate:(NSInteger)timestamp {
+    updatedTimestamp = timestamp;
+    [[MWWeatherMonitor sharedMonitor] getWeather];
 }
 
 - (void) weatherUpdated:(NSDictionary *)weather {
