@@ -31,13 +31,19 @@
 #import "MasterViewController.h"
 
 #import "MWManager.h"
+#import "MWMNotificationsManager.h"
+
+@interface AppDelegate ()
+@property (nonatomic, strong) MWManager *mgr;
+@property (nonatomic, strong) MWMNotificationsManager *notifMgr;
+@end
 
 @implementation AppDelegate
 
 @synthesize window = _window;
 @synthesize navigationController = _navigationController;
 
-@synthesize allWidgets;
+@synthesize allWidgets, mgr, notifMgr;
 
 - (void) preparePresets {
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
@@ -89,6 +95,8 @@
     MasterViewController *masterViewController = [[MasterViewController alloc] initWithNibName:@"MasterViewController" bundle:nil];
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
 
+    self.mgr = [MWManager sharedManager];
+    self.notifMgr = [MWMNotificationsManager sharedManager];
     [MWManager sharedManager].delegate = masterViewController;
     
     allWidgets = [NSMutableArray arrayWithObjects:@"WidgetTime", @"WidgetWeather", @"WidgetCalendar", @"WidgetPhoneStatus", nil];

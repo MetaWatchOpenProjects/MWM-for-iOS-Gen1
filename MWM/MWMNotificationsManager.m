@@ -142,7 +142,7 @@ static MWMNotificationsManager *sharedManager;
         
         [prefs synchronize];
         
-        nextCalendarUpdateTimestamp = -1;
+        nextCalendarUpdateTimestamp = 0;
     }
     
     return self;
@@ -160,7 +160,7 @@ static MWMNotificationsManager *sharedManager;
         UILocalNotification* notif = [[UILocalNotification alloc] init];
         notif.alertBody = textToDisplay;
         [[UIApplication sharedApplication] presentLocalNotificationNow:notif];
-        nextCalendarUpdateTimestamp = -1;
+        nextCalendarUpdateTimestamp = 0;
     }
 }
 @end
