@@ -60,8 +60,7 @@ static MWWeatherMonitor *sharedMonitor;
     NSURL *url =[NSURL URLWithString:[NSString stringWithFormat:@"%@%@&hl=us", kKAWeatherBaseURL, [self.city stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
     if (url) {
         NSURLRequest *req = [[NSURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:15];
-        conn = [NSURLConnection connectionWithRequest:req delegate:self];
-        [conn start];
+        conn = [[NSURLConnection alloc] initWithRequest:req delegate:self startImmediately:YES];
     } else {
         [delegate weatherFailedToResolveCity:city];
     }
