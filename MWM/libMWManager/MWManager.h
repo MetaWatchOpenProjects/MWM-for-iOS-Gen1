@@ -209,6 +209,7 @@
 /*!
  *  @method loadTemplate:
  *  @param mode Template will be loaded into selected mode’s display buffer.
+ *  @param rect Indicate the starting row and number of rows to be updated.
  *
  *  @discussion Copy a template stored in flash memory into the display buffer. 
  *  The clear and fill functions work, but otherwise this message is not implemented.
@@ -224,6 +225,16 @@
  *
  */
 - (void) updateDisplay:(unsigned char)mode;
+
+/*!
+ *  @method updateDisplay:inRect:
+ *  @param mode The selected buffer will become active.
+ *  @param rect Indicate the starting row and number of rows to be updated.
+ *
+ *  @discussion This message is used to draw a new screen to the display.
+ *
+ */
+- (void) updateDisplay:(unsigned char)mode inRect:(CGRect)rect;
 
 /*!
  *  @method drawIdleLines:

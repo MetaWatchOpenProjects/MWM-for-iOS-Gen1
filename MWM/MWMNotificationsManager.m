@@ -73,7 +73,8 @@ static MWMNotificationsManager *sharedManager;
 }
 
 - (void) storeChanged {
-    [self.eventStore refreshSourcesIfNecessary];
+    self.nextEvent = nil;
+    
     NSDate *startDate = [NSDate date];
     NSDate *endDate   = [NSDate distantFuture];
     NSPredicate *predicate = [eventStore predicateForEventsWithStartDate:startDate
