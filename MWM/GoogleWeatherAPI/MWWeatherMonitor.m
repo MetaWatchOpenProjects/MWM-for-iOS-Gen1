@@ -58,10 +58,14 @@ static MWWeatherMonitor *sharedMonitor;
 
 - (void) getWeather {
     NSURL *url =[NSURL URLWithString:[NSString stringWithFormat:@"%@%@&hl=us", kKAWeatherBaseURL, [self.city stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
-    NSLog(@"%@", url);
-    NSURLRequest *req = [[NSURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:25];
-    NSURLConnection *conn = [NSURLConnection connectionWithRequest:req delegate:self];
-    [conn start];
+    if (url) {
+        NSURLRequest *req = [[NSURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:15];
+        NSURLConnection *conn = [NSURLConnection connectionWithRequest:req delegate:self];
+        [conn start];
+    } else {
+        [delegate weatherFailedToResolveCity:city];
+    }
+    
 }
 
 - (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse {
@@ -78,6 +82,11 @@ static MWWeatherMonitor *sharedMonitor;
 
 - (void) connectionDidFinishLoading:(NSURLConnection *)connection {
     [weatherDict removeAllObjects];
+    
+    if (connData == nil) {
+        [delegate weatherFailedToUpdate];
+        return;
+    }
     
     NSXMLParser *parser = [[NSXMLParser alloc] initWithData:connData];
     [parser setShouldProcessNamespaces:YES];
