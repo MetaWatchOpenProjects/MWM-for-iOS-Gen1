@@ -39,6 +39,7 @@
 @property (nonatomic, retain) NSString *city;
 @property (nonatomic, retain) NSMutableDictionary *weatherDict;
 @property (nonatomic, retain) NSMutableData *connData;
+@property (nonatomic, retain) NSURLConnection *conn;
 
 @property (nonatomic, assign) id delegate;
 

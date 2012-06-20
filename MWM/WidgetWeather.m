@@ -125,12 +125,15 @@ static CGFloat widgetHeight = 32;
 }
 
 - (void) stopUpdate {
-    
+    [[[MWWeatherMonitor sharedMonitor] conn] cancel];
 }
 
 - (void) update:(NSInteger)timestamp {
     if (timestamp < 0 || (timestamp - updatedTimestamp >= updateIntvl && updateIntvl >= 0)) {
         // -1: force update; update by interval; update by next calendar
+        if (timestamp < 0) {
+            timestamp = (NSInteger)[NSDate timeIntervalSinceReferenceDate];
+        }
         [self doInternalUpdate:timestamp];
     }
 }
@@ -272,21 +275,15 @@ static CGFloat widgetHeight = 32;
     UIImage *weatherIcon = nil;
     if ([condition isEqualToString:@"Clear"]) {
         weatherIcon=[UIImage imageNamed:@"weather_sunny.bmp"];
-    }else if ([condition isEqualToString:@"Rain"]) {
+    }else if ([condition rangeOfString:@"Rain"].location != NSNotFound) {
         weatherIcon=[UIImage imageNamed:@"weather_rain.bmp"];
-    }else if ([condition isEqualToString:@"Fog"]) {
+    }else if ([condition rangeOfString:@"Fog"].location != NSNotFound) {
         weatherIcon=[UIImage imageNamed:@"weather_cloudy.bmp"];
-    }else if ([condition isEqualToString:@"Cloudy"]) {
+    }else if ([condition rangeOfString:@"Cloudy"].location != NSNotFound) {
         weatherIcon=[UIImage imageNamed:@"weather_cloudy.bmp"];
-    }else if ([condition isEqualToString:@"Mostly Cloudy"]) {
-        weatherIcon=[UIImage imageNamed:@"weather_cloudy.bmp"];
-    }else if ([condition isEqualToString:@"Mostly Sunny"]) {
+    }else if ([condition rangeOfString:@"Sunny"].location != NSNotFound) {
         weatherIcon=[UIImage imageNamed:@"weather_sunny.bmp"];
     }else if ([condition isEqualToString:@"Chance of Showers"]) {
-        weatherIcon=[UIImage imageNamed:@"weather_rain.bmp"];
-    }else if ([condition isEqualToString:@"Chance of Rain"]) {
-        weatherIcon=[UIImage imageNamed:@"weather_rain.bmp"];
-    }else if ([condition isEqualToString:@"Light rain"]) {
         weatherIcon=[UIImage imageNamed:@"weather_rain.bmp"];
     }else if ([condition isEqualToString:@"Overcast"]) {
         weatherIcon=[UIImage imageNamed:@"weather_cloudy.bmp"];

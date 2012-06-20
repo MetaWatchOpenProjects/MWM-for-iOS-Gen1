@@ -29,7 +29,7 @@
 #import "MWWeatherMonitor.h"
 
 @implementation MWWeatherMonitor
-@synthesize weatherDict, city, connData, delegate;
+@synthesize weatherDict, city, connData, delegate, conn;
 
 static MWWeatherMonitor *sharedMonitor;
 
@@ -60,7 +60,7 @@ static MWWeatherMonitor *sharedMonitor;
     NSURL *url =[NSURL URLWithString:[NSString stringWithFormat:@"%@%@&hl=us", kKAWeatherBaseURL, [self.city stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
     if (url) {
         NSURLRequest *req = [[NSURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:15];
-        NSURLConnection *conn = [NSURLConnection connectionWithRequest:req delegate:self];
+        conn = [NSURLConnection connectionWithRequest:req delegate:self];
         [conn start];
     } else {
         [delegate weatherFailedToResolveCity:city];
@@ -106,11 +106,12 @@ static MWWeatherMonitor *sharedMonitor;
     } else {
         [delegate weatherFailedToResolveCity:city];
     }
-
+    self.conn = nil;
 }
 
 - (void) connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     [delegate weatherFailedToUpdate];
+    self.conn = nil;
 }
 
 // Use cordinates
@@ -130,6 +131,8 @@ static MWWeatherMonitor *sharedMonitor;
     self.city = nil;
     self.weatherDict = nil;
     self.connData = nil;
+    [self.conn cancel];
+    self.conn = nil;
     [super dealloc];
 }
 
