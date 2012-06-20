@@ -300,6 +300,7 @@
  */
 - (void) setMWMWriteWithResponse:(BOOL)withRes;
 
+- (void) handle:(NSURL*)url from:(NSString*)appIdentifier;
 - (BOOL) isAppModeAvailable;
 - (BOOL) gainAccessToAppModeFromApp:(NSString*)appIdentifier;
 - (BOOL) releaseAccessToAppModeFromApp:(NSString*)appIdentifier;

@@ -136,25 +136,12 @@
 }
 
 - (BOOL) application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    if ([[url absoluteString] isEqualToString:@"mwm://gain"]) {
-        // gain access
-        if ([[MWManager sharedManager] gainAccessToAppModeFromApp:sourceApplication]) {
-            NSLog(@"access granted");
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"mwmapp://granted"]];
-        } else {
-            NSLog(@"access grant failed");
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"mwmapp://notgranted"]];
-        }
+    if ([[url scheme] isEqualToString:@"mwm"]) {
+        [[MWManager sharedManager] handle:url from:sourceApplication];
         return YES;
-    } else if ([[url absoluteString] isEqualToString:@"mwm://release"]) {
-        if ([[MWManager sharedManager] releaseAccessToAppModeFromApp:sourceApplication]) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"mwmapp://released"]];
-        } else {
-            NSLog(@"access release failed");
-        }
-        return YES;
+    } else {
+        return NO;
     }
-    return NO;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
