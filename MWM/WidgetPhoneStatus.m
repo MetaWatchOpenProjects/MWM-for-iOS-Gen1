@@ -135,6 +135,7 @@ static CGFloat widgetHeight = 32;
     }
     [statusString drawInRect:statusRect withFont:font lineBreakMode:UILineBreakModeCharacterWrap alignment:UITextAlignmentLeft];
     
+    CGImageRelease(previewRef);
     previewRef = CGBitmapContextCreateImage(ctx);
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();   
@@ -155,6 +156,7 @@ static CGFloat widgetHeight = 32;
 }
 
 - (void) dealloc {
+    CGImageRelease(previewRef);
     [self stopUpdate];
     [delegate widgetViewShoudRemove:self];
 }

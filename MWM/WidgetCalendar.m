@@ -182,6 +182,7 @@ static CGFloat widgetHeight = 32;
         [@"No incoming event" drawInRect:CGRectMake(titleRect.origin.x + 1, titleRect.origin.y + 1, titleRect.size.width, titleRect.size.height) withFont:font lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentLeft];
         
         // transfer image
+        CGImageRelease(previewRef);
         previewRef = CGBitmapContextCreateImage(ctx);
         UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();   
@@ -230,6 +231,7 @@ static CGFloat widgetHeight = 32;
     [nextEvent.title drawInRect:CGRectMake(titleRect.origin.x + 1, titleRect.origin.y + titleRect.size.height + 1, titleRect.size.width, widgetHeight - titleRect.size.height - titleRect.origin.y - 1) withFont:font lineBreakMode:UILineBreakModeCharacterWrap alignment:UITextAlignmentLeft];
     
     // transfer image
+    CGImageRelease(previewRef);
     previewRef = CGBitmapContextCreateImage(ctx);
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();   
@@ -271,6 +273,7 @@ static CGFloat widgetHeight = 32;
         [@"No event for today" drawInRect:CGRectMake(titleRect.origin.x + 1, titleRect.origin.y + 1, titleRect.size.width, titleRect.size.height) withFont:font lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentLeft];
         
         // transfer image
+        CGImageRelease(previewRef);
         previewRef = CGBitmapContextCreateImage(ctx);
         UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();   
@@ -327,6 +330,7 @@ static CGFloat widgetHeight = 32;
     }
     
     // transfer image
+    CGImageRelease(previewRef);
     previewRef = CGBitmapContextCreateImage(ctx);
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();   
@@ -383,6 +387,7 @@ static CGFloat widgetHeight = 32;
 }
 
 - (void) dealloc {
+    CGImageRelease(previewRef);
     [self stopUpdate];
     [delegate widgetViewShoudRemove:self];
 }
