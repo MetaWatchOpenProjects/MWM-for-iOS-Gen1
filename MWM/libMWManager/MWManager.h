@@ -94,6 +94,7 @@
 #define DISCONNECTEDBY8882 203
 #define DISCONNECTEDBYBLEPOWER 204
 #define DISCONNECTEDBYBLENOTIF 205
+#define DISCONNECTEDBY8880 206
 // Do not modify above
 
 #define LINESPERMESSAGE 1
@@ -231,7 +232,7 @@
  *  @param mode The selected buffer will become active.
  *  @param rect Indicate the starting row and number of rows to be updated.
  *
- *  @discussion This message is used to draw a new screen to the display.
+ *  @discussion This message is used to draw a new screen to the display for certain rows.
  *
  */
 - (void) updateDisplay:(unsigned char)mode inRect:(CGRect)rect;
@@ -355,7 +356,7 @@
 /*!
  *  @method MWMBtn:atMode:pressedForType:withMsg:
  *
- *  @discussion Not in use.
+ *  @discussion Invoked when any button is pressed when the watch is in Application mode, Notification mode and Scroll Mode.
  *
  */
 - (void) MWMBtn:(unsigned char)btnIndex atMode:(unsigned char)mode pressedForType:(unsigned char)type withMsg:(unsigned char)msg;

@@ -63,8 +63,14 @@
     if (self) {
         // Custom initialization
         self.title = @"Tests";
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncLabel) name:@"MWMDidCleanAppMode" object:[MWManager sharedManager]];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncLabel) name:@"MWMDidGrantAppMode" object:[MWManager sharedManager]];
     }
     return self;
+}
+
+- (void) syncLabel {
+    appIDLabel.text = [[MWManager sharedManager] currentAppModeIdentifier];
 }
 
 - (void)viewDidLoad
@@ -94,6 +100,10 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (void) dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

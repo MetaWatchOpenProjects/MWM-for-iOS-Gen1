@@ -164,7 +164,6 @@
 }
 
 - (void) slider:(DragImageView *)dragView DidStopAtMode:(NSInteger)position {
-    NSLog(@"SliderStoppedAt:%d", position);
     [UIView beginAnimations:nil context:NULL];
     if (position < 1) {
         widgetSettingView.alpha = 0;
@@ -267,6 +266,8 @@
         [[[UIAlertView alloc] initWithTitle:@"Connection Error" message:@"MWM failed to register notifications with Meta Watch." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     } else if (errorCode == DISCONNECTEDBYBLEPOWER) {
         [[[UIAlertView alloc] initWithTitle:@"Connection Error" message:@"The Bluetooth has been turned off. To reconnect, please turn on the Bluetooth from iPhone Settings." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    } else if (errorCode == DISCONNECTEDBY8880) {
+        [[[UIAlertView alloc] initWithTitle:@"Connection Error" message:@"Meta Watch does not implement the MWM service." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }
 }
 
@@ -336,7 +337,6 @@
 
 - (void) setupWidgets {
     NSDictionary *layoutDict = [[NSUserDefaults standardUserDefaults] objectForKey:@"watchLayout"];
-    NSLog(@"%@", layoutDict);
     [self setupWidget:[layoutDict objectForKey:@"03"] withRow:0];
     [self setupWidget:[layoutDict objectForKey:@"13"] withRow:1];
     [self setupWidget:[layoutDict objectForKey:@"23"] withRow:2];
