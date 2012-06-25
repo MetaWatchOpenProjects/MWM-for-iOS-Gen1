@@ -38,6 +38,8 @@
 #define SETTINGVIEWTAGROW2 8002
 #define SETTINGVIEWTAGROW3 8003
 
+#define BTNAPPMODETOGGLE 0x11
+
 @interface MasterViewController ()
 
 @property (nonatomic, strong) UIView *watchView;
@@ -71,8 +73,8 @@
 
 - (void)leftBarBtnPressed:(id)sender {
     NSLog(@"leftBarBtnPressed");
-
-    [[MWManager sharedManager] updateDisplay:kMODE_NOTIFICATION];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"mwmapp.com.metawatch.mwmapp1://"]];
+    //[[MWManager sharedManager] updateDisplay:kMODE_NOTIFICATION];
 }
 
 - (IBAction) infoBtnPressed:(id)sender {
@@ -97,7 +99,6 @@
     [[widget preview] removeFromSuperview];
     [[widgetSettingView viewWithTag:SETTINGVIEWTAGROW1] removeFromSuperview];
 }
-
 
 - (void) widget:(id)widget updatedWithError:(NSError*)error {
     [[MWManager sharedManager] writeImage:[AppDelegate imageDataForCGImage:[widget previewRef]] forMode:kMODE_IDLE inRect:[widget preview].frame linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:NO buzzWhenDone:NO buzzRepeats:0];
@@ -136,6 +137,13 @@
 
 - (void) MWMBtn:(unsigned char)btnIndex atMode:(unsigned char)mode pressedForType:(unsigned char)type withMsg:(unsigned char)msg {
     NSLog(@"btn pressed:%x mode:%x, type:%x, msg:%x", btnIndex, mode, type, msg);
+    if (msg == BTNAPPMODETOGGLE) {
+        if (mode == kMODE_IDLE) {
+            [[MWManager sharedManager] updateDisplay:kMODE_APPLICATION];
+        } else if (mode == kMODE_APPLICATION) {
+            [[MWManager sharedManager] updateDisplay:kMODE_IDLE];
+        }
+    }
 }
 
 #pragma mark - DragSliderView Delegate
@@ -155,7 +163,6 @@
 }
 
 - (void) slider:(DragImageView *)dragView DidStopAtMode:(NSInteger)position {
-    NSLog(@"SliderStoppedAt:%d", position);
     [UIView beginAnimations:nil context:NULL];
     if (position < 1) {
         widgetSettingView.alpha = 0;
@@ -211,7 +218,12 @@
         [[MWManager sharedManager] setBuzzWithRepeats:3];
     }
     
-    [[MWManager sharedManager] setTimerWith:TIMERVALUE andID:0 andCounts:255]; 
+    [[MWManager sharedManager] setTimerWith:TIMERVALUE andID:0 andCounts:255];
+    UIImage *imageToSend = [AppDelegate imageForText:@"Application Mode"];
+    [[MWManager sharedManager] writeImage:[AppDelegate imageDataForCGImage:imageToSend.CGImage] forMode:kMODE_APPLICATION inRect:CGRectMake(0, (96 - imageToSend.size.height)*0.5, imageToSend.size.width, imageToSend.size.height) linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:YES buzzWhenDone:NO buzzRepeats:0];
+
+    [[MWManager  sharedManager] setButton:kBUTTON_A atMode:kMODE_IDLE forType:kBUTTON_TYPE_IMMEDIATE withCallbackMsg:BTNAPPMODETOGGLE];
+    [[MWManager  sharedManager] setButton:kBUTTON_A atMode:kMODE_APPLICATION forType:kBUTTON_TYPE_IMMEDIATE withCallbackMsg:BTNAPPMODETOGGLE];
     
     [self drawIdleScreen];
 }
@@ -253,6 +265,8 @@
         [[[UIAlertView alloc] initWithTitle:@"Connection Error" message:@"MWM failed to register notifications with Meta Watch." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     } else if (errorCode == DISCONNECTEDBYBLEPOWER) {
         [[[UIAlertView alloc] initWithTitle:@"Connection Error" message:@"The Bluetooth has been turned off. To reconnect, please turn on the Bluetooth from iPhone Settings." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    } else if (errorCode == DISCONNECTEDBY8880) {
+        [[[UIAlertView alloc] initWithTitle:@"Connection Error" message:@"Meta Watch does not implement the MWM service." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }
 }
 
@@ -322,7 +336,6 @@
 
 - (void) setupWidgets {
     NSDictionary *layoutDict = [[NSUserDefaults standardUserDefaults] objectForKey:@"watchLayout"];
-    NSLog(@"%@", layoutDict);
     [self setupWidget:[layoutDict objectForKey:@"03"] withRow:0];
     [self setupWidget:[layoutDict objectForKey:@"13"] withRow:1];
     [self setupWidget:[layoutDict objectForKey:@"23"] withRow:2];

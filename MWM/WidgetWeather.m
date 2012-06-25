@@ -180,7 +180,7 @@ static CGFloat widgetHeight = 32;
      Draw the Weather
      */
     [@"No Weather Data" drawInRect:CGRectMake(0, 12, widgetWidth, widgetHeight) withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentCenter];
-    
+    CGImageRelease(previewRef);
     previewRef = CGBitmapContextCreateImage(ctx);
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();   
@@ -213,6 +213,7 @@ static CGFloat widgetHeight = 32;
      */
     [@"Invalid City" drawInRect:CGRectMake(0, 12, widgetWidth, widgetHeight) withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentCenter];
     
+    CGImageRelease(previewRef);
     previewRef = CGBitmapContextCreateImage(ctx);
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();   
@@ -317,7 +318,7 @@ static CGFloat widgetHeight = 32;
     
     
     // transfer image
-    
+    CGImageRelease(previewRef);
     previewRef = CGBitmapContextCreateImage(ctx);
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();   
@@ -401,6 +402,7 @@ static CGFloat widgetHeight = 32;
 }
 
 - (void) dealloc {
+    CGImageRelease(previewRef);
     [self stopUpdate];
     [delegate widgetViewShoudRemove:self];
 }

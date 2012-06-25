@@ -94,6 +94,7 @@
 #define DISCONNECTEDBY8882 203
 #define DISCONNECTEDBYBLEPOWER 204
 #define DISCONNECTEDBYBLENOTIF 205
+#define DISCONNECTEDBY8880 206
 // Do not modify above
 
 #define LINESPERMESSAGE 1
@@ -231,7 +232,7 @@
  *  @param mode The selected buffer will become active.
  *  @param rect Indicate the starting row and number of rows to be updated.
  *
- *  @discussion This message is used to draw a new screen to the display.
+ *  @discussion This message is used to draw a new screen to the display for certain rows.
  *
  */
 - (void) updateDisplay:(unsigned char)mode inRect:(CGRect)rect;
@@ -295,15 +296,42 @@
 /*!
  *  @method setMWMWriteWithResponse:
  *
- *  @discussion Toggle whether the MWM should send BLE commands using with repsonse or without response. With Response" is signficantly faster but may be unreliable.
+ *  @discussion Toggle whether the MWM should send BLE commands using with 
+ *  repsonse or without response. With Response" is signficantly faster but may be unreliable.
  *
  */
 - (void) setMWMWriteWithResponse:(BOOL)withRes;
 
+/*!
+ *  @method handle:from:
+ *
+ *  @discussion Only invoke this method in application:openURL:sourceApplication:annotation:,
+ *  URL should have scheme "mwm://". When another iOS app sends a request to the App Mode of 
+ *  the Meta Watch through URL Scheme, this method will handle this request. That iOS app will
+ *  be notified if the request is succeeded through "mwmapp://" URL Scheme
+ *
+ */
 - (void) handle:(NSURL*)url from:(NSString*)appIdentifier;
+
+/*!
+ *  @method isAppModeAvailable
+ *
+ *  @discussion This method return YES if the App Mode of the Meta Watch is free to be used. 
+ *  No if any app is using the App Mode.
+ *
+ */
 - (BOOL) isAppModeAvailable;
-- (BOOL) gainAccessToAppModeFromApp:(NSString*)appIdentifier;
-- (BOOL) releaseAccessToAppModeFromApp:(NSString*)appIdentifier;
+
+/*!
+ *  @method releaseAccessToAppModeFromApp:
+ *  @param appIdentifier The application bundle identifier of the app which should be released:
+ *  currentAppModeIdentifier in most cases.
+ *
+ *  @discussion This method manually withdraw the access to the App Mode of the Meta Watch from 
+ *  the sepcified application. The sepcified app will be notified through URL scheme.
+ *
+ */
+- (BOOL) forceReleaseAccessToAppModeFromApp:(NSString*)appIdentifier;
 
 @end
 
@@ -355,7 +383,7 @@
 /*!
  *  @method MWMBtn:atMode:pressedForType:withMsg:
  *
- *  @discussion Not in use.
+ *  @discussion Invoked when any button is pressed when the watch is in Application mode, Notification mode and Scroll Mode.
  *
  */
 - (void) MWMBtn:(unsigned char)btnIndex atMode:(unsigned char)mode pressedForType:(unsigned char)type withMsg:(unsigned char)msg;
