@@ -73,8 +73,8 @@
 
 - (void)leftBarBtnPressed:(id)sender {
     NSLog(@"leftBarBtnPressed");
-
-    [[MWManager sharedManager] updateDisplay:kMODE_NOTIFICATION];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"mwmapp.com.metawatch.mwmapp1://"]];
+    //[[MWManager sharedManager] updateDisplay:kMODE_NOTIFICATION];
 }
 
 - (IBAction) infoBtnPressed:(id)sender {
@@ -99,7 +99,6 @@
     [[widget preview] removeFromSuperview];
     [[widgetSettingView viewWithTag:SETTINGVIEWTAGROW1] removeFromSuperview];
 }
-
 
 - (void) widget:(id)widget updatedWithError:(NSError*)error {
     [[MWManager sharedManager] writeImage:[AppDelegate imageDataForCGImage:[widget previewRef]] forMode:kMODE_IDLE inRect:[widget preview].frame linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:NO buzzWhenDone:NO buzzRepeats:0];

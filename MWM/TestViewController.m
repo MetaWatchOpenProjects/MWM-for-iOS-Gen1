@@ -53,7 +53,7 @@
 }
 
 - (IBAction) clearBtnPressed:(id)sender {
-    [[MWManager sharedManager] releaseAccessToAppModeFromApp:[[MWManager sharedManager] currentAppModeIdentifier]];
+    [[MWManager sharedManager] forceReleaseAccessToAppModeFromApp:[[MWManager sharedManager] currentAppModeIdentifier]];
     appIDLabel.text = [[MWManager sharedManager] currentAppModeIdentifier];
 }
 

@@ -296,15 +296,42 @@
 /*!
  *  @method setMWMWriteWithResponse:
  *
- *  @discussion Toggle whether the MWM should send BLE commands using with repsonse or without response. With Response" is signficantly faster but may be unreliable.
+ *  @discussion Toggle whether the MWM should send BLE commands using with 
+ *  repsonse or without response. With Response" is signficantly faster but may be unreliable.
  *
  */
 - (void) setMWMWriteWithResponse:(BOOL)withRes;
 
+/*!
+ *  @method handle:from:
+ *
+ *  @discussion Only invoke this method in application:openURL:sourceApplication:annotation:,
+ *  URL should have scheme "mwm://". When another iOS app sends a request to the App Mode of 
+ *  the Meta Watch through URL Scheme, this method will handle this request. That iOS app will
+ *  be notified if the request is succeeded through "mwmapp://" URL Scheme
+ *
+ */
 - (void) handle:(NSURL*)url from:(NSString*)appIdentifier;
+
+/*!
+ *  @method isAppModeAvailable
+ *
+ *  @discussion This method return YES if the App Mode of the Meta Watch is free to be used. 
+ *  No if any app is using the App Mode.
+ *
+ */
 - (BOOL) isAppModeAvailable;
-- (BOOL) gainAccessToAppModeFromApp:(NSString*)appIdentifier;
-- (BOOL) releaseAccessToAppModeFromApp:(NSString*)appIdentifier;
+
+/*!
+ *  @method releaseAccessToAppModeFromApp:
+ *  @param appIdentifier The application bundle identifier of the app which should be released:
+ *  currentAppModeIdentifier in most cases.
+ *
+ *  @discussion This method manually withdraw the access to the App Mode of the Meta Watch from 
+ *  the sepcified application. The sepcified app will be notified through URL scheme.
+ *
+ */
+- (BOOL) forceReleaseAccessToAppModeFromApp:(NSString*)appIdentifier;
 
 @end
 
