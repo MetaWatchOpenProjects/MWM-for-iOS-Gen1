@@ -38,6 +38,7 @@
 #define SETTINGVIEWTAGROW2 8002
 #define SETTINGVIEWTAGROW3 8003
 
+#define BTNNOTIFMODETOGGLE 0x10
 #define BTNAPPMODETOGGLE 0x11
 
 @interface MasterViewController ()
@@ -140,6 +141,8 @@
         } else if (mode == kMODE_APPLICATION) {
             [[MWManager sharedManager] updateDisplay:kMODE_IDLE];
         }
+    } else if (msg == BTNNOTIFMODETOGGLE && mode == kMODE_NOTIFICATION) {
+        [[MWManager sharedManager] updateDisplay:kMODE_IDLE];
     }
 }
 
@@ -221,6 +224,7 @@
 
     [[MWManager  sharedManager] setButton:kBUTTON_A atMode:kMODE_IDLE forType:kBUTTON_TYPE_PRESS_AND_RELEASE withCallbackMsg:BTNAPPMODETOGGLE];
     [[MWManager  sharedManager] setButton:kBUTTON_A atMode:kMODE_APPLICATION forType:kBUTTON_TYPE_PRESS_AND_RELEASE withCallbackMsg:BTNAPPMODETOGGLE];
+    [[MWManager  sharedManager] setButton:kBUTTON_A atMode:kMODE_NOTIFICATION forType:kBUTTON_TYPE_PRESS_AND_RELEASE withCallbackMsg:BTNNOTIFMODETOGGLE];
     
     [self drawIdleScreen];
 }
