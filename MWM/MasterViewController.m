@@ -73,8 +73,8 @@
 
 - (void)leftBarBtnPressed:(id)sender {
     NSLog(@"leftBarBtnPressed");
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"mwmapp.com.metawatch.mwmapp1://"]];
-    //[[MWManager sharedManager] updateDisplay:kMODE_NOTIFICATION];
+    //[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"mwmapp.com.metawatch.mwmapp1://"]];
+    [[MWManager sharedManager] updateDisplay:kMODE_NOTIFICATION];
 }
 
 - (IBAction) infoBtnPressed:(id)sender {
@@ -124,9 +124,6 @@
 - (void) MWMCheckEvent:(NSTimeInterval)timestamp {
     NSInteger roundedTimeStamp = (NSInteger)timestamp;
     NSLog(@"MWMCheckEvent:%d", roundedTimeStamp);
-//    UILocalNotification *notif = [[UILocalNotification alloc] init];
-//    notif.alertBody = [NSString stringWithFormat:@"CheckEvent:%d", roundedTimeStamp];
-//    [[UIApplication sharedApplication] presentLocalNotificationNow:notif];
     for (id widget in liveWidgets) {
         if (![widget isEqual:[NSNull null]]) {
             [widget update:timestamp];
@@ -222,8 +219,8 @@
     UIImage *imageToSend = [AppDelegate imageForText:@"Application Mode"];
     [[MWManager sharedManager] writeImage:[AppDelegate imageDataForCGImage:imageToSend.CGImage] forMode:kMODE_APPLICATION inRect:CGRectMake(0, (96 - imageToSend.size.height)*0.5, imageToSend.size.width, imageToSend.size.height) linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:YES buzzWhenDone:NO buzzRepeats:0];
 
-    [[MWManager  sharedManager] setButton:kBUTTON_A atMode:kMODE_IDLE forType:kBUTTON_TYPE_IMMEDIATE withCallbackMsg:BTNAPPMODETOGGLE];
-    [[MWManager  sharedManager] setButton:kBUTTON_A atMode:kMODE_APPLICATION forType:kBUTTON_TYPE_IMMEDIATE withCallbackMsg:BTNAPPMODETOGGLE];
+    [[MWManager  sharedManager] setButton:kBUTTON_A atMode:kMODE_IDLE forType:kBUTTON_TYPE_PRESS_AND_RELEASE withCallbackMsg:BTNAPPMODETOGGLE];
+    [[MWManager  sharedManager] setButton:kBUTTON_A atMode:kMODE_APPLICATION forType:kBUTTON_TYPE_PRESS_AND_RELEASE withCallbackMsg:BTNAPPMODETOGGLE];
     
     [self drawIdleScreen];
 }
