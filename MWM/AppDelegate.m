@@ -358,7 +358,7 @@
     
     // transfer image
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    NSLog(@"height%f, %f", image.size.height, textSize.height);
+    //NSLog(@"height%f, %f", image.size.height, textSize.height);
     UIGraphicsEndImageContext();    
     
     return image;
