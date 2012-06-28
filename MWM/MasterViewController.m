@@ -32,8 +32,6 @@
 #import "SettingsViewController.h"
 #import "InfoViewController.h"
 
-#import <MediaPlayer/MediaPlayer.h>
-
 #define SETTINGVIEWTAGROW1 8001
 #define SETTINGVIEWTAGROW2 8002
 #define SETTINGVIEWTAGROW3 8003
@@ -64,7 +62,7 @@
 
 @implementation MasterViewController
 
-@synthesize appDelegate, watchDisplay, watchView, barIndicatorView, widgetSettingView, row1Label, row2Label, row3Label, row4Label, widget1SettingView, widget2SettingView, widget3SettingView, liveWidgets;
+@synthesize appDelegate, watchDisplay, watchView, barIndicatorView, widgetSettingView, row1Label, row2Label, row3Label, row4Label, widget1SettingView, widget2SettingView, widget3SettingView, liveWidgets, musicApp;
 
 #pragma mark - UI Actions
 - (void)rightBarBtnPressed:(id)sender {
@@ -75,13 +73,19 @@
 - (void)leftBarBtnPressed:(id)sender {
     NSLog(@"leftBarBtnPressed");
     //[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"mwmapp.com.metawatch.mwmapp1://"]];
-    [[MWManager sharedManager] updateDisplay:kMODE_NOTIFICATION];
+    [self startiPodApp];
+    
 }
 
 - (IBAction) infoBtnPressed:(id)sender {
     InfoViewController *VC = [[InfoViewController alloc] initWithNibName:@"InfoViewController" bundle:[NSBundle mainBundle]];
     VC.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentModalViewController:VC animated:YES];
+}
+
+- (void) startiPodApp {
+    [[MWManager sharedManager] handle:[NSURL URLWithString:@"mwm://gain"] from:[[NSBundle mainBundle] bundleIdentifier]];
+    musicApp = [[MWMMusicControlApp alloc] init];
 }
 
 #pragma mark - WidgetSelection Delegate
@@ -143,6 +147,14 @@
         }
     } else if (msg == BTNNOTIFMODETOGGLE && mode == kMODE_NOTIFICATION) {
         [[MWManager sharedManager] updateDisplay:kMODE_IDLE];
+    } else if (msg == 0x13 && mode == kMODE_APPLICATION) {
+        if (btnIndex == kBUTTON_B) {
+            [musicApp nextBtnPressed];
+        } else if (btnIndex == kBUTTON_C) {
+            [musicApp playBtnPressed];
+        } else if (btnIndex == kBUTTON_E) {
+            [musicApp previousBtnPressed];
+        }
     }
 }
 
@@ -279,7 +291,7 @@
     [self.watchView addSubview:idle];
     [self.watchView sendSubviewToBack:idle];
     [self.view addSubview:watchView];
-    
+
     [[MWManager sharedManager] drawIdleLines:[[[NSUserDefaults standardUserDefaults] objectForKey:@"drawDashLines"] boolValue]];
     
     for (id widget in liveWidgets) {
@@ -311,7 +323,7 @@
     rightBarBtn.width = 30;
     self.navigationItem.rightBarButtonItem = rightBarBtn;
     
-    UIBarButtonItem *leftBarBtn = [[UIBarButtonItem alloc] initWithTitle:@"Test"
+    UIBarButtonItem *leftBarBtn = [[UIBarButtonItem alloc] initWithTitle:@"iPod"
                                                                     style:UIBarButtonItemStyleBordered
                                                                    target:self
                                                                    action:@selector(leftBarBtnPressed:)]; 
