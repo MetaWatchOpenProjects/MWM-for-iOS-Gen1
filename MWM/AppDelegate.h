@@ -38,8 +38,4 @@
 
 @property (nonatomic, strong) NSMutableArray *allWidgets;
 
-+(CGImageRef)scaleCGImage: (CGImageRef) image withScale: (float) scale;
-+(UIImage *)imageForText:(NSString *)text;
-+(NSData*) imageDataForCGImage:(CGImageRef)inImage;
-
 @end

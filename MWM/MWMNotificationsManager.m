@@ -195,16 +195,16 @@ static MWMNotificationsManager *sharedManager;
         [format setDateFormat:@"HH:mm"];
         
         NSString *textToDisplay = [NSString stringWithFormat:@"%@\n \n%@", [format stringFromDate:nextEvent.startDate], nextEvent.title];
-        UIImage *imageToSend = [AppDelegate imageForText:textToDisplay];
-        [[MWManager sharedManager] writeImage:[AppDelegate imageDataForCGImage:imageToSend.CGImage] forMode:kMODE_NOTIFICATION inRect:CGRectMake(0, (96 - imageToSend.size.height)*0.5, imageToSend.size.width, imageToSend.size.height) linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:YES shouldUpdate:YES buzzWhenDone:YES buzzRepeats:8];
+        UIImage *imageToSend = [MWManager imageForText:textToDisplay];
+        [[MWManager sharedManager] writeImage:[MWManager bitmapDataForCGImage:imageToSend.CGImage] forMode:kMODE_NOTIFICATION inRect:CGRectMake(0, (96 - imageToSend.size.height)*0.5, imageToSend.size.width, imageToSend.size.height) linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:YES shouldUpdate:YES buzzWhenDone:YES buzzRepeats:8];
         
         [self storeChanged];
     }
     
     if (timestamp > nextWakeUpAlarmUpdateTimestamp && nextWakeUpAlarmUpdateTimestamp > 0) {        
         NSString *textToDisplay = [NSString stringWithFormat:@"Time to Wake Up"];
-        UIImage *imageToSend = [AppDelegate imageForText:textToDisplay];
-        [[MWManager sharedManager] writeImage:[AppDelegate imageDataForCGImage:imageToSend.CGImage] forMode:kMODE_NOTIFICATION inRect:CGRectMake(0, (96 - imageToSend.size.height)*0.5, imageToSend.size.width, imageToSend.size.height) linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:YES shouldUpdate:YES buzzWhenDone:YES buzzRepeats:8];
+        UIImage *imageToSend = [MWManager imageForText:textToDisplay];
+        [[MWManager sharedManager] writeImage:[MWManager bitmapDataForCGImage:imageToSend.CGImage] forMode:kMODE_NOTIFICATION inRect:CGRectMake(0, (96 - imageToSend.size.height)*0.5, imageToSend.size.width, imageToSend.size.height) linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:YES shouldUpdate:YES buzzWhenDone:YES buzzRepeats:8];
         
         [self updateNextAlarmTimestamp];
     }

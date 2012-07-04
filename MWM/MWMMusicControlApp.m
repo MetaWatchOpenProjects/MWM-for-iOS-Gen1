@@ -67,14 +67,14 @@
 }
 
 - (void) drawPlayplist:(BOOL)update {
-    UIImage *imageToSend = [AppDelegate imageForText:[NSString stringWithFormat:@"Playlist:\n%@", [[playlistsArray objectAtIndex:currentPlayList] valueForProperty: MPMediaPlaylistPropertyName]]];
-    [[MWManager sharedManager] writeImage:[AppDelegate imageDataForCGImage:imageToSend.CGImage] forMode:kMODE_APPLICATION inRect:CGRectMake(3, 10, imageToSend.size.width, imageToSend.size.height) linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:NO shouldUpdate:update buzzWhenDone:NO buzzRepeats:NO];
+    UIImage *imageToSend = [MWManager imageForText:[NSString stringWithFormat:@"Playlist:\n%@", [[playlistsArray objectAtIndex:currentPlayList] valueForProperty: MPMediaPlaylistPropertyName]]];
+    [[MWManager sharedManager] writeImage:[MWManager bitmapDataForCGImage:imageToSend.CGImage] forMode:kMODE_APPLICATION inRect:CGRectMake(3, 10, imageToSend.size.width, imageToSend.size.height) linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:NO shouldUpdate:update buzzWhenDone:NO buzzRepeats:NO];
 }
 
 - (void) drawCurrentSong:(BOOL)update {
     NSString *songTitle = [self.musicPlayer.nowPlayingItem valueForProperty: MPMediaItemPropertyTitle];
-    UIImage *imageToSend = [AppDelegate imageForText:[NSString stringWithFormat:@"Song:\n%@", songTitle]];
-    [[MWManager sharedManager] writeImage:[AppDelegate imageDataForCGImage:imageToSend.CGImage] forMode:kMODE_APPLICATION inRect:CGRectMake(3, 40, imageToSend.size.width, imageToSend.size.height) linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:NO shouldUpdate:update buzzWhenDone:NO buzzRepeats:NO];
+    UIImage *imageToSend = [MWManager imageForText:[NSString stringWithFormat:@"Song:\n%@", songTitle]];
+    [[MWManager sharedManager] writeImage:[MWManager bitmapDataForCGImage:imageToSend.CGImage] forMode:kMODE_APPLICATION inRect:CGRectMake(3, 40, imageToSend.size.width, imageToSend.size.height) linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:NO shouldUpdate:update buzzWhenDone:NO buzzRepeats:NO];
 }
 
 - (void) nextBtnPressed {

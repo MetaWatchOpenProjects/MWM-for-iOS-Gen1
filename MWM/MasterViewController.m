@@ -78,7 +78,6 @@
     } else {
         [[MWManager sharedManager] forceReleaseAccessToAppModeFromApp:[[NSBundle mainBundle] bundleIdentifier]];
     }
-    
 }
 
 - (IBAction) infoBtnPressed:(id)sender {
@@ -88,6 +87,8 @@
 }
 
 - (void) startiPodApp {
+    // If you are developing a Meta Watch app which will ONLY be accessing the App mode of the Meta Watch,
+    // you should use MWMAppManager library instead. Invoking this method directly, will cause issues.
     [[MWManager sharedManager] handle:[NSURL URLWithString:@"mwm://gain"] from:[[NSBundle mainBundle] bundleIdentifier]];
 }
 
@@ -109,7 +110,7 @@
 }
 
 - (void) widget:(id)widget updatedWithError:(NSError*)error {
-    [[MWManager sharedManager] writeImage:[AppDelegate imageDataForCGImage:[widget previewRef]] forMode:kMODE_IDLE inRect:[widget preview].frame linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:NO shouldUpdate:YES buzzWhenDone:NO buzzRepeats:0];
+    [[MWManager sharedManager] writeImage:[MWManager bitmapDataForCGImage:[widget previewRef]] forMode:kMODE_IDLE inRect:[widget preview].frame linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:NO shouldUpdate:YES buzzWhenDone:NO buzzRepeats:0];
 }
 
 #pragma mark - MWManagerProtocol
@@ -248,8 +249,8 @@
     }
     
     [[MWManager sharedManager] setTimerWith:TIMERVALUE andID:0 andCounts:255];
-    UIImage *imageToSend = [AppDelegate imageForText:@"Application Mode"];
-    [[MWManager sharedManager] writeImage:[AppDelegate imageDataForCGImage:imageToSend.CGImage] forMode:kMODE_APPLICATION inRect:CGRectMake(0, (96 - imageToSend.size.height)*0.5, imageToSend.size.width, imageToSend.size.height) linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:YES shouldUpdate:NO buzzWhenDone:NO buzzRepeats:0];
+    UIImage *imageToSend = [MWManager imageForText:@"Application Mode"];
+    [[MWManager sharedManager] writeImage:[MWManager bitmapDataForCGImage:imageToSend.CGImage] forMode:kMODE_APPLICATION inRect:CGRectMake(0, (96 - imageToSend.size.height)*0.5, imageToSend.size.width, imageToSend.size.height) linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:YES shouldUpdate:NO buzzWhenDone:NO buzzRepeats:0];
 
     [[MWManager  sharedManager] setButton:kBUTTON_A atMode:kMODE_IDLE forType:kBUTTON_TYPE_PRESS_AND_RELEASE withCallbackMsg:BTNAPPMODETOGGLE];
     [[MWManager  sharedManager] setButton:kBUTTON_A atMode:kMODE_APPLICATION forType:kBUTTON_TYPE_PRESS_AND_RELEASE withCallbackMsg:BTNAPPMODETOGGLE];
@@ -321,7 +322,7 @@
 
 - (void) drawDisconnectedScreen {
     [watchView removeFromSuperview];
-    self.watchDisplay.image = [AppDelegate imageForText:@"Disconnected\n\nTap the button below\nto connect."];
+    self.watchDisplay.image = [MWManager imageForText:@"Disconnected\n\nTap the button below\nto connect."];
 }
 			
 #pragma mark - View Controller lifecycle
@@ -352,7 +353,7 @@
     
     self.barIndicatorView.delegate = self;
     
-    self.watchDisplay.image = [AppDelegate imageForText:@"Disconnected\n\nTap the button below\nto connect."];
+    self.watchDisplay.image = [MWManager imageForText:@"Disconnected\n\nTap the button below\nto connect."];
     
     watchView = [[UIView alloc] initWithFrame:watchDisplay.frame];
     watchView.backgroundColor = [UIColor clearColor];
