@@ -267,8 +267,6 @@
     } else if (indexPath.section == 3)  {
         if (indexPath.row == 0) {
             
-        } else if (indexPath.row == 1) {
-            
         } else {
             AlarmViewController *VC = [[AlarmViewController alloc] initWithNibName:@"AlarmViewController" bundle:[NSBundle mainBundle]];
             [self.navigationController pushViewController:VC animated:YES];

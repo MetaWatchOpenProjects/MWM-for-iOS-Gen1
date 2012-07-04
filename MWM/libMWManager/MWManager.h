@@ -206,7 +206,7 @@
  *  @discussion Upload image data to watch and display it.
  *
  */
-- (void) writeImage:(NSData*)imgData forMode:(unsigned char)mode inRect:(CGRect)rect linesPerMessage:(unsigned char)lpm shouldLoadTemplate:(BOOL)loadTemplate buzzWhenDone:(BOOL)buzz buzzRepeats:(unsigned char)repeats;
+- (void) writeImage:(NSData*)imgData forMode:(unsigned char)mode inRect:(CGRect)rect linesPerMessage:(unsigned char)lpm shouldLoadTemplate:(BOOL)loadTemplate shouldUpdate:(BOOL)update buzzWhenDone:(BOOL)buzz buzzRepeats:(unsigned char)repeats;
 /*!
  *  @method loadTemplate:
  *  @param mode Template will be loaded into selected mode’s display buffer.
@@ -387,5 +387,25 @@
  *
  */
 - (void) MWMBtn:(unsigned char)btnIndex atMode:(unsigned char)mode pressedForType:(unsigned char)type withMsg:(unsigned char)msg;
+
+/*!
+ *  @method MWMGrantedLocalAppMode
+ *
+ *  @discussion Callback for internal MWMApp received the access to App mode.
+ *
+ */
+- (void) MWMGrantedLocalAppMode;
+
+/*!
+ *  @method MWMReleasedLocalAppMode
+ *
+ *  @discussion Callback for internal MWMApp lost the access to App mode.
+ *
+ */
+- (void) MWMReleasedLocalAppMode;
+
++(CGImageRef)scaleCGImage: (CGImageRef) image withScale: (float) scale;
++(UIImage *)imageForText:(NSString *)text;
++(NSData*) imageDataForCGImage:(CGImageRef)inImage;
 
 @end

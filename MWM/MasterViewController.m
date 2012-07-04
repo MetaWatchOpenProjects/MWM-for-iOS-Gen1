@@ -73,7 +73,11 @@
 - (void)leftBarBtnPressed:(id)sender {
     NSLog(@"leftBarBtnPressed");
     //[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"mwmapp.com.metawatch.mwmapp1://"]];
-    [self startiPodApp];
+    if (musicApp == nil) {
+        [self startiPodApp];
+    } else {
+        [[MWManager sharedManager] forceReleaseAccessToAppModeFromApp:[[NSBundle mainBundle] bundleIdentifier]];
+    }
     
 }
 
@@ -85,7 +89,6 @@
 
 - (void) startiPodApp {
     [[MWManager sharedManager] handle:[NSURL URLWithString:@"mwm://gain"] from:[[NSBundle mainBundle] bundleIdentifier]];
-    musicApp = [[MWMMusicControlApp alloc] init];
 }
 
 #pragma mark - WidgetSelection Delegate
@@ -106,7 +109,7 @@
 }
 
 - (void) widget:(id)widget updatedWithError:(NSError*)error {
-    [[MWManager sharedManager] writeImage:[AppDelegate imageDataForCGImage:[widget previewRef]] forMode:kMODE_IDLE inRect:[widget preview].frame linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:NO buzzWhenDone:NO buzzRepeats:0];
+    [[MWManager sharedManager] writeImage:[AppDelegate imageDataForCGImage:[widget previewRef]] forMode:kMODE_IDLE inRect:[widget preview].frame linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:NO shouldUpdate:YES buzzWhenDone:NO buzzRepeats:0];
 }
 
 #pragma mark - MWManagerProtocol
@@ -154,8 +157,22 @@
             [musicApp playBtnPressed];
         } else if (btnIndex == kBUTTON_E) {
             [musicApp previousBtnPressed];
+        } else if (btnIndex == kBUTTON_F) {
+            [musicApp playlistBtnPressed];
         }
     }
+}
+
+- (void) MWMGrantedLocalAppMode {
+    [[[UIAlertView alloc] initWithTitle:@"MWM" message:@"iPod App has started." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    self.musicApp = [[MWMMusicControlApp alloc] init];
+    [musicApp startAppMode];
+}
+
+- (void) MWMReleasedLocalAppMode {
+    [[[UIAlertView alloc] initWithTitle:@"MWM" message:@"iPod App has stopped." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    [musicApp stopAppMode];
+    self.musicApp = nil;
 }
 
 #pragma mark - DragSliderView Delegate
@@ -232,7 +249,7 @@
     
     [[MWManager sharedManager] setTimerWith:TIMERVALUE andID:0 andCounts:255];
     UIImage *imageToSend = [AppDelegate imageForText:@"Application Mode"];
-    [[MWManager sharedManager] writeImage:[AppDelegate imageDataForCGImage:imageToSend.CGImage] forMode:kMODE_APPLICATION inRect:CGRectMake(0, (96 - imageToSend.size.height)*0.5, imageToSend.size.width, imageToSend.size.height) linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:YES buzzWhenDone:NO buzzRepeats:0];
+    [[MWManager sharedManager] writeImage:[AppDelegate imageDataForCGImage:imageToSend.CGImage] forMode:kMODE_APPLICATION inRect:CGRectMake(0, (96 - imageToSend.size.height)*0.5, imageToSend.size.width, imageToSend.size.height) linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:YES shouldUpdate:NO buzzWhenDone:NO buzzRepeats:0];
 
     [[MWManager  sharedManager] setButton:kBUTTON_A atMode:kMODE_IDLE forType:kBUTTON_TYPE_PRESS_AND_RELEASE withCallbackMsg:BTNAPPMODETOGGLE];
     [[MWManager  sharedManager] setButton:kBUTTON_A atMode:kMODE_APPLICATION forType:kBUTTON_TYPE_PRESS_AND_RELEASE withCallbackMsg:BTNAPPMODETOGGLE];
