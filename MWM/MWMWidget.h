@@ -32,18 +32,108 @@
 @interface MWMWidget : NSObject
 
 // MetaWatch Widget Interface
+
+/*!
+ *  @property preview
+ *
+ *  @discussion The UIView used to render the preview of thw watch face on the iPhone.
+ *  The origin of the UIView will be overwritten by MWM according to your layout.
+ *
+ */
 @property (nonatomic, strong) UIView *preview;
+
+/*!
+ *  @property updateIntvl
+ *
+ *  @discussion If you widget needs updating at a fixed interval to pull the data, you
+ *  should set this property in seconds. Current the minimum update frequency is 60 seconds,
+ *  if you need a much higher update frequency, like 1 seconds, you should consider using the
+ *  App mode of the MetaWatch. Set this property to -1 if you do not need any updates.
+ *
+ */
 @property (nonatomic) NSInteger updateIntvl;
+
+/*!
+ *  @property updatedTimestamp
+ *
+ *  @discussion The previous updated timestamp.
+ *
+ */
 @property (nonatomic) NSInteger updatedTimestamp;
+
+/*!
+ *  @property settingView
+ *
+ *  @discussion The setting view for the widget, the size should be exact (254, 148). If you 
+ *  need have much more settings, you can use a UIScrollView or present a ModelViewController
+ *  within the setting view.
+ *
+ */
 @property (nonatomic, strong) UIView *settingView;
+
+/*!
+ *  @property widgetSize
+ *
+ *  @discussion Calculated from widgetWidth and widgetHeight from the implementation file.
+ *
+ */
 @property (nonatomic, readonly) CGSize widgetSize;
+
+/*!
+ *  @property widgetID
+ *
+ *  @discussion You should have a unique widgetID. Any presistence settings are stored based on this.
+ *
+ */
 @property (nonatomic, readonly) NSInteger widgetID;
+
+/*!
+ *  @property widgetName
+ *
+ *  @discussion Name of your widget, should be unique also(at least at this moment...).
+ *
+ */
 @property (nonatomic, readonly) NSString *widgetName;
+
+/*!
+ *  @property previewRef
+ *
+ *  @discussion The data will be sent to the Meta Watch. widget:updatedWithError: called, if the error
+ *  is nil, the MWM will send data of previewRef to the watch.
+ *
+ */
 @property (nonatomic) CGImageRef previewRef;
+
+/*!
+ *  @property delegate
+ *
+ *  @discussion MWMWidgetDelegate
+ *
+ */
 @property (nonatomic, weak) id delegate;
 
-- (void) update:(NSInteger)timestamp;
+/*!
+ *  @method prepareToUpdate
+ *
+ *  @discussion Do work needed to update the widget.
+ *
+ */
 - (void) prepareToUpdate;
+
+/*!
+ *  @method update:
+ *
+ *  @discussion Set timestamp to -1, to start a manual update, otherwise no need to call this method.
+ *
+ */
+- (void) update:(NSInteger)timestamp;
+
+/*!
+ *  @method stopUpdate:
+ *
+ *  @discussion Do worked needed to remove the widget. This method normally will also be called in dealloc.
+ *
+ */
 - (void) stopUpdate;
 
 @end
