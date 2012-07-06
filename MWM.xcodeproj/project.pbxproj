@@ -693,8 +693,8 @@
 				);
 				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = iphoneos;
-				VALID_ARCHS = "armv6 armv7";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				VALID_ARCHS = "armv6 armv7 x86_64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -712,8 +712,8 @@
 				);
 				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = iphoneos;
-				VALID_ARCHS = "armv6 armv7";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				VALID_ARCHS = "armv6 armv7 x86_64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

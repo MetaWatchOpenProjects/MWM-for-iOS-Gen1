@@ -131,8 +131,8 @@
 }
 
 - (void) MWMCheckEvent:(NSTimeInterval)timestamp {
-    NSInteger roundedTimeStamp = (NSInteger)timestamp;
-    NSLog(@"MWMCheckEvent:%d", roundedTimeStamp);
+    //NSInteger roundedTimeStamp = (NSInteger)timestamp;
+    //NSLog(@"MWMCheckEvent:%d", roundedTimeStamp);
     for (id widget in liveWidgets) {
         if (![widget isEqual:[NSNull null]]) {
             [widget update:timestamp];
@@ -248,7 +248,6 @@
         [[MWManager sharedManager] setBuzzWithRepeats:3];
     }
     
-    [[MWManager sharedManager] setTimerWith:TIMERVALUE andID:0 andCounts:255];
     UIImage *imageToSend = [MWManager imageForText:@"Application Mode"];
     [[MWManager sharedManager] writeImage:[MWManager bitmapDataForCGImage:imageToSend.CGImage] forMode:kMODE_APPLICATION inRect:CGRectMake(0, (96 - imageToSend.size.height)*0.5, imageToSend.size.width, imageToSend.size.height) linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:YES shouldUpdate:NO buzzWhenDone:NO buzzRepeats:0];
 
