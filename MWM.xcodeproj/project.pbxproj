@@ -90,10 +90,8 @@
 		27FDD0111546CAEA0013D099 /* WidgetTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FDD0101546CAEA0013D099 /* WidgetTime.m */; };
 		27FDD0131546F7FC0013D099 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27FDD0121546F7FC0013D099 /* EventKit.framework */; };
 		27FDD0161546F8110013D099 /* WidgetCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FDD0151546F8110013D099 /* WidgetCalendar.m */; };
-		8568BAF015997AF800D2AB2A /* WidgetTwitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8568BAEF15997AF800D2AB2A /* WidgetTwitter.m */; };
 		8568BAF215997C8F00D2AB2A /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8568BAF115997C8F00D2AB2A /* Twitter.framework */; };
 		8568BAF415997C9600D2AB2A /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8568BAF315997C9600D2AB2A /* Accounts.framework */; };
-		8568BAFC1599801E00D2AB2A /* WidgetTwitterSettingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8568BAFB1599801E00D2AB2A /* WidgetTwitterSettingView.xib */; };
 		857EAA321597828E009C6304 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 857EAA311597828D009C6304 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
@@ -203,11 +201,8 @@
 		27FDD0121546F7FC0013D099 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		27FDD0141546F8110013D099 /* WidgetCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = WidgetCalendar.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		27FDD0151546F8110013D099 /* WidgetCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = WidgetCalendar.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		8568BAEE15997AF800D2AB2A /* WidgetTwitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetTwitter.h; sourceTree = "<group>"; };
-		8568BAEF15997AF800D2AB2A /* WidgetTwitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WidgetTwitter.m; sourceTree = "<group>"; };
 		8568BAF115997C8F00D2AB2A /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		8568BAF315997C9600D2AB2A /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
-		8568BAFB1599801E00D2AB2A /* WidgetTwitterSettingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WidgetTwitterSettingView.xib; sourceTree = "<group>"; };
 		857EAA311597828D009C6304 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -471,7 +466,6 @@
 		27F7CE65154192E600C66158 /* Widgets */ = {
 			isa = PBXGroup;
 			children = (
-				8568BAE91599799300D2AB2A /* WidgetTwitter */,
 				270ECAA6156E62C800ECCCED /* MWMWidgetDelegate.h */,
 				27F2B46C156E6CB1005738E8 /* MWMWidget.h */,
 				270ECAA4156E4ED200ECCCED /* WidgetPhoneStatus */,
@@ -480,16 +474,6 @@
 				27E2930F15626E0100E0DB78 /* WidgetCalendar */,
 			);
 			name = Widgets;
-			sourceTree = "<group>";
-		};
-		8568BAE91599799300D2AB2A /* WidgetTwitter */ = {
-			isa = PBXGroup;
-			children = (
-				8568BAEE15997AF800D2AB2A /* WidgetTwitter.h */,
-				8568BAEF15997AF800D2AB2A /* WidgetTwitter.m */,
-				8568BAFB1599801E00D2AB2A /* WidgetTwitterSettingView.xib */,
-			);
-			name = WidgetTwitter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -605,7 +589,6 @@
 				278C944B1581464E00BD6256 /* icon.png in Resources */,
 				27DFF4051581474700FF7121 /* Default@2x.png in Resources */,
 				27DFF4071581474B00FF7121 /* Default.png in Resources */,
-				8568BAFC1599801E00D2AB2A /* WidgetTwitterSettingView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -631,7 +614,6 @@
 				2752BBEE157E1E9D0053FE77 /* TestViewController.m in Sources */,
 				2752BBF3157E26900053FE77 /* AlarmViewController.m in Sources */,
 				27EB0BAE157F67F900AE2186 /* MWMNotificationsManager.m in Sources */,
-				8568BAF015997AF800D2AB2A /* WidgetTwitter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
