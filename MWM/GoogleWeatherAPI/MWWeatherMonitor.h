@@ -27,7 +27,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import <CoreLocation/CoreLocation.h>
 
 #define kKAWeatherBaseURL @"http://www.google.com/ig/api\?weather="
 
@@ -40,6 +40,8 @@
 @property (nonatomic, retain) NSMutableDictionary *weatherDict;
 @property (nonatomic, retain) NSMutableData *connData;
 @property (nonatomic, retain) NSURLConnection *conn;
+@property (nonatomic, retain) CLLocationManager *locationManager;
+@property (nonatomic, retain) NSMutableArray *locationMeasurements;
 
 @property (nonatomic, assign) id delegate;
 
