@@ -30,7 +30,8 @@
 
 @implementation MWWeatherMonitor
 @synthesize weatherDict, city, connData, delegate, conn;
-
+@synthesize locationManager;
+@synthesize locationMeasurements;
 static MWWeatherMonitor *sharedMonitor;
 
 #pragma mark - Singleton
@@ -57,13 +58,57 @@ static MWWeatherMonitor *sharedMonitor;
 }
 
 - (void) getWeather {
-    NSURL *url =[NSURL URLWithString:[NSString stringWithFormat:@"%@%@&hl=us", kKAWeatherBaseURL, [self.city stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
-    if (url) {
-        NSURLRequest *req = [[NSURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:15];
-        conn = [[NSURLConnection alloc] initWithRequest:req delegate:self startImmediately:YES];
-    } else {
-        [delegate weatherFailedToResolveCity:city];
-    }
+    // Create the manager object
+    self.locationManager = [[[CLLocationManager alloc] init] autorelease];
+    locationManager.desiredAccuracy = 1.0;
+    // Once configured, the location manager must be "started".
+    [locationManager startUpdatingLocation];
+    CLGeocoder *geocoder = [[[CLGeocoder alloc] init] autorelease];
+    CLLocation *location = [[[CLLocation alloc] initWithLatitude:locationManager.location.coordinate.latitude 
+                                                       longitude:locationManager.location.coordinate.longitude] autorelease];
+    __block NSString *postalCode = @"";
+    [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+        CLPlacemark *placemark = [placemarks objectAtIndex:0];
+        NSLog(@"reverseGeocodeLocation:completionHandler: Completion Handler called!");
+        if (error){
+            NSLog(@"Geocode failed with error: %@", error);
+            //return;
+        }
+        NSLog(@"Received placemarks: %@", placemark.postalCode);
+        postalCode = placemark.postalCode;
+        self.city = placemark.postalCode;
+        NSLog(@"Accuracy: %f", locationManager.location.coordinate.longitude);
+        //NSString* locationString = [NSString stringWithFormat:@"%@", "Okemos"];
+        NSURL *url =[NSURL URLWithString:[NSString stringWithFormat:@"%@%@&hl=us", kKAWeatherBaseURL, [postalCode stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+        NSString *urlString = [url absoluteString];
+        NSLog(@"Accuracy: %@", urlString);
+        if (url) {
+            NSURLRequest *req = [[NSURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:15];
+            conn = [[NSURLConnection alloc] initWithRequest:req delegate:self startImmediately:YES];
+        } else {
+            [delegate weatherFailedToResolveCity:city];
+        }
+    }];
+    
+}
+
+/*
+ * We want to get and store a location measurement that meets the desired accuracy. For this example, we are
+ *      going to use horizontal accuracy as the deciding factor. In other cases, you may wish to use vertical
+ *      accuracy, or both together.
+ */
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+    // test that the horizontal accuracy does not indicate an invalid measurement
+    NSLog(@"I am here");
+    if (newLocation.horizontalAccuracy < 0) return;
+    // test the age of the location measurement to determine if the measurement is cached
+    // in most cases you will not want to rely on cached measurements
+    NSTimeInterval locationAge = -[newLocation.timestamp timeIntervalSinceNow];
+    if (locationAge > 5.0) return;
+    // store all of the measurements, just so we can see what kind of data we might receive
+    [locationMeasurements addObject:newLocation];
+    // update the display with the new location data
+    [self getWeather];
     
 }
 
@@ -133,6 +178,7 @@ static MWWeatherMonitor *sharedMonitor;
     [self.conn cancel];
     self.conn = nil;
     [super dealloc];
+    [locationManager stopUpdatingLocation];
 }
 
 @end

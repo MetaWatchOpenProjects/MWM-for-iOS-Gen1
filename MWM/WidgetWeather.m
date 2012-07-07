@@ -67,6 +67,7 @@ static CGFloat widgetHeight = 32;
             useCelsius = [[dataDict valueForKey:@"useC"] boolValue];
             self.currentCityName = [dataDict valueForKey:@"city"];
             updateIntvl = [[dataDict valueForKey:@"updateInterval"] integerValue];
+            //updateIntvl = 120;
             NSLog(@"currentCityName: %@", currentCityName);
             [[MWWeatherMonitor sharedMonitor] setCity:currentCityName];
         }
@@ -129,17 +130,22 @@ static CGFloat widgetHeight = 32;
 }
 
 - (void) update:(NSInteger)timestamp {
+    NSLog(@"Weather Update");
     if (timestamp < 0 || (timestamp - updatedTimestamp >= updateIntvl && updateIntvl >= 0)) {
         // -1: force update; update by interval; update by next calendar
         if (timestamp < 0) {
             timestamp = (NSInteger)[NSDate timeIntervalSinceReferenceDate];
         }
+        NSLog(@"TimeStamp: %d", timestamp);
+        NSLog(@"TimeStamp: %d", timestamp - updatedTimestamp);
+        NSLog(@"TimeStamp2: %d", updateIntvl);
         [self doInternalUpdate:timestamp];
     }
 }
 
 - (void) doInternalUpdate:(NSInteger)timestamp {
     updatedTimestamp = timestamp;
+    NSLog(@"Next weather update in:%d", (NSInteger)(updatedTimestamp - [NSDate timeIntervalSinceReferenceDate]));
     [[MWWeatherMonitor sharedMonitor] getWeather];
 }
 
@@ -258,6 +264,9 @@ static CGFloat widgetHeight = 32;
     NSString *condition = [weatherDict objectForKey:@"condition"];
 
     NSString *location = [weatherDict objectForKey:@"city"];
+    NSLog(@"location: %@", location);
+    [(UITextField*)[settingView viewWithTag:3002] setText:location];
+    [self saveData];
     //NSLog(@"%@", [weather description]);
     if (useCelsius) {
         temp = [weatherDict objectForKey:@"temp_c"];
