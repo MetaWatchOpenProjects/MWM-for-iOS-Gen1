@@ -34,6 +34,7 @@
 @interface MWMNotificationsManager () 
 
 @property (nonatomic) NSInteger nextCalendarUpdateTimestamp;
+@property (nonatomic) NSInteger nextWakeUpAlarmUpdateTimestamp;
 
 @property (nonatomic, strong) EKEventStore *eventStore;
 @property (nonatomic, strong) EKEvent *nextEvent;
@@ -44,6 +45,8 @@
 
 @synthesize nextCalendarUpdateTimestamp, eventStore, nextEvent;
 
+@synthesize nextWakeUpAlarmUpdateTimestamp;
+
 static MWMNotificationsManager *sharedManager;
 
 #pragma mark - Calendar
@@ -53,9 +56,11 @@ static MWMNotificationsManager *sharedManager;
         NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
         [self setCalendarAlertEnabled:[[prefs objectForKey:@"notifCalendar"] boolValue]];
         [self enableTimeZoneSupport:[[prefs objectForKey:@"notifTimezone"] boolValue]];
+        [self setWakeUpAlarmEnabled:[[prefs objectForKey:@"notifWakeUpAlarm"] boolValue]];
     } else {
         [[NSNotificationCenter defaultCenter] removeObserver:self];
         nextCalendarUpdateTimestamp = 0;
+        nextWakeUpAlarmUpdateTimestamp = 0;
     }
     
 }
@@ -114,6 +119,40 @@ static MWMNotificationsManager *sharedManager;
     [[MWManager sharedManager] setWatchRTC];
 }
 
+#pragma mark - Wake Up Alarm
+
+- (void) setWakeUpAlarmEnabled:(BOOL)enable {
+    if (enable) {
+        [self updateNextAlarmTimestamp];
+    } else {
+        nextWakeUpAlarmUpdateTimestamp = 0;
+    }
+}
+
+- (void) updateNextAlarmTimestamp {
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    NSInteger alarmOffset = [[prefs valueForKeyPath:@"notifWakeUpAlarmData.minsOffset"] integerValue];
+    NSInteger currertOffet = [MWMNotificationsManager currentWallClockOffsetInMins];
+    if (currertOffet >= alarmOffset) {
+        // Alarm Passed Today
+        nextWakeUpAlarmUpdateTimestamp = [NSDate timeIntervalSinceReferenceDate] + ((1440 - currertOffet) + alarmOffset)*60;
+    } else {
+        nextWakeUpAlarmUpdateTimestamp = [NSDate timeIntervalSinceReferenceDate] + (alarmOffset - currertOffet)*60;
+    }
+}
+
++ (NSInteger) currentWallClockOffsetInMins {
+    NSDate *todayDate = [NSDate date];
+    
+    NSCalendar* gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    gregorian.timeZone = [NSTimeZone systemTimeZone];
+    
+    unsigned int unitFlags = NSYearCalendarUnit | NSDayCalendarUnit | NSMonthCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+    NSDateComponents* dateComponents = [gregorian components:unitFlags fromDate:todayDate];
+    
+    return dateComponents.hour*60 + dateComponents.minute;
+}
+
 #pragma mark - Singleton
 
 + (MWMNotificationsManager *) sharedManager {
@@ -127,8 +166,7 @@ static MWMNotificationsManager *sharedManager;
     
 }
 
-- (id)init
-{
+- (id) init {
     self = [super init];
     if (self) {
         // Initialization code here.
@@ -144,6 +182,7 @@ static MWMNotificationsManager *sharedManager;
         [prefs synchronize];
         
         nextCalendarUpdateTimestamp = 0;
+        nextWakeUpAlarmUpdateTimestamp = 0;
     }
     
     return self;
@@ -156,9 +195,19 @@ static MWMNotificationsManager *sharedManager;
         [format setDateFormat:@"HH:mm"];
         
         NSString *textToDisplay = [NSString stringWithFormat:@"%@\n \n%@", [format stringFromDate:nextEvent.startDate], nextEvent.title];
-        UIImage *imageToSend = [AppDelegate imageForText:textToDisplay];
-        [[MWManager sharedManager] writeImage:[AppDelegate imageDataForCGImage:imageToSend.CGImage] forMode:kMODE_NOTIFICATION inRect:CGRectMake(0, (96 - imageToSend.size.height)*0.5, imageToSend.size.width, imageToSend.size.height) linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:YES buzzWhenDone:YES buzzRepeats:8];
+        UIImage *imageToSend = [MWManager imageForText:textToDisplay];
+        [[MWManager sharedManager] writeImage:[MWManager bitmapDataForCGImage:imageToSend.CGImage] forMode:kMODE_NOTIFICATION inRect:CGRectMake(0, (96 - imageToSend.size.height)*0.5, imageToSend.size.width, imageToSend.size.height) linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:YES shouldUpdate:YES buzzWhenDone:YES buzzRepeats:8];
+        
         [self storeChanged];
     }
+    
+    if (timestamp > nextWakeUpAlarmUpdateTimestamp && nextWakeUpAlarmUpdateTimestamp > 0) {        
+        NSString *textToDisplay = [NSString stringWithFormat:@"Time to Wake Up"];
+        UIImage *imageToSend = [MWManager imageForText:textToDisplay];
+        [[MWManager sharedManager] writeImage:[MWManager bitmapDataForCGImage:imageToSend.CGImage] forMode:kMODE_NOTIFICATION inRect:CGRectMake(0, (96 - imageToSend.size.height)*0.5, imageToSend.size.width, imageToSend.size.height) linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:YES shouldUpdate:YES buzzWhenDone:YES buzzRepeats:8];
+        
+        [self updateNextAlarmTimestamp];
+    }
 }
+
 @end

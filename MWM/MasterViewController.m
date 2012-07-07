@@ -32,8 +32,6 @@
 #import "SettingsViewController.h"
 #import "InfoViewController.h"
 
-#import <MediaPlayer/MediaPlayer.h>
-
 #define SETTINGVIEWTAGROW1 8001
 #define SETTINGVIEWTAGROW2 8002
 #define SETTINGVIEWTAGROW3 8003
@@ -64,7 +62,7 @@
 
 @implementation MasterViewController
 
-@synthesize appDelegate, watchDisplay, watchView, barIndicatorView, widgetSettingView, row1Label, row2Label, row3Label, row4Label, widget1SettingView, widget2SettingView, widget3SettingView, liveWidgets;
+@synthesize appDelegate, watchDisplay, watchView, barIndicatorView, widgetSettingView, row1Label, row2Label, row3Label, row4Label, widget1SettingView, widget2SettingView, widget3SettingView, liveWidgets, musicApp;
 
 #pragma mark - UI Actions
 - (void)rightBarBtnPressed:(id)sender {
@@ -75,13 +73,23 @@
 - (void)leftBarBtnPressed:(id)sender {
     NSLog(@"leftBarBtnPressed");
     //[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"mwmapp.com.metawatch.mwmapp1://"]];
-    [[MWManager sharedManager] updateDisplay:kMODE_NOTIFICATION];
+    if (musicApp == nil) {
+        [self startiPodApp];
+    } else {
+        [[MWManager sharedManager] forceReleaseAccessToAppModeFromApp:[[NSBundle mainBundle] bundleIdentifier]];
+    }
 }
 
 - (IBAction) infoBtnPressed:(id)sender {
     InfoViewController *VC = [[InfoViewController alloc] initWithNibName:@"InfoViewController" bundle:[NSBundle mainBundle]];
     VC.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentModalViewController:VC animated:YES];
+}
+
+- (void) startiPodApp {
+    // If you are developing a Meta Watch app which will ONLY be accessing the App mode of the Meta Watch,
+    // you should use MWMAppManager library instead. Invoking this method directly, will cause issues.
+    [[MWManager sharedManager] handle:[NSURL URLWithString:@"mwm://gain"] from:[[NSBundle mainBundle] bundleIdentifier]];
 }
 
 #pragma mark - WidgetSelection Delegate
@@ -102,7 +110,7 @@
 }
 
 - (void) widget:(id)widget updatedWithError:(NSError*)error {
-    [[MWManager sharedManager] writeImage:[AppDelegate imageDataForCGImage:[widget previewRef]] forMode:kMODE_IDLE inRect:[widget preview].frame linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:NO buzzWhenDone:NO buzzRepeats:0];
+    [[MWManager sharedManager] writeImage:[MWManager bitmapDataForCGImage:[widget previewRef]] forMode:kMODE_IDLE inRect:[widget preview].frame linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:NO shouldUpdate:YES buzzWhenDone:NO buzzRepeats:0];
 }
 
 #pragma mark - MWManagerProtocol
@@ -123,8 +131,8 @@
 }
 
 - (void) MWMCheckEvent:(NSTimeInterval)timestamp {
-    NSInteger roundedTimeStamp = (NSInteger)timestamp;
-    NSLog(@"MWMCheckEvent:%d", roundedTimeStamp);
+    //NSInteger roundedTimeStamp = (NSInteger)timestamp;
+    //NSLog(@"MWMCheckEvent:%d", roundedTimeStamp);
     for (id widget in liveWidgets) {
         if (![widget isEqual:[NSNull null]]) {
             [widget update:timestamp];
@@ -143,7 +151,29 @@
         }
     } else if (msg == BTNNOTIFMODETOGGLE && mode == kMODE_NOTIFICATION) {
         [[MWManager sharedManager] updateDisplay:kMODE_IDLE];
+    } else if (msg == 0x13 && mode == kMODE_APPLICATION) {
+        if (btnIndex == kBUTTON_B) {
+            [musicApp nextBtnPressed];
+        } else if (btnIndex == kBUTTON_C) {
+            [musicApp playBtnPressed];
+        } else if (btnIndex == kBUTTON_E) {
+            [musicApp previousBtnPressed];
+        } else if (btnIndex == kBUTTON_F) {
+            [musicApp playlistBtnPressed];
+        }
     }
+}
+
+- (void) MWMGrantedLocalAppMode {
+    [[[UIAlertView alloc] initWithTitle:@"MWM" message:@"iPod App has started." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    self.musicApp = [[MWMMusicControlApp alloc] init];
+    [musicApp startAppMode];
+}
+
+- (void) MWMReleasedLocalAppMode {
+    [[[UIAlertView alloc] initWithTitle:@"MWM" message:@"iPod App has stopped." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    [musicApp stopAppMode];
+    self.musicApp = nil;
 }
 
 #pragma mark - DragSliderView Delegate
@@ -218,9 +248,8 @@
         [[MWManager sharedManager] setBuzzWithRepeats:3];
     }
     
-    [[MWManager sharedManager] setTimerWith:TIMERVALUE andID:0 andCounts:255];
-    UIImage *imageToSend = [AppDelegate imageForText:@"Application Mode"];
-    [[MWManager sharedManager] writeImage:[AppDelegate imageDataForCGImage:imageToSend.CGImage] forMode:kMODE_APPLICATION inRect:CGRectMake(0, (96 - imageToSend.size.height)*0.5, imageToSend.size.width, imageToSend.size.height) linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:YES buzzWhenDone:NO buzzRepeats:0];
+    UIImage *imageToSend = [MWManager imageForText:@"Application Mode"];
+    [[MWManager sharedManager] writeImage:[MWManager bitmapDataForCGImage:imageToSend.CGImage] forMode:kMODE_APPLICATION inRect:CGRectMake(0, (96 - imageToSend.size.height)*0.5, imageToSend.size.width, imageToSend.size.height) linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:YES shouldUpdate:NO buzzWhenDone:NO buzzRepeats:0];
 
     [[MWManager  sharedManager] setButton:kBUTTON_A atMode:kMODE_IDLE forType:kBUTTON_TYPE_PRESS_AND_RELEASE withCallbackMsg:BTNAPPMODETOGGLE];
     [[MWManager  sharedManager] setButton:kBUTTON_A atMode:kMODE_APPLICATION forType:kBUTTON_TYPE_PRESS_AND_RELEASE withCallbackMsg:BTNAPPMODETOGGLE];
@@ -279,7 +308,7 @@
     [self.watchView addSubview:idle];
     [self.watchView sendSubviewToBack:idle];
     [self.view addSubview:watchView];
-    
+
     [[MWManager sharedManager] drawIdleLines:[[[NSUserDefaults standardUserDefaults] objectForKey:@"drawDashLines"] boolValue]];
     
     for (id widget in liveWidgets) {
@@ -292,7 +321,7 @@
 
 - (void) drawDisconnectedScreen {
     [watchView removeFromSuperview];
-    self.watchDisplay.image = [AppDelegate imageForText:@"Disconnected\n\nTap the button below\nto connect."];
+    self.watchDisplay.image = [MWManager imageForText:@"Disconnected\n\nTap the button below\nto connect."];
 }
 			
 #pragma mark - View Controller lifecycle
@@ -311,7 +340,7 @@
     rightBarBtn.width = 30;
     self.navigationItem.rightBarButtonItem = rightBarBtn;
     
-    UIBarButtonItem *leftBarBtn = [[UIBarButtonItem alloc] initWithTitle:@"Test"
+    UIBarButtonItem *leftBarBtn = [[UIBarButtonItem alloc] initWithTitle:@"iPod"
                                                                     style:UIBarButtonItemStyleBordered
                                                                    target:self
                                                                    action:@selector(leftBarBtnPressed:)]; 
@@ -323,7 +352,7 @@
     
     self.barIndicatorView.delegate = self;
     
-    self.watchDisplay.image = [AppDelegate imageForText:@"Disconnected\n\nTap the button below\nto connect."];
+    self.watchDisplay.image = [MWManager imageForText:@"Disconnected\n\nTap the button below\nto connect."];
     
     watchView = [[UIView alloc] initWithFrame:watchDisplay.frame];
     watchView.backgroundColor = [UIColor clearColor];

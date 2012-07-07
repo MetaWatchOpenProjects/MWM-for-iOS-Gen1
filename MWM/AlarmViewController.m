@@ -28,11 +28,66 @@
 
 #import "AlarmViewController.h"
 
+#import "MWMNotificationsManager.h"
+
 @interface AlarmViewController ()
+
+@property (nonatomic, strong) IBOutlet UIDatePicker *timePickerView;
+@property (nonatomic, strong) IBOutlet UISwitch *alarmSwitch;
+@property (nonatomic, strong) IBOutlet UISlider *buzzCountsSlider;
 
 @end
 
 @implementation AlarmViewController
+
+@synthesize timePickerView, alarmSwitch, buzzCountsSlider;
+
++ (NSInteger) minsOffetFromDate:(NSDate*)date {
+    NSCalendar* gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    gregorian.timeZone = [NSTimeZone systemTimeZone];
+    unsigned int unitFlags = NSYearCalendarUnit | NSDayCalendarUnit | NSMonthCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+    NSDateComponents* dateComponents = [gregorian components:unitFlags fromDate:date];
+    return dateComponents.hour*60 + dateComponents.minute;
+}
+
++ (NSDate*) localFireDateFromOffset:(NSInteger)minsOffset {
+    // Check if minsoffset is out of range
+    if (minsOffset < 0 || minsOffset > 1439) {
+        NSLog(@"sharedManager: localFireDateFromOffset - Failed: minsOffset out of range");
+        return nil;
+    }
+    
+    NSDate *nowDate = [NSDate date];
+    
+    
+    
+    NSCalendar* gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    gregorian.timeZone = [NSTimeZone systemTimeZone];
+    unsigned int unitFlags = NSYearCalendarUnit | NSDayCalendarUnit | NSMonthCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+    NSDateComponents* dateComponents = [gregorian components:unitFlags fromDate:nowDate];
+    
+    dateComponents.hour = minsOffset/60;
+    dateComponents.minute = minsOffset%60;
+    
+    NSDate *theFireDateForCurrentTZ = [gregorian dateFromComponents:dateComponents];
+    
+    return theFireDateForCurrentTZ;
+}
+
+- (void) leftBarBtnPressed:(id)sender {
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    [prefs setObject:[NSNumber numberWithBool:alarmSwitch.isOn] forKey:@"notifWakeUpAlarm"];
+    
+    NSMutableDictionary *alarmDict = [NSMutableDictionary dictionary];
+    [alarmDict setObject:[NSNumber numberWithInteger:[AlarmViewController minsOffetFromDate:timePickerView.date]] forKey:@"minsOffset"];
+    [prefs setObject:alarmDict forKey:@"notifWakeUpAlarmData"];
+    
+    [prefs synchronize];
+    
+    [[MWMNotificationsManager sharedManager] setWakeUpAlarmEnabled:alarmSwitch.isOn];
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -48,6 +103,19 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    UIBarButtonItem *leftBarBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(leftBarBtnPressed:)];
+    self.navigationItem.leftBarButtonItem = leftBarBtn;
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    [alarmSwitch setOn:[[prefs objectForKey:@"notifWakeUpAlarm"] boolValue]];
+    
+    NSDate *fireDate = [AlarmViewController localFireDateFromOffset:[[prefs valueForKeyPath:@"notifWakeUpAlarmData.minsOffset"] integerValue]];
+    [timePickerView setDate:fireDate];
+    
+    [super viewWillAppear:animated];
 }
 
 - (void)viewDidUnload

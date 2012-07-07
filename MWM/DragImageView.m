@@ -147,7 +147,7 @@
             
             if (location.y >= 300) {
                 connectButton.frame = CGRectMake(0.5*(320 - kBUTTOMWIDTH), 32 - connectButton.frame.size.height*0.5, kBUTTOMWIDTH, connectButton.frame.size.height);
-                [[[UIAlertView alloc] initWithTitle:@"Confirmation" message:@"Do you really want to disconnect the MetaWatch?" delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil] show];
+                [[[UIAlertView alloc] initWithTitle:@"Confirmation" message:@"Do you really want to disconnect the MetaWatch? Apps using the App mode of the MetaWatch will also be disconnected at this time." delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil] show];
                 [UIView commitAnimations];
                 return;
             } else {

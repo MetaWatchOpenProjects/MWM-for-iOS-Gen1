@@ -32,14 +32,17 @@
 
 @interface MWMNotificationsManager : NSObject
 
+// Interface
 + (MWMNotificationsManager *) sharedManager;
+- (void) update:(NSInteger)timestamp;
 
+// Global Toggle
 - (void) setNotificationsEnabled:(BOOL)enable;
 
+// Manager Functions
 - (void) setCalendarAlertEnabled:(BOOL)enable;
 - (void) enableTimeZoneSupport:(BOOL)enable;
-
-- (void) update:(NSInteger)timestamp;
+- (void) setWakeUpAlarmEnabled:(BOOL)enable;
 
 
 

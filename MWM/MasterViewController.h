@@ -38,6 +38,8 @@
 #import "WidgetsSelectionDelegate.h"
 #import "MWMWidget.h"
 
+#import "MWMMusicControlApp.h"
+
 #define TIMERVALUE 60
 
 @interface MasterViewController : UIViewController <UIScrollViewDelegate, DragSliderViewDelegate, MWManagerProtocol, MWMWidgetDelegate, WidgetsSelectionDelegate>
@@ -47,5 +49,8 @@
 @property (nonatomic, strong) IBOutlet DragImageView *barIndicatorView;
 
 @property (nonatomic, strong) IBOutlet UIView* widgetSettingView;
+
+
+@property (nonatomic, strong) MWMMusicControlApp *musicApp;
 
 @end

@@ -29,6 +29,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
+#import <QuartzCore/QuartzCore.h>
 
 // Do not modify Below
 #define kMSG_TYPE_GET_DEVICE_TYPE 0x01
@@ -196,7 +197,7 @@
 
 /*!
  *  @method writeImage:forMode:inRect:linesPerMessage:shouldLoadTemplate:buzzWhenDone:buzzRepeats:
- *  @param imgData Bitmap data for image, use imageDataForCGImage to create.
+ *  @param imgData Bitmap data for image, use bitmapDataForCGImage to create.
  *  @param mode The mode of the image should be displayed at.
  *  @param rect The y cordinate will be used to determine the start line of the data. Other properties not used yet.
  *  @param lpm Amount of lines of pixel to be written.
@@ -206,7 +207,8 @@
  *  @discussion Upload image data to watch and display it.
  *
  */
-- (void) writeImage:(NSData*)imgData forMode:(unsigned char)mode inRect:(CGRect)rect linesPerMessage:(unsigned char)lpm shouldLoadTemplate:(BOOL)loadTemplate buzzWhenDone:(BOOL)buzz buzzRepeats:(unsigned char)repeats;
+- (void) writeImage:(NSData*)imgData forMode:(unsigned char)mode inRect:(CGRect)rect linesPerMessage:(unsigned char)lpm shouldLoadTemplate:(BOOL)loadTemplate shouldUpdate:(BOOL)update buzzWhenDone:(BOOL)buzz buzzRepeats:(unsigned char)repeats;
+
 /*!
  *  @method loadTemplate:
  *  @param mode Template will be loaded into selected mode’s display buffer.
@@ -254,7 +256,7 @@
 - (void) getDeviceType;
 
 /*!
- *  @method getDeviceInfoString
+ *  @method getDeviceInfogString
  *
  *  @discussion Not in use
  *
@@ -333,6 +335,25 @@
  */
 - (BOOL) forceReleaseAccessToAppModeFromApp:(NSString*)appIdentifier;
 
+/*!
+ *  @method imageForText:
+ *  @param text The text needs to be rendered.
+ *
+ *  @discussion Create an image with a width of 96px and a dynamic height according to the length of the text.
+ *
+ */
++ (UIImage *)imageForText:(NSString *)text;
+
+/*!
+ *  @method bitmapDataForCGImage:
+ *  @param The image needs to be drawn at the watch screen.
+ *
+ *  @discussion Return the bitmap data to send to the watch, pass to writeImage:forMode:inRect:linesPerMessage:
+ *  shouldLoadTemplate:buzzWhenDone:buzzRepeats: to send to the watch.
+ *
+ */
++ (NSData*) bitmapDataForCGImage:(CGImageRef)inImage;
+
 @end
 
 /*!
@@ -375,7 +396,7 @@
 /*!
  *  @method MWMCheckEvent:
  *
- *  @discussion Do updates needed.
+ *  @discussion Do updates needed. e.g Progressive updates to inform the user status of connecting.
  *
  */
 - (void) MWMCheckEvent:(NSTimeInterval)timestamp;
@@ -387,5 +408,21 @@
  *
  */
 - (void) MWMBtn:(unsigned char)btnIndex atMode:(unsigned char)mode pressedForType:(unsigned char)type withMsg:(unsigned char)msg;
+
+/*!
+ *  @method MWMGrantedLocalAppMode
+ *
+ *  @discussion Callback for internal MWMApp received the access to App mode.
+ *
+ */
+- (void) MWMGrantedLocalAppMode;
+
+/*!
+ *  @method MWMReleasedLocalAppMode
+ *
+ *  @discussion Callback for internal MWMApp lost the access to App mode.
+ *
+ */
+- (void) MWMReleasedLocalAppMode;
 
 @end

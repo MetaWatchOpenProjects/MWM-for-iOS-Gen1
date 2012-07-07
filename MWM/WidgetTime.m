@@ -85,6 +85,15 @@ static CGFloat widgetHeight = 30;
             [(UISegmentedControl*)[settingView viewWithTag:3003] setSelectedSegmentIndex:1];
         }
         [(UISegmentedControl*)[settingView viewWithTag:3003] addTarget:self action:@selector(monthSegValueChanged:) forControlEvents:UIControlEventValueChanged];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(stopTimer)
+                                                     name:UIApplicationDidEnterBackgroundNotification 
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(startTimer)
+                                                     name:UIApplicationWillEnterForegroundNotification 
+                                                   object:nil];
     }
     return self;
 }
@@ -141,6 +150,7 @@ static CGFloat widgetHeight = 30;
     [[MWManager sharedManager] setWatchShowSec:showSec];
     [[MWManager sharedManager] setWatchShowMonthFirst:monthFirst];
     [[MWManager sharedManager] setWatchRTC];
+    [self startTimer];
 }
 
 - (void) update:(NSInteger)timestamp {
@@ -149,9 +159,6 @@ static CGFloat widgetHeight = 30;
     }
     if (timestamp < 0 || timestamp - updatedTimestamp >= updateIntvl) {
         updatedTimestamp = timestamp;
-        if (watchTimer == nil) {
-            self.watchTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(watchTimerCalled:) userInfo:nil repeats:YES];
-        }
     }
     if (timestamp < 0) {
         updatedTimestamp = (NSInteger)[NSDate timeIntervalSinceReferenceDate];
@@ -159,16 +166,22 @@ static CGFloat widgetHeight = 30;
 }
 
 - (void) stopUpdate {
-    [watchTimer invalidate];
+    [self stopTimer];
+}
+
+- (void) stopTimer {
+    [self.watchTimer invalidate];
     self.watchTimer = nil;
+}
+
+- (void) startTimer {
+    self.watchTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(watchTimerCalled:) userInfo:nil repeats:YES];
 }
 
 - (void) watchTimerCalled:(NSTimer*)timer {
     NSDate *now = [[NSDate alloc] init];
     
     NSDateFormatter *timeFormat = [[NSDateFormatter alloc] init];
-    
-    
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     
     if (showSec) {
@@ -197,10 +210,6 @@ static CGFloat widgetHeight = 30;
         dateLabel.text = [dateFormat stringFromDate:now];
     }
     
-    
-    
-    
-    //NSLog(@"tick, %@, %@", theTime , theDate);
 }
 
 // Allow external classes to read preferences
