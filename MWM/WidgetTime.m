@@ -167,6 +167,7 @@ static CGFloat widgetHeight = 30;
 
 - (void) stopUpdate {
     [self stopTimer];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void) stopTimer {
