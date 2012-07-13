@@ -58,6 +58,7 @@ static MWWeatherMonitor *sharedMonitor;
 
 - (void) getWeather {
     NSURL *url =[NSURL URLWithString:[NSString stringWithFormat:@"%@%@&hl=us", kKAWeatherBaseURL, [self.city stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+    NSLog(@"%@", url);
     if (url) {
         NSURLRequest *req = [[NSURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:15];
         conn = [[NSURLConnection alloc] initWithRequest:req delegate:self startImmediately:YES];
@@ -87,13 +88,17 @@ static MWWeatherMonitor *sharedMonitor;
         return;
     }
     
-    NSXMLParser *parser = [[NSXMLParser alloc] initWithData:connData];
+    NSString *stringReply = [[NSString alloc] initWithData:connData encoding:NSISOLatin1StringEncoding];
+    NSLog(@"%@", stringReply);
+    
+    NSXMLParser *parser = [[NSXMLParser alloc] initWithData:[stringReply dataUsingEncoding:NSUTF8StringEncoding]];
     [parser setShouldProcessNamespaces:YES];
     [parser setShouldResolveExternalEntities:YES];
     [parser setShouldReportNamespacePrefixes:YES];
     [parser setDelegate:self];
     [parser parse];
     
+    [stringReply release];
     [parser release];
     if ([weatherDict valueForKey:@"city"]) {
         NSInteger lowInF = [[weatherDict valueForKey:@"low"] integerValue];
@@ -117,7 +122,7 @@ static MWWeatherMonitor *sharedMonitor;
 //http://www.google.com/ig/api?weather=,,,60167000,24955000 *1000000
 
 -(void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict {
-    //NSLog(@"element: %@ %@",elementName, attributeDict);
+    NSLog(@"element: %@ %@",elementName, attributeDict);
     if ([weatherDict objectForKey:elementName] == nil) {
         id obj = [attributeDict objectForKey:@"data"];
         if (obj) {
