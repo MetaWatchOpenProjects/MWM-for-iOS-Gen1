@@ -122,7 +122,7 @@ static MWWeatherMonitor *sharedMonitor;
 //http://www.google.com/ig/api?weather=,,,60167000,24955000 *1000000
 
 -(void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict {
-    NSLog(@"element: %@ %@",elementName, attributeDict);
+    //NSLog(@"element: %@ %@",elementName, attributeDict);
     if ([weatherDict objectForKey:elementName] == nil) {
         id obj = [attributeDict objectForKey:@"data"];
         if (obj) {
