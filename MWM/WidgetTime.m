@@ -184,7 +184,10 @@ static CGFloat widgetHeight = 30;
     
     NSDateFormatter *timeFormat = [[NSDateFormatter alloc] init];
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    
+    NSLocale *enUSPOSIXLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+
+    [timeFormat setLocale:enUSPOSIXLocale];
+    [dateFormat setLocale:enUSPOSIXLocale];
     if (showSec) {
         [timeFormat setDateFormat:@"hh:mm:ss"];
         NSString *theTime = [timeFormat stringFromDate:now];
