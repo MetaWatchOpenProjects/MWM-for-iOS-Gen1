@@ -92,6 +92,7 @@
 		27FDD0111546CAEA0013D099 /* WidgetTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FDD0101546CAEA0013D099 /* WidgetTime.m */; };
 		27FDD0131546F7FC0013D099 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27FDD0121546F7FC0013D099 /* EventKit.framework */; };
 		27FDD0161546F8110013D099 /* WidgetCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FDD0151546F8110013D099 /* WidgetCalendar.m */; };
+		4E90575115B8CEC50028F4E0 /* mwm_icon114.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E90575015B8CEC50028F4E0 /* mwm_icon114.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -202,6 +203,7 @@
 		27FDD0121546F7FC0013D099 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		27FDD0141546F8110013D099 /* WidgetCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = WidgetCalendar.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		27FDD0151546F8110013D099 /* WidgetCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = WidgetCalendar.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		4E90575015B8CEC50028F4E0 /* mwm_icon114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mwm_icon114.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -275,6 +277,7 @@
 		275A00AA153EA9470096E977 = {
 			isa = PBXGroup;
 			children = (
+				4E90575015B8CEC50028F4E0 /* mwm_icon114.png */,
 				275A00BF153EA9470096E977 /* MWM */,
 				275A00B8153EA9470096E977 /* Frameworks */,
 				275A00B6153EA9470096E977 /* Products */,
@@ -584,6 +587,7 @@
 				278C944B1581464E00BD6256 /* icon.png in Resources */,
 				27DFF4051581474700FF7121 /* Default@2x.png in Resources */,
 				27DFF4071581474B00FF7121 /* Default.png in Resources */,
+				4E90575115B8CEC50028F4E0 /* mwm_icon114.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
