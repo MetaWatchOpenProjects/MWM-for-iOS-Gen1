@@ -58,7 +58,6 @@ static MWWeatherMonitor *sharedMonitor;
 }
 
 - (void) getWeather {
-<<<<<<< HEAD
     // Create the manager object
     self.locationManager = [[[CLLocationManager alloc] init] autorelease];
     locationManager.desiredAccuracy = 1.0;
@@ -110,7 +109,6 @@ static MWWeatherMonitor *sharedMonitor;
     [locationMeasurements addObject:newLocation];
     // update the display with the new location data
     [self getWeather];
-=======
     NSURL *url =[NSURL URLWithString:[NSString stringWithFormat:@"%@%@&hl=us", kKAWeatherBaseURL, [self.city stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
     NSLog(@"%@", url);
     if (url) {
@@ -118,9 +116,7 @@ static MWWeatherMonitor *sharedMonitor;
         conn = [[NSURLConnection alloc] initWithRequest:req delegate:self startImmediately:YES];
     } else {
         [delegate weatherFailedToResolveCity:city];
-    }
->>>>>>> upstream/master
-    
+    }    
 }
 
 - (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse {
