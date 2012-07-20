@@ -72,7 +72,6 @@
 
 - (void)leftBarBtnPressed:(id)sender {
     NSLog(@"leftBarBtnPressed");
-    //[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"mwmapp.com.metawatch.mwmapp1://"]];
     if (musicApp == nil) {
         [self startiPodApp];
     } else {

@@ -37,6 +37,8 @@
 
 - (IBAction) responseSegCtrlValueChanged:(id)sender;
 - (IBAction) clearBtnPressed:(id)sender;
+- (IBAction) sendBtnPressed:(id)sender;
+- (IBAction) nvalBtnPressed:(id)sender;
 
 @end
 
@@ -55,6 +57,15 @@
 - (IBAction) clearBtnPressed:(id)sender {
     [[MWManager sharedManager] forceReleaseAccessToAppModeFromApp:[[MWManager sharedManager] currentAppModeIdentifier]];
     appIDLabel.text = [[MWManager sharedManager] currentAppModeIdentifier];
+}
+
+- (IBAction)sendBtnPressed:(id)sender {
+    UIImage *sendingImg = [UIImage imageNamed:@"2.bmp"];
+    [[MWManager sharedManager] writeImage:[MWManager bitmapDataForCGImage:sendingImg.CGImage] forMode:kMODE_NOTIFICATION inRect:CGRectMake(0, 0, sendingImg.size.width, sendingImg.size.height) linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:NO shouldUpdate:YES buzzWhenDone:NO buzzRepeats:0];
+}
+
+- (IBAction)nvalBtnPressed:(id)sender {
+    [[MWManager sharedManager] performSelector:@selector(testReadNval) withObject:nil];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
