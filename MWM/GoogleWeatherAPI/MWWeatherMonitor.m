@@ -140,7 +140,6 @@ static MWWeatherMonitor *sharedMonitor;
     }
     
     NSString *stringReply = [[NSString alloc] initWithData:connData encoding:NSISOLatin1StringEncoding];
-    NSLog(@"%@", stringReply);
     
     NSXMLParser *parser = [[NSXMLParser alloc] initWithData:[stringReply dataUsingEncoding:NSUTF8StringEncoding]];
     [parser setShouldProcessNamespaces:YES];

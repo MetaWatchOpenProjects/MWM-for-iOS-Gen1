@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2702C23E15B96EF9006FC160 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2702C23D15B96EF9006FC160 /* icon.png */; };
 		270D2DC4154025DE0088C59C /* slider.png in Resources */ = {isa = PBXBuildFile; fileRef = 270D2DC2154025DE0088C59C /* slider.png */; };
 		270D2DC5154025DE0088C59C /* slider@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 270D2DC3154025DE0088C59C /* slider@2x.png */; };
 		2719C0D115664306007E49A4 /* WidgetWeatherSettingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2719C0D015664306007E49A4 /* WidgetWeatherSettingView.xib */; };
@@ -45,7 +46,6 @@
 		275A00E6153EB4DB0096E977 /* handsfree.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 275A00E5153EB4DB0096E977 /* handsfree.jpeg */; };
 		275A00E8153EC6600096E977 /* idel.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 275A00E7153EC6600096E977 /* idel.bmp */; };
 		276A1B2C15512434007C77C7 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 276A1B2B15512434007C77C7 /* CoreBluetooth.framework */; };
-		278C944B1581464E00BD6256 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 278C944A1581464D00BD6256 /* icon.png */; };
 		27A71CD5156BC44D0025D784 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 27A71CD4156BC44D0025D784 /* LICENSE */; };
 		27CED4B21575392B00539874 /* setting@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27CED4B11575392B00539874 /* setting@2x.png */; };
 		27CED4B515753A5600539874 /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 27CED4B415753A5600539874 /* setting.png */; };
@@ -76,7 +76,6 @@
 		27E0F3F0153F258600D1C3F3 /* weather_wind.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 27E0F3EA153F258600D1C3F3 /* weather_wind.bmp */; };
 		27E0F3F7153F3FB300D1C3F3 /* bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 27E0F3F5153F3FB300D1C3F3 /* bar.png */; };
 		27E0F3F8153F3FB300D1C3F3 /* bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27E0F3F6153F3FB300D1C3F3 /* bar@2x.png */; };
-		27E2930A15626D0B00E0DB78 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27E2930915626D0A00E0DB78 /* icon@2x.png */; };
 		27E2930C15626DBF00E0DB78 /* WidgetTimeSettingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27E2930B15626DBF00E0DB78 /* WidgetTimeSettingView.xib */; };
 		27E293181562793C00E0DB78 /* 1.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 27E293141562793C00E0DB78 /* 1.bmp */; };
 		27E293191562793C00E0DB78 /* 2.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 27E293151562793C00E0DB78 /* 2.bmp */; };
@@ -98,6 +97,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2702C23D15B96EF9006FC160 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = SOURCE_ROOT; };
 		270D2DC2154025DE0088C59C /* slider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slider.png; sourceTree = "<group>"; };
 		270D2DC3154025DE0088C59C /* slider@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider@2x.png"; sourceTree = "<group>"; };
 		270ECAA6156E62C800ECCCED /* MWMWidgetDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWMWidgetDelegate.h; sourceTree = "<group>"; };
@@ -148,7 +148,6 @@
 		275A00E5153EB4DB0096E977 /* handsfree.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = handsfree.jpeg; sourceTree = "<group>"; };
 		275A00E7153EC6600096E977 /* idel.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = idel.bmp; sourceTree = "<group>"; };
 		276A1B2B15512434007C77C7 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
-		278C944A1581464D00BD6256 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		279CDCFC1562B8FA00C9FA63 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		27A71CD4156BC44D0025D784 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		27CED4B11575392B00539874 /* setting@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setting@2x.png"; sourceTree = "<group>"; };
@@ -182,7 +181,6 @@
 		27E0F3EA153F258600D1C3F3 /* weather_wind.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = weather_wind.bmp; sourceTree = "<group>"; };
 		27E0F3F5153F3FB300D1C3F3 /* bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar.png; sourceTree = "<group>"; };
 		27E0F3F6153F3FB300D1C3F3 /* bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bar@2x.png"; sourceTree = "<group>"; };
-		27E2930915626D0A00E0DB78 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "../icon@2x.png"; sourceTree = "<group>"; };
 		27E2930B15626DBF00E0DB78 /* WidgetTimeSettingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WidgetTimeSettingView.xib; sourceTree = "<group>"; };
 		27E293141562793C00E0DB78 /* 1.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = 1.bmp; sourceTree = "<group>"; };
 		27E293151562793C00E0DB78 /* 2.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = 2.bmp; sourceTree = "<group>"; };
@@ -355,8 +353,8 @@
 				27CED4B415753A5600539874 /* setting.png */,
 				271E82EB156EB9F400110EFA /* emptyface.png */,
 				271E82EE156EC2C600110EFA /* frame.png */,
-				27E2930915626D0A00E0DB78 /* icon@2x.png */,
-				278C944A1581464D00BD6256 /* icon.png */,
+				2702C23D15B96EF9006FC160 /* icon.png */,
+				4E90575015B8CEC50028F4E0 /* icon@2x.png */,
 				27E293141562793C00E0DB78 /* 1.bmp */,
 				27E293151562793C00E0DB78 /* 2.bmp */,
 				27E293161562793C00E0DB78 /* 3.bmp */,
@@ -571,7 +569,6 @@
 				270D2DC4154025DE0088C59C /* slider.png in Resources */,
 				270D2DC5154025DE0088C59C /* slider@2x.png in Resources */,
 				27FDD00D1546C8A20013D099 /* idle_bg.png in Resources */,
-				27E2930A15626D0B00E0DB78 /* icon@2x.png in Resources */,
 				27E2930C15626DBF00E0DB78 /* WidgetTimeSettingView.xib in Resources */,
 				27E293181562793C00E0DB78 /* 1.bmp in Resources */,
 				27E293191562793C00E0DB78 /* 2.bmp in Resources */,
@@ -593,9 +590,10 @@
 				274DA7CC15765C0200F864DE /* setting_icon@2x.jpg in Resources */,
 				2752BBEF157E1E9D0053FE77 /* TestViewController.xib in Resources */,
 				2752BBF4157E26900053FE77 /* AlarmViewController.xib in Resources */,
-				278C944B1581464E00BD6256 /* icon.png in Resources */,
 				27DFF4051581474700FF7121 /* Default@2x.png in Resources */,
 				27DFF4071581474B00FF7121 /* Default.png in Resources */,
+				4E90575115B8CEC50028F4E0 /* icon@2x.png in Resources */,
+				2702C23E15B96EF9006FC160 /* icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
