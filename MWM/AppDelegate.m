@@ -80,7 +80,7 @@
         [prefs setObject:[NSNumber numberWithBool:NO] forKey:@"notifWakeUpAlarm"];
     }
     if ([prefs objectForKey:@"writeWithResponse"] == nil) {
-        [prefs setObject:[NSNumber numberWithBool:YES] forKey:@"writeWithResponse"];
+        [prefs setObject:[NSNumber numberWithBool:NO] forKey:@"writeWithResponse"];
     }
     if ([prefs objectForKey:@"appIndetifier"] == nil) {
         [prefs setObject:@"" forKey:@"appIndetifier"];

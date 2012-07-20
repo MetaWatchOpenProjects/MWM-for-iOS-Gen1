@@ -131,8 +131,7 @@
 }
 
 - (void) MWMCheckEvent:(NSTimeInterval)timestamp {
-    //NSInteger roundedTimeStamp = (NSInteger)timestamp;
-    //NSLog(@"MWMCheckEvent:%d", roundedTimeStamp);
+    NSLog(@"MWMCheckEvent:%d", (NSInteger)timestamp);
     for (id widget in liveWidgets) {
         if (![widget isEqual:[NSNull null]]) {
             [widget update:timestamp];

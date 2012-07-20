@@ -58,6 +58,7 @@ static MWWeatherMonitor *sharedMonitor;
 }
 
 - (void) getWeather {
+<<<<<<< HEAD
     // Create the manager object
     self.locationManager = [[[CLLocationManager alloc] init] autorelease];
     locationManager.desiredAccuracy = 1.0;
@@ -109,6 +110,16 @@ static MWWeatherMonitor *sharedMonitor;
     [locationMeasurements addObject:newLocation];
     // update the display with the new location data
     [self getWeather];
+=======
+    NSURL *url =[NSURL URLWithString:[NSString stringWithFormat:@"%@%@&hl=us", kKAWeatherBaseURL, [self.city stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+    NSLog(@"%@", url);
+    if (url) {
+        NSURLRequest *req = [[NSURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:15];
+        conn = [[NSURLConnection alloc] initWithRequest:req delegate:self startImmediately:YES];
+    } else {
+        [delegate weatherFailedToResolveCity:city];
+    }
+>>>>>>> upstream/master
     
 }
 
@@ -132,13 +143,17 @@ static MWWeatherMonitor *sharedMonitor;
         return;
     }
     
-    NSXMLParser *parser = [[NSXMLParser alloc] initWithData:connData];
+    NSString *stringReply = [[NSString alloc] initWithData:connData encoding:NSISOLatin1StringEncoding];
+    NSLog(@"%@", stringReply);
+    
+    NSXMLParser *parser = [[NSXMLParser alloc] initWithData:[stringReply dataUsingEncoding:NSUTF8StringEncoding]];
     [parser setShouldProcessNamespaces:YES];
     [parser setShouldResolveExternalEntities:YES];
     [parser setShouldReportNamespacePrefixes:YES];
     [parser setDelegate:self];
     [parser parse];
     
+    [stringReply release];
     [parser release];
     if ([weatherDict valueForKey:@"city"]) {
         NSInteger lowInF = [[weatherDict valueForKey:@"low"] integerValue];
