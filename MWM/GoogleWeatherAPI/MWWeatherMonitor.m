@@ -29,7 +29,7 @@
 #import "MWWeatherMonitor.h"
 
 @implementation MWWeatherMonitor
-@synthesize weatherDict, city, connData, delegate, conn;
+@synthesize weatherDict, city, connData, delegate, conn, locationManager;
 
 static MWWeatherMonitor *sharedMonitor;
 
@@ -57,13 +57,22 @@ static MWWeatherMonitor *sharedMonitor;
 }
 
 - (void) getWeather {
-    NSURL *url =[NSURL URLWithString:[NSString stringWithFormat:@"%@%@&hl=us", kKAWeatherBaseURL, [self.city stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
-    NSLog(@"%@", url);
-    if (url) {
-        NSURLRequest *req = [[NSURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:15];
-        conn = [[NSURLConnection alloc] initWithRequest:req delegate:self startImmediately:YES];
+    if (city.length == 0) {
+        self.locationManager = [[[CLLocationManager alloc] init] autorelease];
+        locationManager.delegate = self;
+        [locationManager startMonitoringSignificantLocationChanges];
     } else {
-        [delegate weatherFailedToResolveCity:city];
+        [locationManager stopMonitoringSignificantLocationChanges];
+        self.locationManager = nil;
+        
+        NSURL *url =[NSURL URLWithString:[NSString stringWithFormat:@"%@%@&hl=us", kKAWeatherBaseURL, [self.city stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+        NSLog(@"%@", url);
+        if (url) {
+            NSURLRequest *req = [[NSURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:15];
+            conn = [[NSURLConnection alloc] initWithRequest:req delegate:self startImmediately:YES];
+        } else {
+            [delegate weatherFailedToResolveCity:city];
+        }
     }
     
 }
@@ -130,7 +139,37 @@ static MWWeatherMonitor *sharedMonitor;
     }
 }
 
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+    NSLog(@"Location: %@", [newLocation description]);
+    CLGeocoder * geoCoder = [[CLGeocoder alloc] init];
+    [geoCoder reverseGeocodeLocation:newLocation completionHandler:^(NSArray *placemarks, NSError *error) {
+        if (placemarks.count > 0) {
+            NSString *locationString = [NSString stringWithFormat:@"%@,%@", [[placemarks objectAtIndex:0] locality], [[placemarks objectAtIndex:0] country]];
+            NSURL *url =[NSURL URLWithString:[NSString stringWithFormat:@"%@%@&hl=us", kKAWeatherBaseURL, [locationString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+            NSLog(@"Geo:%@", url);
+            if (url) {
+                NSURLRequest *req = [[NSURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:15];
+                conn = [[NSURLConnection alloc] initWithRequest:req delegate:self startImmediately:YES];
+                UILocalNotification *notif =[[UILocalNotification alloc] init];
+                notif.alertBody = [NSString stringWithFormat:@"location changed:%@", locationString];
+                [[UIApplication sharedApplication] presentLocalNotificationNow:notif];
+            } else {
+                [delegate weatherFailedToResolveCity:locationString];
+            }
+        } else {
+            [delegate weatherFailedToResolveCity:self.city];
+        }
+        
+    }];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    [delegate weatherFailedToResolveCity:self.city];
+}
+
 - (void) dealloc {
+    [locationManager stopMonitoringSignificantLocationChanges];
+    self.locationManager = nil;
     self.city = nil;
     self.weatherDict = nil;
     self.connData = nil;

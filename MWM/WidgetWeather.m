@@ -152,17 +152,21 @@ static CGFloat widgetHeight = 32;
 
 - (void) weatherFailedToUpdate {
     if (received == NO) {
-        [self drawNullWeather];
+        [self drawNullWeatherWithText:@"No Weather Data"];
         [delegate widget:self updatedWithError:nil];
     }    
 }
 
 - (void) weatherFailedToResolveCity:(NSString *)cityName {
-    [self drawNoCityWeather];
+    if (cityName.length == 0) {
+        [self drawNullWeatherWithText:@"Cannot resolve city"];
+    } else {
+        [self drawNullWeatherWithText:@"Invalid City"];
+    }
     [delegate widget:self updatedWithError:nil];
 }
 
-- (void) drawNullWeather {
+- (void) drawNullWeatherWithText:(NSString*)drawingText {
     UIFont *font = [UIFont fontWithName:@"MetaWatch Small caps 8pt" size:8];   
     //UIFont *largeFont = [UIFont fontWithName:@"MetaWatch Large 16pt" size:16];
     CGSize size  = CGSizeMake(widgetWidth, widgetHeight);
@@ -179,40 +183,7 @@ static CGFloat widgetHeight = 32;
     /*
      Draw the Weather
      */
-    [@"No Weather Data" drawInRect:CGRectMake(0, 12, widgetWidth, widgetHeight) withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentCenter];
-    CGImageRelease(previewRef);
-    previewRef = CGBitmapContextCreateImage(ctx);
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();   
-    
-    for (UIView *view in self.preview.subviews) {
-        [view removeFromSuperview];
-    }
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-    imageView.tag = 7001;
-    imageView.frame = CGRectMake(0, 0, image.size.width, image.size.height);
-    [self.preview addSubview:imageView];
-}
-
-- (void) drawNoCityWeather {
-    UIFont *font = [UIFont fontWithName:@"MetaWatch Small caps 8pt" size:8];   
-    //UIFont *largeFont = [UIFont fontWithName:@"MetaWatch Large 16pt" size:16];
-    CGSize size  = CGSizeMake(widgetWidth, widgetHeight);
-    
-    UIGraphicsBeginImageContextWithOptions(size,NO,1.0);
-    
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    //CGContextSetFillColorWithColor(ctx, [[UIColor clearColor]CGColor]);
-    CGContextSetFillColorWithColor(ctx, [UIColor whiteColor].CGColor);
-    CGContextFillRect(ctx, CGRectMake(0, 0, widgetWidth, widgetHeight));
-    
-    CGContextSetFillColorWithColor(ctx, [[UIColor blackColor]CGColor]);
-    
-    /*
-     Draw the Weather
-     */
-    [@"Invalid City" drawInRect:CGRectMake(0, 12, widgetWidth, widgetHeight) withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentCenter];
-    
+    [drawingText drawInRect:CGRectMake(0, 12, widgetWidth, widgetHeight) withFont:font lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentCenter];
     CGImageRelease(previewRef);
     previewRef = CGBitmapContextCreateImage(ctx);
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
@@ -229,7 +200,7 @@ static CGFloat widgetHeight = 32;
 
 - (void) drawWeather {
     if (weatherDict == nil) {
-        [self drawNullWeather];
+        [self drawNullWeatherWithText:@"No Weather Data"];
         return;
     }
     
@@ -361,13 +332,11 @@ static CGFloat widgetHeight = 32;
     [UIView commitAnimations];
     [textField resignFirstResponder];
     
-    if ([currentCityName isEqualToString:textField.text]) {
+    if ([currentCityName isEqualToString:textField.text] && textField.text.length != 0) {
         return NO;
     }
     self.currentCityName = textField.text;
-    if (currentCityName.length == 0) {
-        currentCityName = @"Helsinki";
-    }
+
     [[MWWeatherMonitor sharedMonitor] setCity:currentCityName];
     [self saveData];
     

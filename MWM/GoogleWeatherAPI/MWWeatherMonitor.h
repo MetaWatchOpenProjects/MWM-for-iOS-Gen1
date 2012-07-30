@@ -27,11 +27,11 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import <CoreLocation/CoreLocation.h>
 
 #define kKAWeatherBaseURL @"http://www.google.com/ig/api\?weather="
 
-@interface MWWeatherMonitor : NSObject<NSXMLParserDelegate, NSURLConnectionDelegate, NSURLConnectionDataDelegate>
+@interface MWWeatherMonitor : NSObject<NSXMLParserDelegate, NSURLConnectionDelegate, NSURLConnectionDataDelegate, CLLocationManagerDelegate>
 
 
 +(MWWeatherMonitor *) sharedMonitor;
@@ -40,6 +40,8 @@
 @property (nonatomic, retain) NSMutableDictionary *weatherDict;
 @property (nonatomic, retain) NSMutableData *connData;
 @property (nonatomic, retain) NSURLConnection *conn;
+
+@property (nonatomic, retain) CLLocationManager *locationManager;
 
 @property (nonatomic, assign) id delegate;
 

@@ -59,7 +59,6 @@
 @property (nonatomic, strong) NSDictionary *weatherDict;
 
 
-
 - (void) toggleValueChanged:(id)sender;
 - (void) updateBtnPressed:(id)sender;
 
