@@ -14,6 +14,12 @@
 		2719C0D415664318007E49A4 /* WidgetCalendarSettingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2719C0D315664318007E49A4 /* WidgetCalendarSettingView.xib */; };
 		271E82EC156EB9F400110EFA /* emptyface.png in Resources */ = {isa = PBXBuildFile; fileRef = 271E82EB156EB9F400110EFA /* emptyface.png */; };
 		271E82EF156EC2C600110EFA /* frame.png in Resources */ = {isa = PBXBuildFile; fileRef = 271E82EE156EC2C600110EFA /* frame.png */; };
+		27374D6515C2A39B005DB803 /* Call.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 27374D6215C2A39B005DB803 /* Call.bmp */; };
+		27374D6615C2A39B005DB803 /* Email.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 27374D6315C2A39B005DB803 /* Email.bmp */; };
+		27374D6715C2A39B005DB803 /* Facebook.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 27374D6415C2A39B005DB803 /* Facebook.bmp */; };
+		27374D6B15C2A3C1005DB803 /* Bob Dylan Music Screen 1.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 27374D6815C2A3C1005DB803 /* Bob Dylan Music Screen 1.bmp */; };
+		27374D6C15C2A3C1005DB803 /* Bob Dylan Music Screen 2.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 27374D6915C2A3C1005DB803 /* Bob Dylan Music Screen 2.bmp */; };
+		27374D6D15C2A3C1005DB803 /* Bob Dylan Music Screen 3.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 27374D6A15C2A3C1005DB803 /* Bob Dylan Music Screen 3.bmp */; };
 		273FDC0C159CB72100206EAE /* MWMMusicControlApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 273FDC0B159CB72100206EAE /* MWMMusicControlApp.m */; };
 		273FDC0E159CBAB000206EAE /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279CDCFC1562B8FA00C9FA63 /* MediaPlayer.framework */; };
 		274DA7C215764AC400F864DE /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 274DA7C015764AC400F864DE /* InfoViewController.m */; };
@@ -46,6 +52,9 @@
 		275A00E6153EB4DB0096E977 /* handsfree.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 275A00E5153EB4DB0096E977 /* handsfree.jpeg */; };
 		275A00E8153EC6600096E977 /* idel.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 275A00E7153EC6600096E977 /* idel.bmp */; };
 		276A1B2C15512434007C77C7 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 276A1B2B15512434007C77C7 /* CoreBluetooth.framework */; };
+		278040E115C6AAB400E0EAD1 /* 1row.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 278040DE15C6AAB400E0EAD1 /* 1row.bmp */; };
+		278040E215C6AAB400E0EAD1 /* 48rows.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 278040DF15C6AAB400E0EAD1 /* 48rows.bmp */; };
+		278040E315C6AAB400E0EAD1 /* 96rows.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 278040E015C6AAB400E0EAD1 /* 96rows.bmp */; };
 		27A71CD5156BC44D0025D784 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 27A71CD4156BC44D0025D784 /* LICENSE */; };
 		27CED4B21575392B00539874 /* setting@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27CED4B11575392B00539874 /* setting@2x.png */; };
 		27CED4B515753A5600539874 /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 27CED4B415753A5600539874 /* setting.png */; };
@@ -103,6 +112,12 @@
 		2719C0D315664318007E49A4 /* WidgetCalendarSettingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WidgetCalendarSettingView.xib; sourceTree = "<group>"; };
 		271E82EB156EB9F400110EFA /* emptyface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = emptyface.png; sourceTree = "<group>"; };
 		271E82EE156EC2C600110EFA /* frame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frame.png; sourceTree = "<group>"; };
+		27374D6215C2A39B005DB803 /* Call.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = Call.bmp; sourceTree = "<group>"; };
+		27374D6315C2A39B005DB803 /* Email.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = Email.bmp; sourceTree = "<group>"; };
+		27374D6415C2A39B005DB803 /* Facebook.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = Facebook.bmp; sourceTree = "<group>"; };
+		27374D6815C2A3C1005DB803 /* Bob Dylan Music Screen 1.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = "Bob Dylan Music Screen 1.bmp"; sourceTree = "<group>"; };
+		27374D6915C2A3C1005DB803 /* Bob Dylan Music Screen 2.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = "Bob Dylan Music Screen 2.bmp"; sourceTree = "<group>"; };
+		27374D6A15C2A3C1005DB803 /* Bob Dylan Music Screen 3.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = "Bob Dylan Music Screen 3.bmp"; sourceTree = "<group>"; };
 		273FDC0A159CB72100206EAE /* MWMMusicControlApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWMMusicControlApp.h; sourceTree = "<group>"; };
 		273FDC0B159CB72100206EAE /* MWMMusicControlApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWMMusicControlApp.m; sourceTree = "<group>"; };
 		274DA7BF15764AC400F864DE /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
@@ -146,6 +161,9 @@
 		275A00E5153EB4DB0096E977 /* handsfree.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = handsfree.jpeg; sourceTree = "<group>"; };
 		275A00E7153EC6600096E977 /* idel.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = idel.bmp; sourceTree = "<group>"; };
 		276A1B2B15512434007C77C7 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		278040DE15C6AAB400E0EAD1 /* 1row.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = 1row.bmp; sourceTree = "<group>"; };
+		278040DF15C6AAB400E0EAD1 /* 48rows.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = 48rows.bmp; sourceTree = "<group>"; };
+		278040E015C6AAB400E0EAD1 /* 96rows.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = 96rows.bmp; sourceTree = "<group>"; };
 		279CDCFC1562B8FA00C9FA63 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		27A71CD4156BC44D0025D784 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		27CED4B11575392B00539874 /* setting@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setting@2x.png"; sourceTree = "<group>"; };
@@ -230,6 +248,22 @@
 				27F2B473156E734B005738E8 /* WidgetPhoneStatusSettingView.xib */,
 			);
 			name = WidgetPhoneStatus;
+			sourceTree = "<group>";
+		};
+		27374D6115C2A385005DB803 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				27374D6215C2A39B005DB803 /* Call.bmp */,
+				27374D6315C2A39B005DB803 /* Email.bmp */,
+				27374D6415C2A39B005DB803 /* Facebook.bmp */,
+				27374D6815C2A3C1005DB803 /* Bob Dylan Music Screen 1.bmp */,
+				27374D6915C2A3C1005DB803 /* Bob Dylan Music Screen 2.bmp */,
+				27374D6A15C2A3C1005DB803 /* Bob Dylan Music Screen 3.bmp */,
+				278040DE15C6AAB400E0EAD1 /* 1row.bmp */,
+				278040DF15C6AAB400E0EAD1 /* 48rows.bmp */,
+				278040E015C6AAB400E0EAD1 /* 96rows.bmp */,
+			);
+			name = "New Group";
 			sourceTree = "<group>";
 		};
 		2752BBE8157DFB750053FE77 /* Settings */ = {
@@ -337,6 +371,7 @@
 		275A00DC153EA9C60096E977 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				27374D6115C2A385005DB803 /* New Group */,
 				27DFF4061581474B00FF7121 /* Default.png */,
 				27DFF4041581474700FF7121 /* Default@2x.png */,
 				27CED4B11575392B00539874 /* setting@2x.png */,
@@ -584,6 +619,15 @@
 				27DFF4071581474B00FF7121 /* Default.png in Resources */,
 				4E90575115B8CEC50028F4E0 /* icon@2x.png in Resources */,
 				2702C23E15B96EF9006FC160 /* icon.png in Resources */,
+				27374D6515C2A39B005DB803 /* Call.bmp in Resources */,
+				27374D6615C2A39B005DB803 /* Email.bmp in Resources */,
+				27374D6715C2A39B005DB803 /* Facebook.bmp in Resources */,
+				27374D6B15C2A3C1005DB803 /* Bob Dylan Music Screen 1.bmp in Resources */,
+				27374D6C15C2A3C1005DB803 /* Bob Dylan Music Screen 2.bmp in Resources */,
+				27374D6D15C2A3C1005DB803 /* Bob Dylan Music Screen 3.bmp in Resources */,
+				278040E115C6AAB400E0EAD1 /* 1row.bmp in Resources */,
+				278040E215C6AAB400E0EAD1 /* 48rows.bmp in Resources */,
+				278040E315C6AAB400E0EAD1 /* 96rows.bmp in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

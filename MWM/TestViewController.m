@@ -39,6 +39,10 @@
 - (IBAction) clearBtnPressed:(id)sender;
 - (IBAction) sendBtnPressed:(id)sender;
 - (IBAction) nvalBtnPressed:(id)sender;
+- (IBAction) row1BtnPressed:(id)sender;
+- (IBAction) row48BtnPressed:(id)sender;
+- (IBAction) row96BtnPressed:(id)sender;
+- (IBAction) cleanBtnPressed:(id)sender;
 
 @end
 
@@ -66,6 +70,26 @@
 
 - (IBAction)nvalBtnPressed:(id)sender {
     [[MWManager sharedManager] performSelector:@selector(testReadNval) withObject:nil];
+}
+
+- (IBAction) row1BtnPressed:(id)sender {
+    UIImage *sendingImg = [UIImage imageNamed:@"1row.bmp"];
+    [[MWManager sharedManager] writeImage:[MWManager bitmapDataForCGImage:sendingImg.CGImage] forMode:kMODE_NOTIFICATION inRect:CGRectMake(0, 0, sendingImg.size.width, sendingImg.size.height) linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:YES shouldUpdate:YES buzzWhenDone:NO buzzRepeats:0];
+}
+
+- (IBAction) row48BtnPressed:(id)sender {
+    UIImage *sendingImg = [UIImage imageNamed:@"48rows.bmp"];
+    [[MWManager sharedManager] writeImage:[MWManager bitmapDataForCGImage:sendingImg.CGImage] forMode:kMODE_NOTIFICATION inRect:CGRectMake(0, 0, sendingImg.size.width, sendingImg.size.height) linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:YES shouldUpdate:YES buzzWhenDone:NO buzzRepeats:0];
+}
+
+- (IBAction) row96BtnPressed:(id)sender {
+    UIImage *sendingImg = [UIImage imageNamed:@"96rows.bmp"];
+    [[MWManager sharedManager] writeImage:[MWManager bitmapDataForCGImage:sendingImg.CGImage] forMode:kMODE_NOTIFICATION inRect:CGRectMake(0, 0, sendingImg.size.width, sendingImg.size.height) linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:YES shouldUpdate:YES buzzWhenDone:NO buzzRepeats:0];
+}
+
+- (IBAction) cleanBtnPressed:(id)sender {
+    [[MWManager sharedManager] loadTemplate:kMODE_NOTIFICATION];
+    [[MWManager sharedManager] updateDisplay:kMODE_NOTIFICATION];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
