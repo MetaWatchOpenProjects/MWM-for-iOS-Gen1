@@ -37,11 +37,13 @@
 +(MWWeatherMonitor *) sharedMonitor;
 
 @property (nonatomic, retain) NSString *city;
+@property (nonatomic, retain, readonly) NSString *cityInUse;
 @property (nonatomic, retain) NSMutableDictionary *weatherDict;
 @property (nonatomic, retain) NSMutableData *connData;
 @property (nonatomic, retain) NSURLConnection *conn;
 
 @property (nonatomic, retain) CLLocationManager *locationManager;
+@property (nonatomic) BOOL useGeo;
 
 @property (nonatomic, assign) id delegate;
 
@@ -54,5 +56,6 @@
 - (void) weatherUpdated:(NSDictionary*)weather;
 - (void) weatherFailedToUpdate;
 - (void) weatherFailedToResolveCity:(NSString*)cityName;
+//- (void) weatherLocationUpdated;
 
 @end

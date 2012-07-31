@@ -29,7 +29,7 @@
 #import "MWWeatherMonitor.h"
 
 @implementation MWWeatherMonitor
-@synthesize weatherDict, city, connData, delegate, conn, locationManager;
+@synthesize weatherDict, city, connData, delegate, conn, locationManager, cityInUse;
 
 static MWWeatherMonitor *sharedMonitor;
 
@@ -50,6 +50,7 @@ static MWWeatherMonitor *sharedMonitor;
         // Initialization code here.
         self.weatherDict = [NSMutableDictionary dictionary];
         self.city=@"Helsinki";
+        cityInUse = @"";
         self.connData = [NSMutableData data];
     }
     
@@ -69,8 +70,11 @@ static MWWeatherMonitor *sharedMonitor;
         NSLog(@"%@", url);
         if (url) {
             NSURLRequest *req = [[NSURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:15];
+            self.conn = nil;
             conn = [[NSURLConnection alloc] initWithRequest:req delegate:self startImmediately:YES];
+            [req release];
         } else {
+            cityInUse = @"";
             [delegate weatherFailedToResolveCity:city];
         }
     }
@@ -93,11 +97,13 @@ static MWWeatherMonitor *sharedMonitor;
     [weatherDict removeAllObjects];
     
     if (connData == nil) {
+        cityInUse = @"";
         [delegate weatherFailedToUpdate];
         return;
     }
     
     NSString *stringReply = [[NSString alloc] initWithData:connData encoding:NSISOLatin1StringEncoding];
+    //NSLog(@"%@", stringReply);
     
     NSXMLParser *parser = [[NSXMLParser alloc] initWithData:[stringReply dataUsingEncoding:NSUTF8StringEncoding]];
     [parser setShouldProcessNamespaces:YES];
@@ -116,12 +122,14 @@ static MWWeatherMonitor *sharedMonitor;
         
         [delegate weatherUpdated:weatherDict];
     } else {
+        cityInUse = @"";
         [delegate weatherFailedToResolveCity:city];
     }
     self.conn = nil;
 }
 
 - (void) connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    cityInUse = @"";
     [delegate weatherFailedToUpdate];
     self.conn = nil;
 }
@@ -144,26 +152,38 @@ static MWWeatherMonitor *sharedMonitor;
     CLGeocoder * geoCoder = [[CLGeocoder alloc] init];
     [geoCoder reverseGeocodeLocation:newLocation completionHandler:^(NSArray *placemarks, NSError *error) {
         if (placemarks.count > 0) {
-            NSString *locationString = [NSString stringWithFormat:@"%@,%@", [[placemarks objectAtIndex:0] locality], [[placemarks objectAtIndex:0] country]];
-            NSURL *url =[NSURL URLWithString:[NSString stringWithFormat:@"%@%@&hl=us", kKAWeatherBaseURL, [locationString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
-            NSLog(@"Geo:%@", url);
-            if (url) {
-                NSURLRequest *req = [[NSURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:15];
-                conn = [[NSURLConnection alloc] initWithRequest:req delegate:self startImmediately:YES];
-                UILocalNotification *notif =[[UILocalNotification alloc] init];
-                notif.alertBody = [NSString stringWithFormat:@"location changed:%@", locationString];
-                [[UIApplication sharedApplication] presentLocalNotificationNow:notif];
-            } else {
-                [delegate weatherFailedToResolveCity:locationString];
-            }
+            // Debug
+            UILocalNotification *notif =[[UILocalNotification alloc] init];
+            notif.alertBody = [NSString stringWithFormat:@"loc changed: %@", [[placemarks objectAtIndex:0] locality]];
+            [[UIApplication sharedApplication] presentLocalNotificationNow:notif];
+            [notif release];
+            
+            if (![cityInUse isEqualToString:[[placemarks objectAtIndex:0] locality]]) {
+                NSString *locationString = [NSString stringWithFormat:@"%@,%@", [[placemarks objectAtIndex:0] locality], [[placemarks objectAtIndex:0] country]];
+                
+                NSURL *url =[NSURL URLWithString:[NSString stringWithFormat:@"%@%@&hl=us", kKAWeatherBaseURL, [locationString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+                NSLog(@"Geo:%@", url);
+                if (url) {
+                    cityInUse = [[NSString stringWithString:[[placemarks objectAtIndex:0] locality]] retain];
+                    NSURLRequest *req = [[NSURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:15];
+                    self.conn = nil;
+                    conn = [[NSURLConnection alloc] initWithRequest:req delegate:self startImmediately:YES];
+                    [req release];
+                } else {
+                    cityInUse = @"";
+                    [delegate weatherFailedToResolveCity:locationString];
+                }
+            } 
         } else {
+            cityInUse = @"";
             [delegate weatherFailedToResolveCity:self.city];
         }
-        
+     [geoCoder release];
     }];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    cityInUse = @"";
     [delegate weatherFailedToResolveCity:self.city];
 }
 
