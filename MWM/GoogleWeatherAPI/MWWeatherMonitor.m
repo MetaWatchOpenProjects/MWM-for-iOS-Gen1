@@ -57,7 +57,11 @@ static MWWeatherMonitor *sharedMonitor;
     return self;
 }
 
-- (void) getWeather {
+- (void) getWeatherForced:(BOOL)forced {
+    if (forced) {
+        cityInUse = @"";
+    }
+    
     if (city.length == 0) {
         self.locationManager = [[[CLLocationManager alloc] init] autorelease];
         locationManager.delegate = self;

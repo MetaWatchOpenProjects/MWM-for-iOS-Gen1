@@ -47,7 +47,7 @@
 
 @property (nonatomic, assign) id delegate;
 
-- (void) getWeather;
+- (void) getWeatherForced:(BOOL)forced;
 - (void) resetWeatherHistory;
 
 @end

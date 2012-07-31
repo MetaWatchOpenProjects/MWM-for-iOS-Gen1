@@ -141,7 +141,7 @@ static CGFloat widgetHeight = 32;
 
 - (void) doInternalUpdate:(NSInteger)timestamp {
     updatedTimestamp = timestamp;
-    [[MWWeatherMonitor sharedMonitor] getWeather];
+    [[MWWeatherMonitor sharedMonitor] getWeatherForced:YES];
 }
 
 - (void) weatherUpdated:(NSDictionary *)weather {
@@ -341,7 +341,7 @@ static CGFloat widgetHeight = 32;
     [[MWWeatherMonitor sharedMonitor] setCity:currentCityName];
     [self saveData];
     
-    [[MWWeatherMonitor sharedMonitor] getWeather];
+    [[MWWeatherMonitor sharedMonitor] getWeatherForced:YES];
     
     return NO;
 }
