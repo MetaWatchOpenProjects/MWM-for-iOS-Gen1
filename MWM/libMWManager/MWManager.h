@@ -1,25 +1,5 @@
-/*****************************************************************************
- *  Copyright (c) 2011 Meta Watch Ltd.                                       *
- *  www.MetaWatch.org                                                        *
- *                                                                           *
- =============================================================================
- *                                                                           *
- *  Licensed under the Apache License, Version 2.0 (the "License");          *
- *  you may not use this file except in compliance with the License.         *
- *  You may obtain a copy of the License at                                  *
- *                                                                           *
- *    http://www.apache.org/licenses/LICENSE-2.0                             *
- *                                                                           *
- *  Unless required by applicable law or agreed to in writing, software      *
- *  distributed under the License is distributed on an "AS IS" BASIS,        *
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. *
- *  See the License for the specific language governing permissions and      *
- *  limitations under the License.                                           *
- *                                                                           *
- *****************************************************************************/
-
 //
-//  AppDelegate.h
+//  MWManager.h
 //  MWM
 //
 //  Created by Siqi Hao on 4/18/12.
@@ -146,9 +126,9 @@
 /*!
  *  @method stopScan
  *
- *  @discussion Ask the MWManager to stop scan. This method 
- *  will also disconnect the watch when the watch connection 
- *  has not been fully established, but will not disconnect 
+ *  @discussion Ask the MWManager to stop scan. This method
+ *  will also disconnect the watch when the watch connection
+ *  has not been fully established, but will not disconnect
  *  a fully connected watch.
  *
  */
@@ -208,13 +188,12 @@
  *
  */
 - (void) writeImage:(NSData*)imgData forMode:(unsigned char)mode inRect:(CGRect)rect linesPerMessage:(unsigned char)lpm shouldLoadTemplate:(BOOL)loadTemplate shouldUpdate:(BOOL)update buzzWhenDone:(BOOL)buzz buzzRepeats:(unsigned char)repeats;
-
 /*!
  *  @method loadTemplate:
  *  @param mode Template will be loaded into selected mode’s display buffer.
  *  @param rect Indicate the starting row and number of rows to be updated.
  *
- *  @discussion Copy a template stored in flash memory into the display buffer. 
+ *  @discussion Copy a template stored in flash memory into the display buffer.
  *  The clear and fill functions work, but otherwise this message is not implemented.
  *
  */
@@ -238,6 +217,14 @@
  *
  */
 - (void) updateDisplay:(unsigned char)mode inRect:(CGRect)rect;
+
+/*!
+ *  @method setWatchIdleFullScreen:
+ *
+ *  @discussion This command is used to determine who draws the top 1/3 of the watch idel screen.
+ *
+ */
+- (void) setWatchIdleFullScreen:(BOOL)enabled;
 
 /*!
  *  @method drawIdleLines:
@@ -298,7 +285,7 @@
 /*!
  *  @method setMWMWriteWithResponse:
  *
- *  @discussion Toggle whether the MWM should send BLE commands using with 
+ *  @discussion Toggle whether the MWM should send BLE commands using with
  *  repsonse or without response. With Response" is signficantly faster but may be unreliable.
  *
  */
@@ -308,7 +295,7 @@
  *  @method handle:from:
  *
  *  @discussion Only invoke this method in application:openURL:sourceApplication:annotation:,
- *  URL should have scheme "mwm://". When another iOS app sends a request to the App Mode of 
+ *  URL should have scheme "mwm://". When another iOS app sends a request to the App Mode of
  *  the Meta Watch through URL Scheme, this method will handle this request. That iOS app will
  *  be notified if the request is succeeded through "mwmapp://" URL Scheme
  *
@@ -318,7 +305,7 @@
 /*!
  *  @method isAppModeAvailable
  *
- *  @discussion This method return YES if the App Mode of the Meta Watch is free to be used. 
+ *  @discussion This method return YES if the App Mode of the Meta Watch is free to be used.
  *  No if any app is using the App Mode.
  *
  */
@@ -329,7 +316,7 @@
  *  @param appIdentifier The application bundle identifier of the app which should be released:
  *  currentAppModeIdentifier in most cases.
  *
- *  @discussion This method manually withdraw the access to the App Mode of the Meta Watch from 
+ *  @discussion This method manually withdraw the access to the App Mode of the Meta Watch from
  *  the sepcified application. The sepcified app will be notified through URL scheme.
  *
  */
@@ -386,8 +373,8 @@
 /*!
  *  @method MWM:didConnectPeripheral:
  *
- *  @discussion Invoked when the watch is connected but more handshakes 
- *  still undergoing. MWMDidDiscoveredWritePort will be invoked when watch 
+ *  @discussion Invoked when the watch is connected but more handshakes
+ *  still undergoing. MWMDidDiscoveredWritePort will be invoked when watch
  *  is fully connected
  *
  */
