@@ -93,10 +93,10 @@
 /*!
  *  @property statusCode
  *
- *  @discussion 0:Disconnected; 1: Connecting; 2: Fully connected;
+ *  @discussion 0:Disconnected; 1: Connecting; 2: Fully connected; 3: Disconnecting
  *
  */
-@property (nonatomic) NSInteger statusCode;
+@property (nonatomic, readonly) NSInteger statusCode;
 
 /*!
  *  @property currentAppModeIdentifier

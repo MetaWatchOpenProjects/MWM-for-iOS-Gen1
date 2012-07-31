@@ -83,6 +83,7 @@
 }
 
 - (void) connectButtonPressed:(id)sender {
+    NSLog(@"DragImageView: Connect Pressed");
     if ([MWManager sharedManager].statusCode == 0) {
         connectButton.titleLabel.numberOfLines = 2;
         [connectButton setTitle:@"Connecting...\nTap to Cancel" forState:UIControlStateNormal];

@@ -263,8 +263,6 @@
     [barIndicatorView setConnectable:YES];
     [self slider:nil DidStopAtMode:0];
     
-    [MWManager sharedManager].statusCode = 0;
-    
     for (id widget in liveWidgets) {
         if ([widget respondsToSelector:@selector(stopUpdate)]) {
             [widget performSelector:@selector(stopUpdate)];
