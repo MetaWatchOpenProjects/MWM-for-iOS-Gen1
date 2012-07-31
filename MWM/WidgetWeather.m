@@ -126,9 +126,7 @@ static CGFloat widgetHeight = 32;
 }
 
 - (void) stopUpdate {
-    [[[MWWeatherMonitor sharedMonitor] conn] cancel];
-    [[[MWWeatherMonitor sharedMonitor] locationManager] stopMonitoringSignificantLocationChanges];
-    [[MWWeatherMonitor sharedMonitor] setDelegate:nil];
+    [[MWWeatherMonitor sharedMonitor] resetWeatherHistory];
 }
 
 - (void) update:(NSInteger)timestamp {

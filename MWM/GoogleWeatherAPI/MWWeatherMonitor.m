@@ -152,6 +152,12 @@ static MWWeatherMonitor *sharedMonitor;
     CLGeocoder * geoCoder = [[CLGeocoder alloc] init];
     [geoCoder reverseGeocodeLocation:newLocation completionHandler:^(NSArray *placemarks, NSError *error) {
         if (placemarks.count > 0) {
+            if (error) {
+                NSLog(@"Resolve error");
+                [delegate weatherFailedToResolveCity:@""];
+                return;
+            }
+            
             // Debug
             UILocalNotification *notif =[[UILocalNotification alloc] init];
             notif.alertBody = [NSString stringWithFormat:@"loc changed: %@", [[placemarks objectAtIndex:0] locality]];
@@ -185,6 +191,13 @@ static MWWeatherMonitor *sharedMonitor;
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
     cityInUse = @"";
     [delegate weatherFailedToResolveCity:self.city];
+}
+
+- (void) resetWeatherHistory {
+    [self.conn cancel];
+    cityInUse = @"";
+    [self.locationManager stopMonitoringSignificantLocationChanges];
+    self.delegate = nil;
 }
 
 - (void) dealloc {
