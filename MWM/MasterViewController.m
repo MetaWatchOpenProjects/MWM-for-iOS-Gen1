@@ -72,6 +72,7 @@
 
 - (void)leftBarBtnPressed:(id)sender {
     NSLog(@"leftBarBtnPressed");
+    return;
     if (musicApp == nil) {
         [self startiPodApp];
     } else {

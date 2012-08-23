@@ -79,7 +79,7 @@
 
 - (IBAction) row48BtnPressed:(id)sender {
     UIImage *sendingImg = [UIImage imageNamed:@"48rows.bmp"];
-    [[MWManager sharedManager] writeImage:[MWManager bitmapDataForCGImage:sendingImg.CGImage] forMode:kMODE_NOTIFICATION inRect:CGRectMake(0, 0, sendingImg.size.width, sendingImg.size.height) linesPerMessage:LINESPERMESSAGE shouldLoadTemplate:YES shouldUpdate:YES buzzWhenDone:NO buzzRepeats:0];
+    [[MWManager sharedManager] writeImage:[MWManager bitmapDataForCGImage:sendingImg.CGImage] forMode:kMODE_NOTIFICATION inRect:CGRectMake(0, 0, sendingImg.size.width, sendingImg.size.height) linesPerMessage:2 shouldLoadTemplate:YES shouldUpdate:YES buzzWhenDone:NO buzzRepeats:0];
 }
 
 - (IBAction) row96BtnPressed:(id)sender {

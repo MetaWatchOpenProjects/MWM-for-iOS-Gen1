@@ -56,7 +56,17 @@ static CGFloat widgetHeight = 32;
         updatedTimestamp = 0;
         nextUpdateTimestamp = 0;
         
+        //eventStore = [[EKEventStore alloc] initWithAccessToEntityTypes:EKEntityTypeEvent];
         eventStore = [[EKEventStore alloc] init];
+        
+        #ifdef __IPHONE_6_0
+        [eventStore requestAccessToEntityType:EKEntityTypeEvent completion:^
+            (BOOL granted, NSError *error){
+                if (granted) {
+                    [self update:-1];
+                }
+        }];
+        #endif
         
         NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
         NSDictionary *dataDict = [prefs valueForKey:[NSString stringWithFormat:@"%d", widgetID]];

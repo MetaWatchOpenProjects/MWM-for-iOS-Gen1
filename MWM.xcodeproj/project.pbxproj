@@ -12,6 +12,7 @@
 		270D2DC5154025DE0088C59C /* slider@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 270D2DC3154025DE0088C59C /* slider@2x.png */; };
 		2719C0D115664306007E49A4 /* WidgetWeatherSettingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2719C0D015664306007E49A4 /* WidgetWeatherSettingView.xib */; };
 		2719C0D415664318007E49A4 /* WidgetCalendarSettingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2719C0D315664318007E49A4 /* WidgetCalendarSettingView.xib */; };
+		271CF8E415D508000083BFBE /* unifont-5.1.20080907.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 271CF8E315D508000083BFBE /* unifont-5.1.20080907.ttf */; };
 		271E82EC156EB9F400110EFA /* emptyface.png in Resources */ = {isa = PBXBuildFile; fileRef = 271E82EB156EB9F400110EFA /* emptyface.png */; };
 		271E82EF156EC2C600110EFA /* frame.png in Resources */ = {isa = PBXBuildFile; fileRef = 271E82EE156EC2C600110EFA /* frame.png */; };
 		27374D6515C2A39B005DB803 /* Call.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 27374D6215C2A39B005DB803 /* Call.bmp */; };
@@ -52,6 +53,8 @@
 		275A00E6153EB4DB0096E977 /* handsfree.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 275A00E5153EB4DB0096E977 /* handsfree.jpeg */; };
 		275A00E8153EC6600096E977 /* idel.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 275A00E7153EC6600096E977 /* idel.bmp */; };
 		276A1B2C15512434007C77C7 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 276A1B2B15512434007C77C7 /* CoreBluetooth.framework */; };
+		277A9D2E15D26F5300E45EDE /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 277A9D2C15D26F5300E45EDE /* AddressBook.framework */; };
+		277A9D2F15D26F5300E45EDE /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 277A9D2D15D26F5300E45EDE /* AddressBookUI.framework */; };
 		278040E115C6AAB400E0EAD1 /* 1row.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 278040DE15C6AAB400E0EAD1 /* 1row.bmp */; };
 		278040E215C6AAB400E0EAD1 /* 48rows.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 278040DF15C6AAB400E0EAD1 /* 48rows.bmp */; };
 		278040E315C6AAB400E0EAD1 /* 96rows.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 278040E015C6AAB400E0EAD1 /* 96rows.bmp */; };
@@ -77,7 +80,7 @@
 		27E0F3B9153F05E100D1C3F3 /* metawatch_8pt_7pxl_CAPS.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 27E0F3B4153F05E100D1C3F3 /* metawatch_8pt_7pxl_CAPS.ttf */; };
 		27E0F3BA153F05E100D1C3F3 /* metawatch_16pt_11pxl.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 27E0F3B5153F05E100D1C3F3 /* metawatch_16pt_11pxl.ttf */; };
 		27E0F3C6153F115200D1C3F3 /* idel_bg.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 27E0F3C5153F115200D1C3F3 /* idel_bg.bmp */; };
-		27E0F3E3153F218500D1C3F3 /* MWWeatherMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E0F3E2153F1E6F00D1C3F3 /* MWWeatherMonitor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		27E0F3E3153F218500D1C3F3 /* MWWeatherMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E0F3E2153F1E6F00D1C3F3 /* MWWeatherMonitor.m */; };
 		27E0F3EB153F258600D1C3F3 /* weather_cloudy.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 27E0F3E5153F258600D1C3F3 /* weather_cloudy.bmp */; };
 		27E0F3EC153F258600D1C3F3 /* weather_rain.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 27E0F3E6153F258600D1C3F3 /* weather_rain.bmp */; };
 		27E0F3ED153F258600D1C3F3 /* weather_snow.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 27E0F3E7153F258600D1C3F3 /* weather_snow.bmp */; };
@@ -86,6 +89,7 @@
 		27E0F3F0153F258600D1C3F3 /* weather_wind.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 27E0F3EA153F258600D1C3F3 /* weather_wind.bmp */; };
 		27E0F3F7153F3FB300D1C3F3 /* bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 27E0F3F5153F3FB300D1C3F3 /* bar.png */; };
 		27E0F3F8153F3FB300D1C3F3 /* bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27E0F3F6153F3FB300D1C3F3 /* bar@2x.png */; };
+		27E233DE15D27C020087CB0A /* call_placeholder.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 27E233DD15D27C020087CB0A /* call_placeholder.bmp */; };
 		27E2930C15626DBF00E0DB78 /* WidgetTimeSettingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27E2930B15626DBF00E0DB78 /* WidgetTimeSettingView.xib */; };
 		27E293181562793C00E0DB78 /* 1.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 27E293141562793C00E0DB78 /* 1.bmp */; };
 		27E293191562793C00E0DB78 /* 2.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 27E293151562793C00E0DB78 /* 2.bmp */; };
@@ -111,6 +115,7 @@
 		270ECAA6156E62C800ECCCED /* MWMWidgetDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWMWidgetDelegate.h; sourceTree = "<group>"; };
 		2719C0D015664306007E49A4 /* WidgetWeatherSettingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WidgetWeatherSettingView.xib; sourceTree = "<group>"; };
 		2719C0D315664318007E49A4 /* WidgetCalendarSettingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WidgetCalendarSettingView.xib; sourceTree = "<group>"; };
+		271CF8E315D508000083BFBE /* unifont-5.1.20080907.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "unifont-5.1.20080907.ttf"; sourceTree = "<group>"; };
 		271E82EB156EB9F400110EFA /* emptyface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = emptyface.png; sourceTree = "<group>"; };
 		271E82EE156EC2C600110EFA /* frame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frame.png; sourceTree = "<group>"; };
 		27374D6215C2A39B005DB803 /* Call.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = Call.bmp; sourceTree = "<group>"; };
@@ -162,6 +167,8 @@
 		275A00E5153EB4DB0096E977 /* handsfree.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = handsfree.jpeg; sourceTree = "<group>"; };
 		275A00E7153EC6600096E977 /* idel.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = idel.bmp; sourceTree = "<group>"; };
 		276A1B2B15512434007C77C7 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		277A9D2C15D26F5300E45EDE /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		277A9D2D15D26F5300E45EDE /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		278040DE15C6AAB400E0EAD1 /* 1row.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = 1row.bmp; sourceTree = "<group>"; };
 		278040DF15C6AAB400E0EAD1 /* 48rows.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = 48rows.bmp; sourceTree = "<group>"; };
 		278040E015C6AAB400E0EAD1 /* 96rows.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = 96rows.bmp; sourceTree = "<group>"; };
@@ -199,6 +206,7 @@
 		27E0F3EA153F258600D1C3F3 /* weather_wind.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = weather_wind.bmp; sourceTree = "<group>"; };
 		27E0F3F5153F3FB300D1C3F3 /* bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar.png; sourceTree = "<group>"; };
 		27E0F3F6153F3FB300D1C3F3 /* bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bar@2x.png"; sourceTree = "<group>"; };
+		27E233DD15D27C020087CB0A /* call_placeholder.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = call_placeholder.bmp; sourceTree = "<group>"; };
 		27E2930B15626DBF00E0DB78 /* WidgetTimeSettingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WidgetTimeSettingView.xib; sourceTree = "<group>"; };
 		27E293141562793C00E0DB78 /* 1.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = 1.bmp; sourceTree = "<group>"; };
 		27E293151562793C00E0DB78 /* 2.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = 2.bmp; sourceTree = "<group>"; };
@@ -229,6 +237,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				277A9D2E15D26F5300E45EDE /* AddressBook.framework in Frameworks */,
+				277A9D2F15D26F5300E45EDE /* AddressBookUI.framework in Frameworks */,
 				2780410215C6B68900E0EAD1 /* CoreLocation.framework in Frameworks */,
 				276A1B2C15512434007C77C7 /* CoreBluetooth.framework in Frameworks */,
 				273FDC0E159CBAB000206EAE /* MediaPlayer.framework in Frameworks */,
@@ -329,6 +339,8 @@
 		275A00B8153EA9470096E977 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				277A9D2C15D26F5300E45EDE /* AddressBook.framework */,
+				277A9D2D15D26F5300E45EDE /* AddressBookUI.framework */,
 				2780410115C6B68900E0EAD1 /* CoreLocation.framework */,
 				279CDCFC1562B8FA00C9FA63 /* MediaPlayer.framework */,
 				276A1B2B15512434007C77C7 /* CoreBluetooth.framework */,
@@ -389,6 +401,7 @@
 				27E293161562793C00E0DB78 /* 3.bmp */,
 				27E293171562793C00E0DB78 /* 4.bmp */,
 				27FDD00C1546C8A20013D099 /* idle_bg.png */,
+				27E233DD15D27C020087CB0A /* call_placeholder.bmp */,
 				274DA7C915765C0200F864DE /* setting_icon.jpg */,
 				274DA7CA15765C0200F864DE /* setting_icon@2x.jpg */,
 				27E0F3E4153F257000D1C3F3 /* WeatherIcons */,
@@ -422,6 +435,7 @@
 		27E0F39D153F01C800D1C3F3 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				271CF8E315D508000083BFBE /* unifont-5.1.20080907.ttf */,
 				27E0F3B1153F05E100D1C3F3 /* metawatch_8pt_5pxl_CAPS.ttf */,
 				27E0F3B2153F05E100D1C3F3 /* metawatch_8pt_5pxl_Numerals.ttf */,
 				27E0F3B3153F05E100D1C3F3 /* metawatch_8pt_6pxl_Numerals.ttf */,
@@ -632,6 +646,8 @@
 				278040E115C6AAB400E0EAD1 /* 1row.bmp in Resources */,
 				278040E215C6AAB400E0EAD1 /* 48rows.bmp in Resources */,
 				278040E315C6AAB400E0EAD1 /* 96rows.bmp in Resources */,
+				27E233DE15D27C020087CB0A /* call_placeholder.bmp in Resources */,
+				271CF8E415D508000083BFBE /* unifont-5.1.20080907.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -45,7 +45,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.1.8</string>
+	<string>0.1.9</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -60,7 +60,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>0.1.8</string>
+	<string>0.1.9</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIAppFonts</key>
@@ -70,6 +70,7 @@
 		<string>metawatch_8pt_6pxl_Numerals.ttf</string>
 		<string>metawatch_8pt_7pxl_CAPS.ttf</string>
 		<string>metawatch_16pt_11pxl.ttf</string>
+		<string>unifont-5.1.20080907.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

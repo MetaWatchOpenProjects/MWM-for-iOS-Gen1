@@ -36,16 +36,16 @@
 
 +(MWWeatherMonitor *) sharedMonitor;
 
-@property (nonatomic, retain) NSString *city;
-@property (nonatomic, retain, readonly) NSString *cityInUse;
-@property (nonatomic, retain) NSMutableDictionary *weatherDict;
-@property (nonatomic, retain) NSMutableData *connData;
-@property (nonatomic, retain) NSURLConnection *conn;
+@property (nonatomic, strong) NSString *city;
+@property (nonatomic, strong, readonly) NSString *cityInUse;
+@property (nonatomic, strong) NSMutableDictionary *weatherDict;
+@property (nonatomic, strong) NSMutableData *connData;
+@property (nonatomic, strong) NSURLConnection *conn;
 
-@property (nonatomic, retain) CLLocationManager *locationManager;
+@property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic) BOOL useGeo;
 
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, weak) id delegate;
 
 - (void) getWeatherForced:(BOOL)forced;
 - (void) resetWeatherHistory;

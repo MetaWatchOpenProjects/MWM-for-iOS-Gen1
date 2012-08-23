@@ -68,10 +68,21 @@ static MWMNotificationsManager *sharedManager;
 - (void) setCalendarAlertEnabled:(BOOL)enable {
     if (enable) {
         [[NSNotificationCenter defaultCenter] removeObserver:self name:EKEventStoreChangedNotification object:eventStore];
-        self.eventStore= [[EKEventStore alloc] init];
+        //eventStore = [[EKEventStore alloc] initWithAccessToEntityTypes:EKEntityTypeEvent];
+        eventStore = [[EKEventStore alloc] init];
+        
+        #ifdef __IPHONE_6_0
+        [eventStore requestAccessToEntityType:EKEntityTypeEvent completion:^
+         (BOOL granted, NSError *error){
+             if (granted) {
+                 [self storeChanged];
+             } else {
+                 [[NSNotificationCenter defaultCenter] removeObserver:self name:EKEventStoreChangedNotification object:eventStore];
+             }
+         }];
+        #endif
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeChanged)
                                                      name:EKEventStoreChangedNotification object:eventStore];
-        [self storeChanged];
     } else {
         [[NSNotificationCenter defaultCenter] removeObserver:self name:EKEventStoreChangedNotification object:nil];
     }

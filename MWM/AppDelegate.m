@@ -129,7 +129,7 @@
     // Normal startup
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
-    //NSLog(@"%@", [[UIFont familyNames] description]);
+    NSLog(@"%@", [[UIFont familyNames] description]);
     
     
     NSURL *url = (NSURL *)[launchOptions valueForKey:UIApplicationLaunchOptionsURLKey];
