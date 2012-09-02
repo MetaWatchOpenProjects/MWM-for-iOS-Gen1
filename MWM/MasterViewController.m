@@ -72,6 +72,12 @@
 
 - (void)leftBarBtnPressed:(id)sender {
     NSLog(@"leftBarBtnPressed");
+    [[MWManager sharedManager] performSelector:@selector(ringPhoneWithMAPData:) withObject:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                                            @"Yang Mu", @"sender",
+                                                                                            @"", @"subject",
+                                                                                            @"type", @"type",
+                                                                                            @"This is a test notification", @"content",
+                                                                                            nil]];
     return;
     if (musicApp == nil) {
         [self startiPodApp];

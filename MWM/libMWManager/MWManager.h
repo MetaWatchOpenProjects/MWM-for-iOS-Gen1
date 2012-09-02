@@ -10,6 +10,8 @@
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
 #import <QuartzCore/QuartzCore.h>
+#import <AddressBook/AddressBook.h>
+#import <AddressBookUI/AddressBookUI.h>
 
 // Do not modify Below
 #define kMSG_TYPE_GET_DEVICE_TYPE 0x01
@@ -28,6 +30,9 @@
 #define kMSG_TYPE_STATUS_CHANGE_EVENT 0x33
 #define kMSG_TYPE_BUTTON_EVENT_MESSAGE 0x34
 
+#define kMSG_TYPE_GENERAL_PHONE_MESSAGE 0x35
+#define kMSG_TYPE_GENERAL_WATCH_MESSAGE 0x36
+
 #define kMSG_TYPE_WRITE_BUFFER 0x40
 #define kMSG_TYPE_CONFIGURE_MODE 0x41
 #define kMSG_TYPE_CONFIGURE_IDLE_BUFFER_SIZE 0x42
@@ -45,6 +50,9 @@
 #define kMSG_TYPE_READ_BATTERY_VOLATRE_RESPONSE 0x57
 #define kMSG_TYPE_SET_TIMER 0xB0
 #define kMSG_TYPE_SET_TIMER_RESPONSE 0xB1
+#define kMSG_TYPE_CALLER_ID 0xB3
+#define kMSG_TYPE_RING_PHONE 0xB4
+#define kMSG_TYPE_MESSAGE_ACCESS_PROFILE 0xB8
 
 #define kMODE_IDLE 0x00
 #define kMODE_APPLICATION 0x01
@@ -65,7 +73,7 @@
 
 #define FRAME_HEADER_LEN 4
 #define FRAME_CRC_LEN 2
-#define FRAME_OVERHEAD FRAME_HEADER_LEN + FRAME_CRC_LEN
+#define FRAME_OVERHEAD (FRAME_HEADER_LEN + FRAME_CRC_LEN)
 #define PIXELS_PER_LINE 96
 #define BYTES_PER_LINE PIXELS_PER_LINE / 8
 
