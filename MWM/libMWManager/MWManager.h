@@ -196,6 +196,9 @@
  *
  */
 - (void) writeImage:(NSData*)imgData forMode:(unsigned char)mode inRect:(CGRect)rect linesPerMessage:(unsigned char)lpm shouldLoadTemplate:(BOOL)loadTemplate shouldUpdate:(BOOL)update buzzWhenDone:(BOOL)buzz buzzRepeats:(unsigned char)repeats;
+
+- (void) loadTemplate:(unsigned char)mode withTemplate:(unsigned char)templ;
+
 /*!
  *  @method loadTemplate:
  *  @param mode Template will be loaded into selected mode’s display buffer.

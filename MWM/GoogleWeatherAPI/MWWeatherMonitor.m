@@ -113,6 +113,16 @@ static MWWeatherMonitor *sharedMonitor;
     [parser setDelegate:self];
     [parser parse];
     
+    [weatherDict removeAllObjects];
+    [weatherDict setObject:@"Espoo" forKey:@"city"];
+    [weatherDict setObject:@"9" forKey:@"low_c"];
+    [weatherDict setObject:@"16" forKey:@"high_c"];
+    [weatherDict setObject:@"54" forKey:@"low"];
+    [weatherDict setObject:@"66" forKey:@"high"];
+    [weatherDict setObject:@"61" forKey:@"temp_f"];
+    [weatherDict setObject:@"16" forKey:@"temp_c"];
+    [weatherDict setObject:@"Cloudy" forKey:@"condition"];
+    
     if ([weatherDict valueForKey:@"city"]) {
         NSInteger lowInF = [[weatherDict valueForKey:@"low"] integerValue];
         [weatherDict setValue:[NSString stringWithFormat:@"%d", ((lowInF - 32) *5/9)] forKey:@"low_c"];

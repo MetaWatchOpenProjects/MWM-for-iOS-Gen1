@@ -72,6 +72,10 @@
 
 - (void)leftBarBtnPressed:(id)sender {
     NSLog(@"leftBarBtnPressed");
+    [[MWManager sharedManager] setWatchIdleFullScreen:YES];
+    [[MWManager sharedManager] loadTemplate:kMODE_IDLE withTemplate:0x04];
+    [[MWManager sharedManager] updateDisplay:kMODE_IDLE];
+    return;
     [[MWManager sharedManager] performSelector:@selector(ringPhoneWithMAPData:) withObject:[NSDictionary dictionaryWithObjectsAndKeys:
                                                                                             @"Yang Mu", @"sender",
                                                                                             @"", @"subject",
@@ -343,11 +347,11 @@
     rightBarBtn.width = 30;
     self.navigationItem.rightBarButtonItem = rightBarBtn;
     
-    UIBarButtonItem *leftBarBtn = [[UIBarButtonItem alloc] initWithTitle:@"iPod"
-                                                                    style:UIBarButtonItemStyleBordered
-                                                                   target:self
-                                                                   action:@selector(leftBarBtnPressed:)]; 
-    self.navigationItem.leftBarButtonItem = leftBarBtn;
+//    UIBarButtonItem *leftBarBtn = [[UIBarButtonItem alloc] initWithTitle:@"iPod"
+//                                                                    style:UIBarButtonItemStyleBordered
+//                                                                   target:self
+//                                                                   action:@selector(leftBarBtnPressed:)]; 
+//    self.navigationItem.leftBarButtonItem = leftBarBtn;
     
     self.appDelegate = [UIApplication sharedApplication].delegate;
     
